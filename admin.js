@@ -516,20 +516,20 @@ async function handleDirectAdminLogin(e) {
     }
 
     try {
-        let isValid = false;
+        let result = { success: false };
         if (typeof verifyAdminPasswordWithFirebase === 'function') {
-            isValid = await verifyAdminPasswordWithFirebase(enteredPass);
+            result = await verifyAdminPasswordWithFirebase(enteredPass);
         } else {
             const localPass = localStorage.getItem('makkah_admin_password');
-            isValid = !!(localPass && enteredPass === localPass);
+            result = { success: !!(localPass && enteredPass === localPass) };
         }
 
-        if (isValid) {
+        if (result && result.success) {
             sessionStorage.setItem('makkah_admin_auth', 'authenticated');
             if (overlay) overlay.classList.add('hidden');
         } else {
             if (err) {
-                err.innerText = "كلمة المرور غير صحيحة، حاول مجدداً";
+                err.innerText = (result && result.message) ? result.message : "كلمة المرور غير صحيحة، حاول مجدداً";
                 err.classList.remove('hidden');
             }
             input.classList.add('border-red-500');

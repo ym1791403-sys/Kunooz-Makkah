@@ -188,35 +188,82 @@ async function deleteOrderFromFirebase(firebaseKey) {
 async function verifyAdminPasswordWithFirebase(enteredPassword) {
     const db = getFirebaseDB();
     if (!db) {
-        const localPass = localStorage.getItem('makkah_admin_password');
-        return !!(localPass && enteredPassword === localPass);
+        throw new Error("قاعدة بيانات Firebase غير متصلة");
     }
 
+    const cleanInput = enteredPassword.toString().trim();
+
     try {
-        // فحص القيم المخزنة في قاعدة البيانات في المسارات المحتملة
-        const paths = ['adminPassword', 'settings/adminPassword', 'admin/password', 'password', 'pass'];
-        for (const p of paths) {
-            const snap = await db.ref(p).once('value');
-            if (snap.exists() && snap.val()) {
-                const dbPass = snap.val().toString().trim();
-                if (enteredPassword.toString().trim() === dbPass) {
-                    // حفظها محلياً للجلسة
-                    localStorage.setItem('makkah_admin_password', dbPass);
-                    return true;
+        // جلب البيانات من جذر قاعدة بيانات Firebase
+        const rootSnap = await db.ref('/').once('value');
+        if (!rootSnap.exists() || rootSnap.val() === null) {
+            return {
+                success: false,
+                emptyDb: true,
+                message: "قاعدة بيانات Firebase فارغة حالياً ولا تحتوي على كلمة مرور."
+            };
+        }
+
+        const data = rootSnap.val();
+
+        // 1. إذا كانت القيمة مخزنة كنص أو رقم مباشر
+        if (typeof data === 'string' || typeof data === 'number') {
+            if (data.toString().trim() === cleanInput) {
+                localStorage.setItem('makkah_admin_password', cleanInput);
+                return { success: true };
+            }
+        }
+
+        // 2. البحث الذكي في الكائنات والمفاتيح الشائعة
+        if (typeof data === 'object' && data !== null) {
+            // فحص مباشر للمفاتيح الشائعة
+            const commonKeys = ['adminPassword', 'password', 'admin_password', 'pass', 'adminPass', 'secret', 'pin'];
+            for (const k of commonKeys) {
+                if (data[k] !== undefined && data[k] !== null) {
+                    if (data[k].toString().trim() === cleanInput) {
+                        localStorage.setItem('makkah_admin_password', cleanInput);
+                        return { success: true };
+                    }
+                }
+            }
+
+            // فحص داخل كائن admin أو settings إن وجد
+            if (data.admin && typeof data.admin === 'object') {
+                for (const k of commonKeys) {
+                    if (data.admin[k] !== undefined && data.admin[k] !== null) {
+                        if (data.admin[k].toString().trim() === cleanInput) {
+                            localStorage.setItem('makkah_admin_password', cleanInput);
+                            return { success: true };
+                        }
+                    }
+                }
+            }
+
+            if (data.settings && typeof data.settings === 'object') {
+                for (const k of commonKeys) {
+                    if (data.settings[k] !== undefined && data.settings[k] !== null) {
+                        if (data.settings[k].toString().trim() === cleanInput) {
+                            localStorage.setItem('makkah_admin_password', cleanInput);
+                            return { success: true };
+                        }
+                    }
+                }
+            }
+
+            // فحص عام: هل القيمة المدخلة تطابق أي حقل كلمة سر في القاعدة؟
+            for (const key of Object.keys(data)) {
+                if (key.toLowerCase().includes('pass') || key.toLowerCase().includes('admin')) {
+                    if (data[key] && data[key].toString().trim() === cleanInput) {
+                        localStorage.setItem('makkah_admin_password', cleanInput);
+                        return { success: true };
+                    }
                 }
             }
         }
 
-        // فحص في localStorage في حال تم تعيينها سابقاً
-        const localPass = localStorage.getItem('makkah_admin_password');
-        if (localPass && enteredPassword === localPass) {
-            return true;
-        }
-
-        return false;
+        return { success: false, message: "كلمة المرور غير صحيحة، لا تطابق المسجل في Firebase" };
     } catch (err) {
         console.error("Firebase Password Verification Error:", err);
-        const localPass = localStorage.getItem('makkah_admin_password');
-        return !!(localPass && enteredPassword === localPass);
+        return { success: false, error: err, message: "حدث خطأ في صلاحيات القراءة من Firebase: " + err.message };
     }
 }
