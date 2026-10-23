@@ -7,6 +7,17 @@
 // رقم الواتساب الخاص بالمتجر لاستقبال الطلبات
 const STORE_WHATSAPP_NUMBER = "201080369841"; 
 
+// دالة التعقيم الأمني لمنع ثغرات XSS
+function escapeHTML(str) {
+    if (str === null || str === undefined) return '';
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+} 
+
 // قائمة المنتجات المخزنة / المحملة من Firebase
 let liveFirebaseProducts = JSON.parse(localStorage.getItem('makkah_real_products') || '[]');
 
@@ -472,6 +483,11 @@ function renderFrontAnnouncement(announcements) {
 
     const currentStyle = themeStyles[activeAnn.theme] || themeStyles['emerald'];
 
+    const cleanText = escapeHTML(activeAnn.text || '');
+    const cleanBtnText = escapeHTML(activeAnn.btnText || '');
+    const cleanBtnLink = escapeHTML(activeAnn.btnLink || '#products');
+    const cleanId = escapeHTML(activeAnn.id);
+
     bar.className = `${currentStyle} py-2.5 px-4 text-xs font-medium shadow-sm transition-all duration-300 relative z-50`;
     bar.innerHTML = `
         <div class="max-w-7xl mx-auto flex items-center justify-between gap-3 flex-wrap">
@@ -479,15 +495,15 @@ function renderFrontAnnouncement(announcements) {
                 <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-white/20 text-white shrink-0 text-[11px] animate-pulse">
                     <i class="fas fa-bullhorn"></i>
                 </span>
-                <span class="font-bold tracking-wide">${activeAnn.text || ''}</span>
-                ${activeAnn.btnText ? `
-                    <a href="${activeAnn.btnLink || '#products'}" class="bg-white hover:bg-gray-100 text-gray-900 font-bold px-3 py-1 rounded-lg text-[11px] shadow-sm transition-all active:scale-95 flex items-center gap-1">
-                        <span>${activeAnn.btnText}</span>
+                <span class="font-bold tracking-wide">${cleanText}</span>
+                ${cleanBtnText ? `
+                    <a href="${cleanBtnLink}" class="bg-white hover:bg-gray-100 text-gray-900 font-bold px-3 py-1 rounded-lg text-[11px] shadow-sm transition-all active:scale-95 flex items-center gap-1">
+                        <span>${cleanBtnText}</span>
                         <i class="fas fa-arrow-left text-[9px]"></i>
                     </a>
                 ` : ''}
             </div>
-            <button onclick="dismissAnnouncement('${activeAnn.id}')" title="إغلاق الإعلان" class="text-white/60 hover:text-white transition-colors p-1 rounded-full text-xs shrink-0">
+            <button onclick="dismissAnnouncement('${cleanId}')" title="إغلاق الإعلان" class="text-white/60 hover:text-white transition-colors p-1 rounded-full text-xs shrink-0">
                 <i class="fas fa-times"></i>
             </button>
         </div>
@@ -659,6 +675,23 @@ function closeCheckoutModal() {
 
 async function handleCheckoutSubmit(e) {
     e.preventDefault();
+
+    // 1. حماية ضد روبوتات السخام (Honeypot Trap Protection)
+    const honeypot = document.getElementById('custHoneypot');
+    if (honeypot && honeypot.value.trim() !== '') {
+        console.warn("Spam Bot Detected and Blocked via Honeypot.");
+        closeCheckoutModal();
+        return;
+    }
+
+    // 2. كبح الطلبات المتتالية ومكافحة الإغراق (Anti-Flood / Anti-DDoS Cooldown)
+    const lastOrderTime = parseInt(sessionStorage.getItem('makkah_last_order_ts') || '0', 10);
+    const now = Date.now();
+    if (now - lastOrderTime < 15000) { // 15 ثانية كحد أدنى بين كل طلب والآخر
+        showToast('يرجى الانتظار بضع ثوانٍ قبل محاولة إرسال طلب جديد', 'fas fa-shield-alt text-amber-500');
+        return;
+    }
+
     const name = document.getElementById('custName').value.trim();
     const phone = document.getElementById('custPhone').value.trim();
     const city = document.getElementById('custCity').value.trim();
@@ -668,6 +701,15 @@ async function handleCheckoutSubmit(e) {
         showToast('يرجى استكمال جميع البيانات المطلوبة', 'fas fa-exclamation-triangle text-amber-500');
         return;
     }
+
+    // 3. التحقق من صحة رقم الهاتف
+    const phoneClean = phone.replace(/[^0-9]/g, '');
+    if (phoneClean.length < 9 || phoneClean.length > 15) {
+        showToast('يرجى كتابة رقم هاتف صحيح للتواصل وتأكيد الشحن', 'fas fa-phone text-red-500');
+        return;
+    }
+
+    sessionStorage.setItem('makkah_last_order_ts', now.toString());
 
     const subtotal = state.cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
     const discountAmount = Math.round(subtotal * state.appliedDiscountPercent);
@@ -810,6 +852,11 @@ function togglePasswordVisibility() {
     }
 }
 
+let secretLoginLimiter = {
+    failedAttempts: parseInt(sessionStorage.getItem('makkah_front_fails') || '0', 10),
+    lockoutUntil: parseInt(sessionStorage.getItem('makkah_front_lockout') || '0', 10)
+};
+
 async function handleAdminLogin(e) {
     e.preventDefault();
     const input = document.getElementById('adminPassInput');
@@ -817,8 +864,28 @@ async function handleAdminLogin(e) {
     const submitBtn = e.target.querySelector('button[type="submit"]');
     if (!input) return;
 
+    // 1. فحص القفل المؤقت ضد هجمات القوة الغاشمة والتخمين
+    const now = Date.now();
+    if (now < secretLoginLimiter.lockoutUntil) {
+        const remainingSeconds = Math.ceil((secretLoginLimiter.lockoutUntil - now) / 1000);
+        if (err) {
+            err.innerText = `تم إيقاف المحاولات مؤقتاً لحماية الحساب. يرجى الانتظار (${remainingSeconds}) ثانية.`;
+            err.classList.remove('hidden');
+        }
+        return;
+    }
+
     const enteredPass = input.value.trim();
     if (!enteredPass) return;
+
+    // 2. فحص أقصى طول لكلمة المرور
+    if (enteredPass.length > 64) {
+        if (err) {
+            err.innerText = "كلمة المرور تتجاوز الحد المسموح (64 حرفاً).";
+            err.classList.remove('hidden');
+        }
+        return;
+    }
 
     if (err) err.classList.add('hidden');
     input.classList.remove('border-red-500');
@@ -839,13 +906,35 @@ async function handleAdminLogin(e) {
         }
 
         if (result && result.success) {
+            secretLoginLimiter.failedAttempts = 0;
+            secretLoginLimiter.lockoutUntil = 0;
+            sessionStorage.removeItem('makkah_front_fails');
+            sessionStorage.removeItem('makkah_front_lockout');
+
             sessionStorage.setItem('makkah_admin_auth', 'authenticated');
             closeAdminLoginModal();
             window.location.href = 'admin.html';
         } else {
-            if (err) {
-                err.innerText = (result && result.message) ? result.message : "كلمة المرور غير صحيحة، حاول مجدداً";
-                err.classList.remove('hidden');
+            secretLoginLimiter.failedAttempts++;
+            sessionStorage.setItem('makkah_front_fails', secretLoginLimiter.failedAttempts);
+
+            if (secretLoginLimiter.failedAttempts >= 5) {
+                secretLoginLimiter.lockoutUntil = Date.now() + 60000; // 60 ثانية
+                sessionStorage.setItem('makkah_front_lockout', secretLoginLimiter.lockoutUntil);
+                secretLoginLimiter.failedAttempts = 0;
+                sessionStorage.removeItem('makkah_front_fails');
+
+                if (err) {
+                    err.innerText = "تم إيقاف محاولات الدخول لمدة 60 ثانية لحماية لوحة الإدارة من التخمين.";
+                    err.classList.remove('hidden');
+                }
+            } else {
+                const remaining = 5 - secretLoginLimiter.failedAttempts;
+                if (err) {
+                    const msg = (result && result.message) ? result.message : "كلمة المرور غير صحيحة، حاول مجدداً";
+                    err.innerText = `${msg} (متبقي ${remaining} محاولات قبل القفل المؤقت)`;
+                    err.classList.remove('hidden');
+                }
             }
             input.classList.add('border-red-500');
             input.select();

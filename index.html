@@ -349,6 +349,11 @@
                 </div>
 
                 <form id="checkoutForm" onsubmit="handleCheckoutSubmit(event)" class="space-y-4 mt-4">
+                    <!-- Honeypot Anti-Bot Field (Hidden from humans, traps spam bots) -->
+                    <div style="display:none !important;" aria-hidden="true">
+                        <input type="text" id="custHoneypot" name="customer_website_check" tabindex="-1" autocomplete="off">
+                    </div>
+
                     <div>
                         <label class="block text-xs font-bold text-gray-700 mb-1">الاسم بالكامل *</label>
                         <input type="text" id="custName" required placeholder="أحمد محمد" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-amber-500">
@@ -549,6 +554,8 @@
                             type="password" 
                             id="adminPassInput" 
                             required 
+                            maxlength="64"
+                            autocomplete="current-password"
                             placeholder="كلمة المرور..." 
                             class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-emerald-500 text-center font-mono tracking-widest"
                         >

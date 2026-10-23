@@ -1,9 +1,21 @@
 // =================================================================
 // لوحة التحكم والإدارة (Admin Dashboard) | متجر كنوز مكة
 // مربوطة مباشرة بقاعدة بيانات Firebase Realtime Database
+// معززة بأنظمة الحماية ومكافحة التخمين و XSS
 // =================================================================
 
 const STORE_WHATSAPP_NUMBER = "201080369841";
+
+// دالة التعقيم الأمني لمنع ثغرات XSS وحقن الأكواد الخبيثة
+function escapeHTML(str) {
+    if (str === null || str === undefined) return '';
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
 
 // حالة الأدمن
 let adminState = {
@@ -213,19 +225,23 @@ function renderAdminProducts(searchQuery = '') {
         const catName = CATEGORY_NAMES[product.category] || product.category;
         const fallbackImg = 'https://images.unsplash.com/photo-1608248597359-497669d0d3a9?auto=format&fit=crop&w=300&q=80';
         const imgSrc = product.image || fallbackImg;
+        const cleanTitle = escapeHTML(product.title);
+        const cleanDesc = escapeHTML(product.description || '');
+        const cleanBadge = escapeHTML(product.badge || '');
+        const cleanCat = escapeHTML(catName);
 
         return `
             <tr class="hover:bg-gray-50/80 transition-colors">
                 <td class="p-4">
-                    <img src="${imgSrc}" alt="${product.title}" class="w-14 h-14 rounded-xl object-cover bg-gray-100 border border-gray-200">
+                    <img src="${escapeHTML(imgSrc)}" alt="${cleanTitle}" class="w-14 h-14 rounded-xl object-cover bg-gray-100 border border-gray-200">
                 </td>
                 <td class="p-4">
-                    <h4 class="font-bold text-gray-900 text-sm max-w-xs">${product.title}</h4>
-                    <p class="text-xs text-gray-400 line-clamp-1 mt-0.5">${product.description || ''}</p>
+                    <h4 class="font-bold text-gray-900 text-sm max-w-xs">${cleanTitle}</h4>
+                    <p class="text-xs text-gray-400 line-clamp-1 mt-0.5">${cleanDesc}</p>
                 </td>
                 <td class="p-4">
                     <span class="inline-block bg-emerald-50 text-emerald-800 text-xs px-2.5 py-1 rounded-lg font-bold border border-emerald-100">
-                        ${catName}
+                        ${cleanCat}
                     </span>
                 </td>
                 <td class="p-4 font-black text-emerald-700 text-sm">
@@ -235,9 +251,9 @@ function renderAdminProducts(searchQuery = '') {
                     ${product.oldPrice ? `${product.oldPrice.toLocaleString()} ج.م` : '—'}
                 </td>
                 <td class="p-4">
-                    ${product.badge ? `
+                    ${cleanBadge ? `
                         <span class="text-[11px] font-bold bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full">
-                            ${product.badge}
+                            ${cleanBadge}
                         </span>
                     ` : '<span class="text-gray-300 text-xs">—</span>'}
                 </td>
@@ -436,26 +452,32 @@ function renderAdminOrders() {
 
     tbody.innerHTML = adminState.orders.map(order => {
         const customerPhoneDigits = (order.phone || '').replace(/[^0-9]/g, '');
-        const itemsSummary = (order.items || []).map(i => `• ${i.title} (${i.qty} عبوة)`).join('<br>');
+        const itemsSummary = (order.items || []).map(i => `• ${escapeHTML(i.title)} (${parseInt(i.qty, 10) || 1} عبوة)`).join('<br>');
         const orderKey = order.firebaseKey || order.id;
+        const cleanName = escapeHTML(order.name || '');
+        const cleanPhone = escapeHTML(order.phone || '');
+        const cleanCity = escapeHTML(order.city || '');
+        const cleanAddress = escapeHTML(order.address || '');
+        const cleanDate = escapeHTML(order.date || 'اليوم');
+        const cleanOrderNumber = escapeHTML(order.orderNumber || order.id);
 
         return `
             <tr class="hover:bg-gray-50/80 transition-colors">
                 <td class="p-4 font-mono font-bold text-emerald-700">
-                    #${order.orderNumber || order.id}
+                    #${cleanOrderNumber}
                 </td>
                 <td class="p-4 text-xs text-gray-500 whitespace-nowrap">
-                    ${order.date || 'اليوم'}
+                    ${cleanDate}
                 </td>
                 <td class="p-4">
-                    <p class="font-bold text-gray-900 text-sm">${order.name}</p>
-                    <a href="tel:${order.phone}" class="text-xs text-blue-600 font-mono hover:underline inline-flex items-center gap-1 mt-0.5">
-                        <i class="fas fa-phone text-[10px]"></i> ${order.phone}
+                    <p class="font-bold text-gray-900 text-sm">${cleanName}</p>
+                    <a href="tel:${encodeURIComponent(order.phone || '')}" class="text-xs text-blue-600 font-mono hover:underline inline-flex items-center gap-1 mt-0.5">
+                        <i class="fas fa-phone text-[10px]"></i> ${cleanPhone}
                     </a>
                 </td>
                 <td class="p-4 text-xs text-gray-600 max-w-xs">
-                    <span class="font-bold text-gray-800">${order.city}</span><br>
-                    <span>${order.address}</span>
+                    <span class="font-bold text-gray-800">${cleanCity}</span><br>
+                    <span>${cleanAddress}</span>
                 </td>
                 <td class="p-4 text-xs text-gray-700 leading-relaxed max-w-sm">
                     ${itemsSummary || '—'}
@@ -464,7 +486,7 @@ function renderAdminOrders() {
                     ${(order.total || 0).toLocaleString()} ج.م
                 </td>
                 <td class="p-4">
-                    <select onchange="updateOrderStatus('${orderKey}', this.value)" class="bg-gray-50 border border-gray-200 text-xs font-bold rounded-lg p-1.5 focus:outline-none">
+                    <select onchange="updateOrderStatus('${escapeHTML(orderKey)}', this.value)" class="bg-gray-50 border border-gray-200 text-xs font-bold rounded-lg p-1.5 focus:outline-none">
                         <option value="جديد" ${order.status === 'جديد' ? 'selected' : ''}>جديد 🟡</option>
                         <option value="تم التأكيد" ${order.status === 'تم التأكيد' ? 'selected' : ''}>تم التأكيد 🟢</option>
                         <option value="تم الشحن" ${order.status === 'تم الشحن' ? 'selected' : ''}>تم الشحن 🚚</option>
@@ -474,14 +496,14 @@ function renderAdminOrders() {
                 <td class="p-4 text-center whitespace-nowrap">
                     <div class="flex items-center justify-center gap-2">
                         <a 
-                            href="https://wa.me/${customerPhoneDigits.startsWith('2') ? customerPhoneDigits : '2' + customerPhoneDigits}?text=${encodeURIComponent(`السلام عليكم أستاذ ${order.name}، بخصوص طلبك من كنوز مكة رقم #${order.orderNumber}`)}" 
+                            href="https://wa.me/${customerPhoneDigits.startsWith('2') ? customerPhoneDigits : '2' + customerPhoneDigits}?text=${encodeURIComponent(`السلام عليكم أستاذ ${order.name || ''}، بخصوص طلبك من كنوز مكة رقم #${order.orderNumber || ''}`)}" 
                             target="_blank" 
                             class="px-2.5 py-1.5 rounded-xl bg-green-100 hover:bg-green-200 text-green-800 text-xs font-bold transition-colors inline-flex items-center gap-1"
                             title="محادثة العميل عبر الواتساب"
                         >
                             <i class="fab fa-whatsapp"></i> واتساب
                         </a>
-                        <button onclick="deleteOrder('${orderKey}')" class="p-1.5 rounded-lg text-gray-400 hover:text-red-500 transition-colors" title="حذف الطلب">
+                        <button onclick="deleteOrder('${escapeHTML(orderKey)}')" class="p-1.5 rounded-lg text-gray-400 hover:text-red-500 transition-colors" title="حذف الطلب">
                             <i class="fas fa-trash-alt text-xs"></i>
                         </button>
                     </div>
@@ -522,8 +544,13 @@ async function deleteOrder(orderKey) {
 }
 
 // ==========================================
-// Admin Password & Authentication Protection
+// Admin Password & Authentication Protection (مع نظام كبح القوة الغاشمة)
 // ==========================================
+let directLoginLimiter = {
+    failedAttempts: parseInt(sessionStorage.getItem('makkah_admin_fails') || '0', 10),
+    lockoutUntil: parseInt(sessionStorage.getItem('makkah_admin_lockout') || '0', 10)
+};
+
 function checkAdminAuth() {
     const overlay = document.getElementById('adminAuthLockOverlay');
     const isAuth = sessionStorage.getItem('makkah_admin_auth') === 'authenticated';
@@ -546,8 +573,28 @@ async function handleDirectAdminLogin(e) {
     const submitBtn = e.target.querySelector('button[type="submit"]');
     if (!input) return;
 
+    // 1. فحص القفل المؤقت ضد هجمات القوة الغاشمة (Brute-force protection)
+    const now = Date.now();
+    if (now < directLoginLimiter.lockoutUntil) {
+        const remainingSeconds = Math.ceil((directLoginLimiter.lockoutUntil - now) / 1000);
+        if (err) {
+            err.innerText = `تم قفل محاولات الدخول مؤقتاً لحماية اللوحة من التخمين. انتظر (${remainingSeconds}) ثانية.`;
+            err.classList.remove('hidden');
+        }
+        return;
+    }
+
     const enteredPass = input.value.trim();
     if (!enteredPass) return;
+
+    // 2. فحص أقصى طول لكلمة المرور لمنع هجمات Buffer Flooding
+    if (enteredPass.length > 64) {
+        if (err) {
+            err.innerText = "كلمة المرور تتجاوز الحد المسموح (64 حرفاً).";
+            err.classList.remove('hidden');
+        }
+        return;
+    }
 
     if (err) err.classList.add('hidden');
     input.classList.remove('border-red-500');
@@ -568,12 +615,36 @@ async function handleDirectAdminLogin(e) {
         }
 
         if (result && result.success) {
+            // تصفير عداد المحاولات الفاشلة عند النجاح
+            directLoginLimiter.failedAttempts = 0;
+            directLoginLimiter.lockoutUntil = 0;
+            sessionStorage.removeItem('makkah_admin_fails');
+            sessionStorage.removeItem('makkah_admin_lockout');
+
             sessionStorage.setItem('makkah_admin_auth', 'authenticated');
             if (overlay) overlay.classList.add('hidden');
         } else {
-            if (err) {
-                err.innerText = (result && result.message) ? result.message : "كلمة المرور غير صحيحة، حاول مجدداً";
-                err.classList.remove('hidden');
+            directLoginLimiter.failedAttempts++;
+            sessionStorage.setItem('makkah_admin_fails', directLoginLimiter.failedAttempts);
+
+            if (directLoginLimiter.failedAttempts >= 5) {
+                // قفل لمدة 60 ثانية بعد 5 محاولات خاطئة
+                directLoginLimiter.lockoutUntil = Date.now() + 60000;
+                sessionStorage.setItem('makkah_admin_lockout', directLoginLimiter.lockoutUntil);
+                directLoginLimiter.failedAttempts = 0;
+                sessionStorage.removeItem('makkah_admin_fails');
+
+                if (err) {
+                    err.innerText = "تم إيقاف محاولات الدخول لمدة 60 ثانية لحماية حسابك من محاولات التخمين.";
+                    err.classList.remove('hidden');
+                }
+            } else {
+                const left = 5 - directLoginLimiter.failedAttempts;
+                if (err) {
+                    const msg = (result && result.message) ? result.message : "كلمة المرور غير صحيحة";
+                    err.innerText = `${msg} (متبقي ${left} محاولات قبل القفل المؤقت)`;
+                    err.classList.remove('hidden');
+                }
             }
             input.classList.add('border-red-500');
             input.select();
@@ -632,16 +703,20 @@ function renderAdminAnnouncements() {
         const themeInfo = THEME_LABELS[ann.theme] || THEME_LABELS['emerald'];
         const dateStr = ann.createdAt ? new Date(ann.createdAt).toLocaleDateString('ar-EG') : 'الآن';
 
+        const cleanText = escapeHTML(ann.text || '');
+        const cleanBtnText = escapeHTML(ann.btnText || '');
+        const cleanBtnLink = escapeHTML(ann.btnLink || '#');
+
         return `
             <tr class="hover:bg-gray-50/80 transition-colors">
                 <td class="p-4">
-                    <button onclick="toggleAnnouncementActive('${ann.id}', ${isActive})" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold transition-all ${isActive ? 'bg-emerald-100 text-emerald-800 hover:bg-emerald-200' : 'bg-gray-100 text-gray-500 hover:bg-gray-200'}">
+                    <button onclick="toggleAnnouncementActive('${escapeHTML(ann.id)}', ${isActive})" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold transition-all ${isActive ? 'bg-emerald-100 text-emerald-800 hover:bg-emerald-200' : 'bg-gray-100 text-gray-500 hover:bg-gray-200'}">
                         <span class="w-2 h-2 rounded-full ${isActive ? 'bg-emerald-500 animate-pulse' : 'bg-gray-400'}"></span>
                         <span>${isActive ? 'نشط في المتجر 🟢' : 'معطّل مؤقتاً ⏸️'}</span>
                     </button>
                 </td>
                 <td class="p-4">
-                    <p class="font-bold text-gray-900 text-sm max-w-sm line-clamp-2">${ann.text || ''}</p>
+                    <p class="font-bold text-gray-900 text-sm max-w-sm line-clamp-2">${cleanText}</p>
                 </td>
                 <td class="p-4">
                     <span class="inline-block text-xs px-2.5 py-1 rounded-lg font-bold border ${themeInfo.bg}">
@@ -649,17 +724,17 @@ function renderAdminAnnouncements() {
                     </span>
                 </td>
                 <td class="p-4 text-xs font-semibold text-gray-600">
-                    ${ann.btnText ? `${ann.btnText} (${ann.btnLink || '#'})` : '<span class="text-gray-300">—</span>'}
+                    ${cleanBtnText ? `${cleanBtnText} (${cleanBtnLink})` : '<span class="text-gray-300">—</span>'}
                 </td>
                 <td class="p-4 text-xs text-gray-400 font-mono">
                     ${dateStr}
                 </td>
                 <td class="p-4 text-center">
                     <div class="flex items-center justify-center gap-2">
-                        <button onclick="openAnnouncementModal('${ann.id}')" title="تعديل الإعلان" class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-700 hover:bg-emerald-100 flex items-center justify-center transition-colors">
+                        <button onclick="openAnnouncementModal('${escapeHTML(ann.id)}')" title="تعديل الإعلان" class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-700 hover:bg-emerald-100 flex items-center justify-center transition-colors">
                             <i class="fas fa-edit text-xs"></i>
                         </button>
-                        <button onclick="deleteAnnouncement('${ann.id}')" title="حذف الإعلان" class="w-8 h-8 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 flex items-center justify-center transition-colors">
+                        <button onclick="deleteAnnouncement('${escapeHTML(ann.id)}')" title="حذف الإعلان" class="w-8 h-8 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 flex items-center justify-center transition-colors">
                             <i class="fas fa-trash-alt text-xs"></i>
                         </button>
                     </div>
