@@ -184,27 +184,13 @@ async function deleteOrderFromFirebase(firebaseKey) {
 
 // ==========================================================
 // دوال إدارة الإعلانات والعروض (Announcements & Banners) في Firebase
+// مربوطة مباشرة بمسار announcements في قاعدة بيانات Firebase Realtime Database
 // ==========================================================
-const DEFAULT_ANNOUNCEMENTS = [
-    {
-        id: "1",
-        text: "🔥 خصم حصري 20% على جميع زيوت إنبات الفراغات وعلاج التساقط بمناسبة الافتتاح!",
-        btnText: "تسوق العرض الآن",
-        btnLink: "#hair-loss",
-        theme: "emerald",
-        active: true,
-        createdAt: Date.now()
-    }
-];
 
 function subscribeToAnnouncements(onDataReceived, onError) {
     const db = getFirebaseDB();
     if (!db) {
-        let local = JSON.parse(localStorage.getItem('makkah_announcements') || 'null');
-        if (!local || local.length === 0) {
-            local = DEFAULT_ANNOUNCEMENTS;
-            localStorage.setItem('makkah_announcements', JSON.stringify(local));
-        }
+        const local = JSON.parse(localStorage.getItem('makkah_announcements') || '[]');
         if (onDataReceived) onDataReceived(local);
         return;
     }
@@ -220,19 +206,13 @@ function subscribeToAnnouncements(onDataReceived, onError) {
                 id: val[key].id || key
             }));
             list.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
-        } else {
-            // تهيئة إعلان افتراضي أولي إن كانت قاعدة البيانات خالية
-            list = DEFAULT_ANNOUNCEMENTS;
-            try {
-                db.ref('announcements/1').set(DEFAULT_ANNOUNCEMENTS[0]);
-            } catch(e) {}
         }
+        // حفظ النسخة الحقيقية المأخوذة من Firebase فقط بدون أي بيانات وهمية
         localStorage.setItem('makkah_announcements', JSON.stringify(list));
         if (onDataReceived) onDataReceived(list);
     }, (error) => {
         console.error("Firebase Announcements Read Error:", error);
-        let fallback = JSON.parse(localStorage.getItem('makkah_announcements') || 'null');
-        if (!fallback || fallback.length === 0) fallback = DEFAULT_ANNOUNCEMENTS;
+        const fallback = JSON.parse(localStorage.getItem('makkah_announcements') || '[]');
         if (onDataReceived) onDataReceived(fallback);
         if (onError) onError(error);
     });

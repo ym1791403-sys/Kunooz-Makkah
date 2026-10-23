@@ -59,10 +59,6 @@
                         <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
                         <span>قاعدة بيانات Firebase متصلة</span>
                     </span>
-                    <button onclick="openChangePasswordModal()" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-gray-300 hover:text-white rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 border border-slate-700" title="تغيير كلمة مرور لوحة الإدارة">
-                        <i class="fas fa-key text-amber-400"></i>
-                        <span class="hidden md:inline">تغيير الباسورد</span>
-                    </button>
                     <a href="index.html" class="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shadow-md shadow-emerald-600/20">
                         <span>المتجر</span>
                         <i class="fas fa-arrow-up-right-from-square text-[10px]"></i>
@@ -452,39 +448,6 @@
                             <i class="fas fa-check ml-1"></i> حفظ وتحديث المنتج في المتجر
                         </button>
                         <button type="button" onclick="closeProductModal()" class="px-5 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl font-semibold text-sm transition-colors">
-                            إلغاء
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Change Password Modal -->
-    <div id="changePasswordModal" class="fixed inset-0 z-50 overflow-y-auto hidden">
-        <div class="min-h-screen px-4 flex items-center justify-center">
-            <div class="fixed inset-0 bg-black/60 backdrop-blur-sm" onclick="closeChangePasswordModal()"></div>
-            <div class="relative bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl z-10 text-center space-y-4">
-                <div class="w-14 h-14 bg-amber-50 text-amber-600 rounded-2xl flex items-center justify-center text-xl mx-auto">
-                    <i class="fas fa-key"></i>
-                </div>
-                <div>
-                    <h3 class="font-black text-gray-900 text-lg">تغيير كلمة مرور الإدارة</h3>
-                    <p class="text-xs text-gray-500 mt-0.5">اختر كلمة مرور جديدة للوحة التحكم</p>
-                </div>
-                <form onsubmit="handleChangePasswordSubmit(event)" class="space-y-3">
-                    <div>
-                        <input type="password" id="currentPassInput" required placeholder="كلمة المرور الحالية" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs focus:outline-none focus:border-emerald-500">
-                    </div>
-                    <div>
-                        <input type="password" id="newPassInput" required minlength="4" placeholder="كلمة المرور الجديدة" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs focus:outline-none focus:border-emerald-500">
-                    </div>
-                    <p id="changePassError" class="text-xs text-red-500 font-bold hidden"></p>
-                    <div class="pt-2 flex gap-2">
-                        <button type="submit" class="flex-1 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs">
-                            تحديث الباسورد
-                        </button>
-                        <button type="button" onclick="closeChangePasswordModal()" class="px-4 py-2.5 bg-gray-100 text-gray-700 rounded-xl text-xs font-semibold">
                             إلغاء
                         </button>
                     </div>

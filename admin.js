@@ -602,66 +602,6 @@ function handleAdminLogout() {
     }
 }
 
-// Change Password Modal
-function openChangePasswordModal() {
-    const modal = document.getElementById('changePasswordModal');
-    const err = document.getElementById('changePassError');
-    if (err) err.classList.add('hidden');
-    document.getElementById('currentPassInput').value = '';
-    document.getElementById('newPassInput').value = '';
-    if (modal) modal.classList.remove('hidden');
-}
-
-function closeChangePasswordModal() {
-    const modal = document.getElementById('changePasswordModal');
-    if (modal) modal.classList.add('hidden');
-}
-
-async function handleChangePasswordSubmit(e) {
-    e.preventDefault();
-    const currentPass = document.getElementById('currentPassInput').value.trim();
-    const newPass = document.getElementById('newPassInput').value.trim();
-    const err = document.getElementById('changePassError');
-
-    let isCurrentValid = false;
-    if (typeof verifyAdminPasswordWithFirebase === 'function') {
-        isCurrentValid = await verifyAdminPasswordWithFirebase(currentPass);
-    } else {
-        const localPass = localStorage.getItem('makkah_admin_password');
-        isCurrentValid = !!(localPass && currentPass === localPass);
-    }
-
-    if (!isCurrentValid) {
-        if (err) {
-            err.innerText = 'كلمة المرور الحالية غير صحيحة!';
-            err.classList.remove('hidden');
-        }
-        return;
-    }
-
-    if (newPass.length < 4) {
-        if (err) {
-            err.innerText = 'يجب أن تتكون كلمة المرور الجديدة من 4 خانات على الأقل.';
-            err.classList.remove('hidden');
-        }
-        return;
-    }
-
-    // حفظ في Firebase Realtime Database
-    try {
-        const db = getFirebaseDB();
-        if (db) {
-            await db.ref('adminPassword').set(newPass);
-        }
-    } catch(errDb) {
-        console.warn("Could not sync new password to Firebase:", errDb);
-    }
-
-    localStorage.setItem('makkah_admin_password', newPass);
-    closeChangePasswordModal();
-    alert('تم تحديث كلمة المرور بنجاح في Firebase والمتجر!');
-}
-
 // =================================================================
 // إدارة شريط الإعلانات والخصومات (Announcements CRUD)
 // =================================================================
