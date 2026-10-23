@@ -704,13 +704,6 @@ function renderAdminAnnouncements() {
                     <p class="font-bold text-gray-900 text-sm max-w-sm line-clamp-2">${ann.text || ''}</p>
                 </td>
                 <td class="p-4">
-                    ${ann.coupon ? `
-                        <span class="inline-block bg-amber-50 text-amber-800 border border-amber-200 text-xs px-2.5 py-1 rounded-lg font-mono font-bold tracking-wider">
-                            ${ann.coupon}
-                        </span>
-                    ` : '<span class="text-gray-300 text-xs">—</span>'}
-                </td>
-                <td class="p-4">
                     <span class="inline-block text-xs px-2.5 py-1 rounded-lg font-bold border ${themeInfo.bg}">
                         ${themeInfo.name}
                     </span>
@@ -742,7 +735,6 @@ function openAnnouncementModal(id = null) {
     const form = document.getElementById('announcementForm');
     const editIdInput = document.getElementById('editAnnouncementId');
     const textInput = document.getElementById('announcementText');
-    const couponInput = document.getElementById('announcementCoupon');
     const btnTextInput = document.getElementById('announcementBtnText');
     const btnLinkInput = document.getElementById('announcementBtnLink');
     const themeSelect = document.getElementById('announcementTheme');
@@ -757,7 +749,6 @@ function openAnnouncementModal(id = null) {
             if (titleEl) titleEl.innerText = "تعديل الإعلان أو الخصم الترويجي";
             if (editIdInput) editIdInput.value = item.id;
             if (textInput) textInput.value = item.text || '';
-            if (couponInput) couponInput.value = item.coupon || '';
             if (btnTextInput) btnTextInput.value = item.btnText || '';
             if (btnLinkInput) btnLinkInput.value = item.btnLink || '';
             if (themeSelect) themeSelect.value = item.theme || 'emerald';
@@ -781,18 +772,15 @@ function closeAnnouncementModal() {
 
 function updateAnnouncementPreview() {
     const textInput = document.getElementById('announcementText');
-    const couponInput = document.getElementById('announcementCoupon');
     const btnTextInput = document.getElementById('announcementBtnText');
     const themeSelect = document.getElementById('announcementTheme');
 
     const text = (textInput && textInput.value.trim()) || 'خصم خاص 20% على جميع كورسات علاج التساقط وإنبات الفراغات لفترة محدودة!';
-    const coupon = couponInput ? couponInput.value.trim().toUpperCase() : '';
     const btnText = btnTextInput ? btnTextInput.value.trim() : '';
     const theme = themeSelect ? themeSelect.value : 'emerald';
 
     const previewBox = document.getElementById('announcementLivePreview');
     const textEl = document.getElementById('previewTextContent');
-    const couponEl = document.getElementById('previewCouponBadge');
     const btnEl = document.getElementById('previewBtnBadge');
 
     if (!previewBox) return;
@@ -808,15 +796,6 @@ function updateAnnouncementPreview() {
 
     if (textEl) textEl.innerText = text;
 
-    if (couponEl) {
-        if (coupon) {
-            couponEl.innerText = coupon;
-            couponEl.classList.remove('hidden');
-        } else {
-            couponEl.classList.add('hidden');
-        }
-    }
-
     if (btnEl) {
         if (btnText) {
             btnEl.innerText = btnText;
@@ -831,7 +810,6 @@ async function handleAnnouncementFormSubmit(e) {
     e.preventDefault();
     const editId = document.getElementById('editAnnouncementId').value;
     const text = document.getElementById('announcementText').value.trim();
-    const coupon = document.getElementById('announcementCoupon').value.trim().toUpperCase();
     const btnText = document.getElementById('announcementBtnText').value.trim();
     const btnLink = document.getElementById('announcementBtnLink').value.trim();
     const theme = document.getElementById('announcementTheme').value;
@@ -845,7 +823,6 @@ async function handleAnnouncementFormSubmit(e) {
     const payload = {
         id: editId || Date.now().toString(),
         text: text,
-        coupon: coupon,
         btnText: btnText,
         btnLink: btnLink || '#products',
         theme: theme,

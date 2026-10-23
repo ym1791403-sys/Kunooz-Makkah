@@ -480,13 +480,6 @@ function renderFrontAnnouncement(announcements) {
                     <i class="fas fa-bullhorn"></i>
                 </span>
                 <span class="font-bold tracking-wide">${activeAnn.text || ''}</span>
-                ${activeAnn.coupon ? `
-                    <button onclick="copyAnnouncementCoupon('${activeAnn.coupon}')" title="اضغط لنسخ وتطبيق كود الخصم في سلتك" class="bg-white/20 hover:bg-white/30 text-white font-mono font-bold px-2.5 py-0.5 rounded-lg text-[11px] border border-white/30 transition-all flex items-center gap-1 active:scale-95 shadow-sm">
-                        <i class="fas fa-tag text-[10px]"></i>
-                        <span>كود: ${activeAnn.coupon}</span>
-                        <i class="far fa-copy text-[10px] opacity-75"></i>
-                    </button>
-                ` : ''}
                 ${activeAnn.btnText ? `
                     <a href="${activeAnn.btnLink || '#products'}" class="bg-white hover:bg-gray-100 text-gray-900 font-bold px-3 py-1 rounded-lg text-[11px] shadow-sm transition-all active:scale-95 flex items-center gap-1">
                         <span>${activeAnn.btnText}</span>
@@ -500,15 +493,6 @@ function renderFrontAnnouncement(announcements) {
         </div>
     `;
     bar.classList.remove('hidden');
-}
-
-function copyAnnouncementCoupon(coupon) {
-    if (!coupon) return;
-    try {
-        navigator.clipboard.writeText(coupon);
-    } catch(e) {}
-    applyCoupon(coupon);
-    showToast(`تم نسخ وتفعيل كود الخصم (${coupon}) في سلتك ✓`, 'fas fa-check-circle text-emerald-500');
 }
 
 function dismissAnnouncement(id) {

@@ -189,7 +189,6 @@ const DEFAULT_ANNOUNCEMENTS = [
     {
         id: "1",
         text: "🔥 خصم حصري 20% على جميع زيوت إنبات الفراغات وعلاج التساقط بمناسبة الافتتاح!",
-        coupon: "MAKKAH20",
         btnText: "تسوق العرض الآن",
         btnLink: "#hair-loss",
         theme: "emerald",

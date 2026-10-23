@@ -286,29 +286,11 @@
                 <!-- Cart Summary & Checkout Footer -->
                 <div id="cartFooter" class="p-5 border-t border-gray-100 bg-gray-50 space-y-3">
                     
-                    <!-- Coupon Input -->
-                    <div class="flex gap-2">
-                        <input 
-                            type="text" 
-                            id="couponInput" 
-                            placeholder="كود الخصم (جرب: MAKKAH20)" 
-                            class="flex-1 bg-white border border-gray-200 rounded-xl px-3 py-2 text-xs uppercase focus:outline-none focus:border-amber-500"
-                        >
-                        <button onclick="applyCoupon()" class="px-4 py-2 bg-gray-800 hover:bg-gray-900 text-white rounded-xl text-xs font-bold transition-all">
-                            تطبيق
-                        </button>
-                    </div>
-                    <p id="couponMsg" class="text-xs hidden"></p>
-
                     <!-- Cost Breakdown -->
-                    <div class="space-y-1.5 text-xs text-gray-600 pt-2 border-t border-gray-200">
+                    <div class="space-y-1.5 text-xs text-gray-600">
                         <div class="flex justify-between">
                             <span>المجموع الفرعي</span>
                             <span id="cartSubtotal" class="font-semibold text-gray-900">0 ج.م</span>
-                        </div>
-                        <div class="flex justify-between text-green-600" id="discountRow" style="display: none;">
-                            <span>الخصم المطبق</span>
-                            <span id="cartDiscount" class="font-semibold">-0 ج.م</span>
                         </div>
                         <div class="flex justify-between">
                             <span>تكلفة الشحن</span>
