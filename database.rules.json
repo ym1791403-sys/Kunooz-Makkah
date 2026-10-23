@@ -1,6 +1,28 @@
 {
   "rules": {
-    ".read": true,
-    ".write": true
+    ".read": false,
+    ".write": false,
+    "products": {
+      ".read": true,
+      ".indexOn": ["category", "createdAt"],
+      "$productId": {
+        ".write": true,
+        ".validate": "!newData.exists() || (newData.hasChildren(['title', 'price']) && newData.child('title').isString() && newData.child('title').val().length > 0 && newData.child('title').val().length <= 200 && (!newData.hasChild('price') || newData.child('price').isNumber() || newData.child('price').isString()))"
+      }
+    },
+    "announcements": {
+      ".read": true,
+      "$announcementId": {
+        ".write": true,
+        ".validate": "!newData.exists() || (newData.hasChild('text') && newData.child('text').isString() && newData.child('text').val().length > 0 && newData.child('text').val().length <= 500)"
+      }
+    },
+    "orders": {
+      ".read": true,
+      "$orderId": {
+        ".write": true,
+        ".validate": "!newData.exists() || (newData.hasChildren(['name', 'phone', 'total']) && newData.child('name').isString() && newData.child('name').val().length >= 2 && newData.child('name').val().length <= 150 && newData.child('phone').isString() && newData.child('phone').val().length >= 8 && newData.child('phone').val().length <= 30 && newData.child('total').isNumber() && newData.child('total').val() >= 0)"
+      }
+    }
   }
 }
