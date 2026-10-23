@@ -54,15 +54,23 @@
                 </div>
 
                 <!-- Navigation Action Links -->
-                <div class="flex items-center gap-3">
-                    <span id="firebaseStatusBadge" class="bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-xs font-bold px-3 py-1.5 rounded-xl flex items-center gap-1.5">
+                <div class="flex items-center gap-2 sm:gap-3">
+                    <span id="firebaseStatusBadge" class="hidden sm:flex bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-xs font-bold px-3 py-1.5 rounded-xl items-center gap-1.5">
                         <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
                         <span>قاعدة بيانات Firebase متصلة</span>
                     </span>
-                    <a href="index.html" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold transition-all flex items-center gap-2 shadow-md shadow-emerald-600/20">
-                        <span>معاينة المتجر المباشر</span>
+                    <button onclick="openChangePasswordModal()" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-gray-300 hover:text-white rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 border border-slate-700" title="تغيير كلمة مرور لوحة الإدارة">
+                        <i class="fas fa-key text-amber-400"></i>
+                        <span class="hidden md:inline">تغيير الباسورد</span>
+                    </button>
+                    <a href="index.html" class="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shadow-md shadow-emerald-600/20">
+                        <span>المتجر</span>
                         <i class="fas fa-arrow-up-right-from-square text-[10px]"></i>
                     </a>
+                    <button onclick="handleAdminLogout()" class="px-3 py-2 bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/30 rounded-xl text-xs font-bold transition-all flex items-center gap-1" title="تسجيل الخروج وقفل لوحة الإدارة">
+                        <i class="fas fa-arrow-right-from-bracket"></i>
+                        <span class="hidden md:inline">خروج</span>
+                    </button>
                 </div>
 
             </div>
@@ -379,6 +387,69 @@
                     </div>
                 </form>
             </div>
+        </div>
+    </div>
+
+    <!-- Change Password Modal -->
+    <div id="changePasswordModal" class="fixed inset-0 z-50 overflow-y-auto hidden">
+        <div class="min-h-screen px-4 flex items-center justify-center">
+            <div class="fixed inset-0 bg-black/60 backdrop-blur-sm" onclick="closeChangePasswordModal()"></div>
+            <div class="relative bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl z-10 text-center space-y-4">
+                <div class="w-14 h-14 bg-amber-50 text-amber-600 rounded-2xl flex items-center justify-center text-xl mx-auto">
+                    <i class="fas fa-key"></i>
+                </div>
+                <div>
+                    <h3 class="font-black text-gray-900 text-lg">تغيير كلمة مرور الإدارة</h3>
+                    <p class="text-xs text-gray-500 mt-0.5">اختر كلمة مرور جديدة للوحة التحكم</p>
+                </div>
+                <form onsubmit="handleChangePasswordSubmit(event)" class="space-y-3">
+                    <div>
+                        <input type="password" id="currentPassInput" required placeholder="كلمة المرور الحالية" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs focus:outline-none focus:border-emerald-500">
+                    </div>
+                    <div>
+                        <input type="password" id="newPassInput" required minlength="4" placeholder="كلمة المرور الجديدة" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs focus:outline-none focus:border-emerald-500">
+                    </div>
+                    <p id="changePassError" class="text-xs text-red-500 font-bold hidden"></p>
+                    <div class="pt-2 flex gap-2">
+                        <button type="submit" class="flex-1 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs">
+                            تحديث الباسورد
+                        </button>
+                        <button type="button" onclick="closeChangePasswordModal()" class="px-4 py-2.5 bg-gray-100 text-gray-700 rounded-xl text-xs font-semibold">
+                            إلغاء
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Authentication Guard Overlay (Visible only when not logged in) -->
+    <div id="adminAuthLockOverlay" class="fixed inset-0 z-50 bg-slate-900/95 backdrop-blur-md flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl max-w-sm w-full p-7 text-center shadow-2xl space-y-4 border border-gray-100">
+            <div class="w-16 h-16 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center text-2xl mx-auto shadow-sm">
+                <i class="fas fa-lock"></i>
+            </div>
+            <div>
+                <h3 class="font-black text-gray-900 text-lg">لوحة الإدارة محمية بكلمة مرور</h3>
+                <p class="text-xs text-gray-500 mt-1">يجب إدخال كلمة المرور للمتابعة وإدارة المتجر</p>
+            </div>
+            <form onsubmit="handleDirectAdminLogin(event)" class="space-y-3">
+                <input 
+                    type="password" 
+                    id="directAdminPassInput" 
+                    required 
+                    placeholder="أدخل كلمة المرور..." 
+                    class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-emerald-500 text-center font-mono tracking-widest"
+                >
+                <p id="directLoginError" class="text-xs text-red-500 font-bold hidden">كلمة المرور غير صحيحة، حاول مجدداً</p>
+                <button type="submit" class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-lg shadow-emerald-600/20 active:scale-95 transition-all text-sm flex items-center justify-center gap-2">
+                    <i class="fas fa-unlock"></i>
+                    <span>فتح لوحة التحكم</span>
+                </button>
+                <a href="index.html" class="block text-xs text-gray-400 hover:text-gray-600 pt-1">
+                    ← العودة لمتجر كنوز مكة
+                </a>
+            </form>
         </div>
     </div>
 

@@ -689,3 +689,55 @@ function showToast(message, iconClass = 'fas fa-check-circle text-emerald-500') 
         toast.classList.remove('toast-show');
     }, 3200);
 }
+
+// ==========================================
+// Secret Admin Login via Lock Icon
+// ==========================================
+function openAdminLoginModal() {
+    const modal = document.getElementById('adminLoginModal');
+    const input = document.getElementById('adminPassInput');
+    const err = document.getElementById('adminLoginError');
+    if (!modal) return;
+    if (input) input.value = '';
+    if (err) err.classList.add('hidden');
+    modal.classList.remove('hidden');
+    setTimeout(() => { if (input) input.focus(); }, 150);
+}
+
+function closeAdminLoginModal() {
+    const modal = document.getElementById('adminLoginModal');
+    if (modal) modal.classList.add('hidden');
+}
+
+function togglePasswordVisibility() {
+    const input = document.getElementById('adminPassInput');
+    const icon = document.getElementById('passVisibilityIcon');
+    if (!input || !icon) return;
+    if (input.type === 'password') {
+        input.type = 'text';
+        icon.className = 'fas fa-eye-slash';
+    } else {
+        input.type = 'password';
+        icon.className = 'fas fa-eye';
+    }
+}
+
+function handleAdminLogin(e) {
+    e.preventDefault();
+    const input = document.getElementById('adminPassInput');
+    const err = document.getElementById('adminLoginError');
+    if (!input) return;
+
+    const enteredPass = input.value.trim();
+    const correctPass = localStorage.getItem('makkah_admin_password') || '123456';
+
+    if (enteredPass === correctPass) {
+        sessionStorage.setItem('makkah_admin_auth', 'authenticated');
+        closeAdminLoginModal();
+        window.location.href = 'admin.html';
+    } else {
+        if (err) err.classList.remove('hidden');
+        input.classList.add('border-red-500');
+        input.select();
+    }
+}

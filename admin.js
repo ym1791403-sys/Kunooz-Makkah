@@ -24,6 +24,7 @@ const CATEGORY_NAMES = {
 
 // بدء التشغيل والربط بـ Firebase
 document.addEventListener('DOMContentLoaded', () => {
+    checkAdminAuth();
     updateDashboardStats();
     renderAdminProducts();
     renderAdminOrders();
@@ -475,4 +476,91 @@ async function deleteOrder(orderKey) {
     } catch(err) {
         console.error("Delete order error:", err);
     }
+}
+
+// ==========================================
+// Admin Password & Authentication Protection
+// ==========================================
+function checkAdminAuth() {
+    const overlay = document.getElementById('adminAuthLockOverlay');
+    const isAuth = sessionStorage.getItem('makkah_admin_auth') === 'authenticated';
+    if (!overlay) return;
+
+    if (!isAuth) {
+        overlay.classList.remove('hidden');
+        const input = document.getElementById('directAdminPassInput');
+        if (input) setTimeout(() => input.focus(), 200);
+    } else {
+        overlay.classList.add('hidden');
+    }
+}
+
+function handleDirectAdminLogin(e) {
+    e.preventDefault();
+    const input = document.getElementById('directAdminPassInput');
+    const err = document.getElementById('directLoginError');
+    const overlay = document.getElementById('adminAuthLockOverlay');
+    if (!input) return;
+
+    const enteredPass = input.value.trim();
+    const correctPass = localStorage.getItem('makkah_admin_password') || '123456';
+
+    if (enteredPass === correctPass) {
+        sessionStorage.setItem('makkah_admin_auth', 'authenticated');
+        if (overlay) overlay.classList.add('hidden');
+    } else {
+        if (err) err.classList.remove('hidden');
+        input.classList.add('border-red-500');
+        input.select();
+    }
+}
+
+function handleAdminLogout() {
+    if (confirm('هل تريد تسجيل الخروج وقفل لوحة الإدارة؟')) {
+        sessionStorage.removeItem('makkah_admin_auth');
+        window.location.href = 'index.html';
+    }
+}
+
+// Change Password Modal
+function openChangePasswordModal() {
+    const modal = document.getElementById('changePasswordModal');
+    const err = document.getElementById('changePassError');
+    if (err) err.classList.add('hidden');
+    document.getElementById('currentPassInput').value = '';
+    document.getElementById('newPassInput').value = '';
+    if (modal) modal.classList.remove('hidden');
+}
+
+function closeChangePasswordModal() {
+    const modal = document.getElementById('changePasswordModal');
+    if (modal) modal.classList.add('hidden');
+}
+
+function handleChangePasswordSubmit(e) {
+    e.preventDefault();
+    const currentPass = document.getElementById('currentPassInput').value.trim();
+    const newPass = document.getElementById('newPassInput').value.trim();
+    const err = document.getElementById('changePassError');
+    const correctPass = localStorage.getItem('makkah_admin_password') || '123456';
+
+    if (currentPass !== correctPass) {
+        if (err) {
+            err.innerText = 'كلمة المرور الحالية غير صحيحة!';
+            err.classList.remove('hidden');
+        }
+        return;
+    }
+
+    if (newPass.length < 4) {
+        if (err) {
+            err.innerText = 'يجب أن تتكون كلمة المرور الجديدة من 4 خانات على الأقل.';
+            err.classList.remove('hidden');
+        }
+        return;
+    }
+
+    localStorage.setItem('makkah_admin_password', newPass);
+    closeChangePasswordModal();
+    alert('تم تغيير كلمة مرور لوحة الإدارة بنجاح!');
 }
