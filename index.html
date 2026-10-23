@@ -39,6 +39,9 @@
 </head>
 <body class="bg-gray-50 text-gray-800 font-cairo antialiased min-h-screen flex flex-col">
 
+    <!-- Dynamic Admin Announcements & Promotions Bar -->
+    <div id="dynamicAnnouncementBar" class="hidden transition-all duration-300"></div>
+
     <!-- Navigation Header -->
     <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -555,8 +558,7 @@
                 </div>
                 <div>
                     <h3 class="font-black text-gray-900 text-lg">لوحة الإدارة والتحكم</h3>
-                    <p class="text-xs text-gray-500 mt-1">حساب المسؤول: <span class="font-bold text-emerald-700 font-mono">kanouz123@gmail.com</span></p>
-                    <p class="text-[11px] text-gray-400 mt-0.5">أدخل كلمة المرور المسجلة في Firebase للمتابعة</p>
+                    <p class="text-xs text-gray-500 mt-1">أدخل كلمة المرور للمتابعة</p>
                 </div>
 
                 <form onsubmit="handleAdminLogin(event)" class="space-y-3">

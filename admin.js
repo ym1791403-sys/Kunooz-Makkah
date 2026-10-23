@@ -10,6 +10,7 @@ let adminState = {
     currentTab: 'products',
     products: JSON.parse(localStorage.getItem('makkah_real_products') || '[]'),
     orders: JSON.parse(localStorage.getItem('makkah_orders') || '[]'),
+    announcements: JSON.parse(localStorage.getItem('makkah_announcements') || '[]'),
     tempUploadedImageData: ''
 };
 
@@ -28,6 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateDashboardStats();
     renderAdminProducts();
     renderAdminOrders();
+    renderAdminAnnouncements();
 
     // الاستماع المباشر للمنتجات من Firebase
     if (typeof subscribeToProducts === 'function') {
@@ -58,6 +60,20 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         );
     }
+
+    // الاستماع المباشر للإعلانات والعروض الترويجية من Firebase
+    if (typeof subscribeToAnnouncements === 'function') {
+        subscribeToAnnouncements(
+            (liveAnnouncements) => {
+                adminState.announcements = liveAnnouncements;
+                renderAdminAnnouncements();
+                updateTabBadges();
+            },
+            (error) => {
+                console.warn("Firebase announcements subscription fallback to local:", error);
+            }
+        );
+    }
 });
 
 function setFirebaseBadgeStatus(isConnected, message = "") {
@@ -81,22 +97,39 @@ function switchAdminTab(tab) {
     adminState.currentTab = tab;
     const secProducts = document.getElementById('sectionProducts');
     const secOrders = document.getElementById('sectionOrders');
+    const secAnnouncements = document.getElementById('sectionAnnouncements');
     const btnProducts = document.getElementById('tabBtnProducts');
     const btnOrders = document.getElementById('tabBtnOrders');
+    const btnAnnouncements = document.getElementById('tabBtnAnnouncements');
     const productsActionsBar = document.getElementById('productsActionsBar');
+    const announcementsActionsBar = document.getElementById('announcementsActionsBar');
+
+    const activeClasses = "px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all bg-white text-emerald-800 shadow-sm flex items-center gap-2";
+    const inactiveClasses = "px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all text-gray-600 hover:text-gray-900 flex items-center gap-2";
+
+    // إخفاء كافة الأقسام افتراضياً
+    if (secProducts) secProducts.classList.add('hidden');
+    if (secOrders) secOrders.classList.add('hidden');
+    if (secAnnouncements) secAnnouncements.classList.add('hidden');
+
+    if (btnProducts) btnProducts.className = inactiveClasses;
+    if (btnOrders) btnOrders.className = inactiveClasses;
+    if (btnAnnouncements) btnAnnouncements.className = inactiveClasses;
+
+    if (productsActionsBar) productsActionsBar.classList.add('hidden');
+    if (announcementsActionsBar) announcementsActionsBar.classList.add('hidden');
 
     if (tab === 'products') {
-        secProducts.classList.remove('hidden');
-        secOrders.classList.add('hidden');
-        btnProducts.className = "px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all bg-white text-emerald-800 shadow-sm flex items-center gap-2";
-        btnOrders.className = "px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all text-gray-600 hover:text-gray-900 flex items-center gap-2";
-        productsActionsBar.classList.remove('hidden');
-    } else {
-        secProducts.classList.add('hidden');
-        secOrders.classList.remove('hidden');
-        btnOrders.className = "px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all bg-white text-emerald-800 shadow-sm flex items-center gap-2";
-        btnProducts.className = "px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all text-gray-600 hover:text-gray-900 flex items-center gap-2";
-        productsActionsBar.classList.add('hidden');
+        if (secProducts) secProducts.classList.remove('hidden');
+        if (btnProducts) btnProducts.className = activeClasses;
+        if (productsActionsBar) productsActionsBar.classList.remove('hidden');
+    } else if (tab === 'orders') {
+        if (secOrders) secOrders.classList.remove('hidden');
+        if (btnOrders) btnOrders.className = activeClasses;
+    } else if (tab === 'announcements') {
+        if (secAnnouncements) secAnnouncements.classList.remove('hidden');
+        if (btnAnnouncements) btnAnnouncements.className = activeClasses;
+        if (announcementsActionsBar) announcementsActionsBar.classList.remove('hidden');
     }
 }
 
@@ -107,9 +140,9 @@ function updateDashboardStats() {
     const totalRevenueEl = document.getElementById('statTotalRevenue');
     const statWhatsappNum = document.getElementById('statWhatsappNum');
 
-    const totalProducts = adminState.products.length;
-    const totalOrders = adminState.orders.length;
-    const totalRevenue = adminState.orders.reduce((sum, order) => sum + (order.total || 0), 0);
+    const totalProducts = (adminState.products || []).length;
+    const totalOrders = (adminState.orders || []).length;
+    const totalRevenue = (adminState.orders || []).reduce((sum, order) => sum + (order.total || 0), 0);
 
     if (totalProductsEl) totalProductsEl.innerText = totalProducts;
     if (totalOrdersEl) totalOrdersEl.innerText = totalOrders;
@@ -122,8 +155,18 @@ function updateDashboardStats() {
 function updateTabBadges() {
     const pBadge = document.getElementById('tabBadgeProducts');
     const oBadge = document.getElementById('tabBadgeOrders');
-    if (pBadge) pBadge.innerText = adminState.products.length;
-    if (oBadge) oBadge.innerText = adminState.orders.length;
+    const aBadge = document.getElementById('tabBadgeAnnouncements');
+    if (pBadge) pBadge.innerText = (adminState.products || []).length;
+    if (oBadge) oBadge.innerText = (adminState.orders || []).length;
+    if (aBadge) {
+        const activeCount = (adminState.announcements || []).filter(a => a.active !== false).length;
+        aBadge.innerText = activeCount;
+        if (activeCount > 0) {
+            aBadge.className = "bg-amber-100 text-amber-800 text-[11px] px-2 py-0.5 rounded-full font-bold";
+        } else {
+            aBadge.className = "bg-gray-300 text-gray-700 text-[11px] px-2 py-0.5 rounded-full font-bold";
+        }
+    }
 }
 
 // ==========================================
@@ -617,4 +660,273 @@ async function handleChangePasswordSubmit(e) {
     localStorage.setItem('makkah_admin_password', newPass);
     closeChangePasswordModal();
     alert('تم تحديث كلمة المرور بنجاح في Firebase والمتجر!');
+}
+
+// =================================================================
+// إدارة شريط الإعلانات والخصومات (Announcements CRUD)
+// =================================================================
+
+const THEME_LABELS = {
+    'emerald': { name: 'أخضر زمردي فاخر', bg: 'bg-emerald-100 text-emerald-800 border-emerald-200' },
+    'amber': { name: 'ذهبي ترويجي دافئ', bg: 'bg-amber-100 text-amber-800 border-amber-200' },
+    'rose': { name: 'أحمر خصومات نارية', bg: 'bg-rose-100 text-rose-800 border-rose-200' },
+    'indigo': { name: 'كحلي ملكي فخم', bg: 'bg-indigo-100 text-indigo-800 border-indigo-200' }
+};
+
+function renderAdminAnnouncements() {
+    const tbody = document.getElementById('adminAnnouncementsTableBody');
+    const emptyView = document.getElementById('adminEmptyAnnouncements');
+    if (!tbody) return;
+
+    const list = adminState.announcements || [];
+    if (list.length === 0) {
+        tbody.innerHTML = '';
+        if (emptyView) emptyView.classList.remove('hidden');
+        return;
+    }
+
+    if (emptyView) emptyView.classList.add('hidden');
+
+    tbody.innerHTML = list.map(ann => {
+        const isActive = ann.active !== false;
+        const themeInfo = THEME_LABELS[ann.theme] || THEME_LABELS['emerald'];
+        const dateStr = ann.createdAt ? new Date(ann.createdAt).toLocaleDateString('ar-EG') : 'الآن';
+
+        return `
+            <tr class="hover:bg-gray-50/80 transition-colors">
+                <td class="p-4">
+                    <button onclick="toggleAnnouncementActive('${ann.id}', ${isActive})" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold transition-all ${isActive ? 'bg-emerald-100 text-emerald-800 hover:bg-emerald-200' : 'bg-gray-100 text-gray-500 hover:bg-gray-200'}">
+                        <span class="w-2 h-2 rounded-full ${isActive ? 'bg-emerald-500 animate-pulse' : 'bg-gray-400'}"></span>
+                        <span>${isActive ? 'نشط في المتجر 🟢' : 'معطّل مؤقتاً ⏸️'}</span>
+                    </button>
+                </td>
+                <td class="p-4">
+                    <p class="font-bold text-gray-900 text-sm max-w-sm line-clamp-2">${ann.text || ''}</p>
+                </td>
+                <td class="p-4">
+                    ${ann.coupon ? `
+                        <span class="inline-block bg-amber-50 text-amber-800 border border-amber-200 text-xs px-2.5 py-1 rounded-lg font-mono font-bold tracking-wider">
+                            ${ann.coupon}
+                        </span>
+                    ` : '<span class="text-gray-300 text-xs">—</span>'}
+                </td>
+                <td class="p-4">
+                    <span class="inline-block text-xs px-2.5 py-1 rounded-lg font-bold border ${themeInfo.bg}">
+                        ${themeInfo.name}
+                    </span>
+                </td>
+                <td class="p-4 text-xs font-semibold text-gray-600">
+                    ${ann.btnText ? `${ann.btnText} (${ann.btnLink || '#'})` : '<span class="text-gray-300">—</span>'}
+                </td>
+                <td class="p-4 text-xs text-gray-400 font-mono">
+                    ${dateStr}
+                </td>
+                <td class="p-4 text-center">
+                    <div class="flex items-center justify-center gap-2">
+                        <button onclick="openAnnouncementModal('${ann.id}')" title="تعديل الإعلان" class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-700 hover:bg-emerald-100 flex items-center justify-center transition-colors">
+                            <i class="fas fa-edit text-xs"></i>
+                        </button>
+                        <button onclick="deleteAnnouncement('${ann.id}')" title="حذف الإعلان" class="w-8 h-8 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 flex items-center justify-center transition-colors">
+                            <i class="fas fa-trash-alt text-xs"></i>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        `;
+    }).join('');
+}
+
+function openAnnouncementModal(id = null) {
+    const modal = document.getElementById('announcementModal');
+    const titleEl = document.getElementById('announcementModalTitle');
+    const form = document.getElementById('announcementForm');
+    const editIdInput = document.getElementById('editAnnouncementId');
+    const textInput = document.getElementById('announcementText');
+    const couponInput = document.getElementById('announcementCoupon');
+    const btnTextInput = document.getElementById('announcementBtnText');
+    const btnLinkInput = document.getElementById('announcementBtnLink');
+    const themeSelect = document.getElementById('announcementTheme');
+    const activeCheck = document.getElementById('announcementActive');
+
+    if (form) form.reset();
+    if (editIdInput) editIdInput.value = '';
+
+    if (id) {
+        const item = (adminState.announcements || []).find(a => a.id.toString() === id.toString());
+        if (item) {
+            if (titleEl) titleEl.innerText = "تعديل الإعلان أو الخصم الترويجي";
+            if (editIdInput) editIdInput.value = item.id;
+            if (textInput) textInput.value = item.text || '';
+            if (couponInput) couponInput.value = item.coupon || '';
+            if (btnTextInput) btnTextInput.value = item.btnText || '';
+            if (btnLinkInput) btnLinkInput.value = item.btnLink || '';
+            if (themeSelect) themeSelect.value = item.theme || 'emerald';
+            if (activeCheck) activeCheck.checked = item.active !== false;
+        }
+    } else {
+        if (titleEl) titleEl.innerText = "إضافة إعلان أو عرض ترويجي جديد";
+        if (editIdInput) editIdInput.value = '';
+        if (activeCheck) activeCheck.checked = true;
+        if (themeSelect) themeSelect.value = 'emerald';
+    }
+
+    updateAnnouncementPreview();
+    if (modal) modal.classList.remove('hidden');
+}
+
+function closeAnnouncementModal() {
+    const modal = document.getElementById('announcementModal');
+    if (modal) modal.classList.add('hidden');
+}
+
+function updateAnnouncementPreview() {
+    const textInput = document.getElementById('announcementText');
+    const couponInput = document.getElementById('announcementCoupon');
+    const btnTextInput = document.getElementById('announcementBtnText');
+    const themeSelect = document.getElementById('announcementTheme');
+
+    const text = (textInput && textInput.value.trim()) || 'خصم خاص 20% على جميع كورسات علاج التساقط وإنبات الفراغات لفترة محدودة!';
+    const coupon = couponInput ? couponInput.value.trim().toUpperCase() : '';
+    const btnText = btnTextInput ? btnTextInput.value.trim() : '';
+    const theme = themeSelect ? themeSelect.value : 'emerald';
+
+    const previewBox = document.getElementById('announcementLivePreview');
+    const textEl = document.getElementById('previewTextContent');
+    const couponEl = document.getElementById('previewCouponBadge');
+    const btnEl = document.getElementById('previewBtnBadge');
+
+    if (!previewBox) return;
+
+    const themeClasses = {
+        'emerald': 'bg-gradient-to-r from-emerald-900 via-emerald-800 to-emerald-950 text-white',
+        'amber': 'bg-gradient-to-r from-amber-700 via-amber-600 to-amber-800 text-white',
+        'rose': 'bg-gradient-to-r from-rose-700 via-red-600 to-rose-800 text-white',
+        'indigo': 'bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white'
+    };
+
+    previewBox.className = `p-3 rounded-xl ${themeClasses[theme] || themeClasses['emerald']} text-xs font-medium text-center shadow-inner flex flex-wrap items-center justify-center gap-2 transition-all`;
+
+    if (textEl) textEl.innerText = text;
+
+    if (couponEl) {
+        if (coupon) {
+            couponEl.innerText = coupon;
+            couponEl.classList.remove('hidden');
+        } else {
+            couponEl.classList.add('hidden');
+        }
+    }
+
+    if (btnEl) {
+        if (btnText) {
+            btnEl.innerText = btnText;
+            btnEl.classList.remove('hidden');
+        } else {
+            btnEl.classList.add('hidden');
+        }
+    }
+}
+
+async function handleAnnouncementFormSubmit(e) {
+    e.preventDefault();
+    const editId = document.getElementById('editAnnouncementId').value;
+    const text = document.getElementById('announcementText').value.trim();
+    const coupon = document.getElementById('announcementCoupon').value.trim().toUpperCase();
+    const btnText = document.getElementById('announcementBtnText').value.trim();
+    const btnLink = document.getElementById('announcementBtnLink').value.trim();
+    const theme = document.getElementById('announcementTheme').value;
+    const active = document.getElementById('announcementActive').checked;
+
+    if (!text) {
+        alert("يرجى كتابة نص الإعلان أو العرض");
+        return;
+    }
+
+    const payload = {
+        id: editId || Date.now().toString(),
+        text: text,
+        coupon: coupon,
+        btnText: btnText,
+        btnLink: btnLink || '#products',
+        theme: theme,
+        active: active,
+        createdAt: editId ? undefined : Date.now(),
+        updatedAt: Date.now()
+    };
+
+    const submitBtn = e.target.querySelector('button[type="submit"]');
+    const originalBtn = submitBtn ? submitBtn.innerHTML : '';
+    if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin ml-1"></i> جاري الحفظ...';
+    }
+
+    try {
+        if (typeof saveAnnouncementToFirebase === 'function') {
+            await saveAnnouncementToFirebase(payload);
+        } else {
+            let list = adminState.announcements || [];
+            if (editId) {
+                const idx = list.findIndex(a => a.id.toString() === editId.toString());
+                if (idx > -1) list[idx] = { ...list[idx], ...payload };
+            } else {
+                list.unshift(payload);
+            }
+            adminState.announcements = list;
+            localStorage.setItem('makkah_announcements', JSON.stringify(list));
+            renderAdminAnnouncements();
+            updateTabBadges();
+        }
+
+        closeAnnouncementModal();
+        alert('تم حفظ ونشر الإعلان بنجاح في متجر كنوز مكة ✓');
+    } catch (err) {
+        console.error("Save announcement error:", err);
+        alert('حدث خطأ أثناء حفظ الإعلان، يرجى المحاولة مرة أخرى.');
+    } finally {
+        if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalBtn;
+        }
+    }
+}
+
+async function toggleAnnouncementActive(id, currentActive) {
+    try {
+        const newStatus = !currentActive;
+        if (typeof toggleAnnouncementInFirebase === 'function') {
+            await toggleAnnouncementInFirebase(id, newStatus);
+        } else {
+            let list = adminState.announcements || [];
+            const item = list.find(a => a.id.toString() === id.toString());
+            if (item) item.active = newStatus;
+            adminState.announcements = list;
+            localStorage.setItem('makkah_announcements', JSON.stringify(list));
+            renderAdminAnnouncements();
+            updateTabBadges();
+        }
+    } catch (err) {
+        console.error("Toggle active error:", err);
+        alert("حدث خطأ أثناء تغيير حالة الإعلان");
+    }
+}
+
+async function deleteAnnouncement(id) {
+    if (!confirm('هل أنت متأكد من حذف هذا الإعلان نهائياً من المتجر؟')) return;
+
+    try {
+        if (typeof deleteAnnouncementFromFirebase === 'function') {
+            await deleteAnnouncementFromFirebase(id);
+        } else {
+            let list = adminState.announcements || [];
+            list = list.filter(a => a.id.toString() !== id.toString());
+            adminState.announcements = list;
+            localStorage.setItem('makkah_announcements', JSON.stringify(list));
+            renderAdminAnnouncements();
+            updateTabBadges();
+        }
+    } catch (err) {
+        console.error("Delete announcement error:", err);
+        alert("حدث خطأ أثناء حذف الإعلان");
+    }
 }

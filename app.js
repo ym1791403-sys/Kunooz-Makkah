@@ -40,6 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateCartUI();
     updateWishlistUI();
     setupFloatingWhatsapp();
+    renderFrontAnnouncement();
 
     // الاستماع المباشر للمنتجات من Firebase
     if (typeof subscribeToProducts === 'function') {
@@ -51,6 +52,18 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             (error) => {
                 console.warn("Using local products fallback due to Firebase error:", error);
+            }
+        );
+    }
+
+    // الاستماع المباشر للإعلانات والعروض الترويجية من Firebase
+    if (typeof subscribeToAnnouncements === 'function') {
+        subscribeToAnnouncements(
+            (announcements) => {
+                renderFrontAnnouncement(announcements);
+            },
+            (error) => {
+                console.warn("Using local announcements fallback due to Firebase error:", error);
             }
         );
     }
@@ -394,24 +407,115 @@ function toggleCartDrawer() {
 }
 
 // Coupon Logic
-function applyCoupon() {
+function applyCoupon(codeToApply = null) {
     const input = document.getElementById('couponInput');
     const msg = document.getElementById('couponMsg');
-    if (!input || !msg) return;
 
-    const code = input.value.trim().toUpperCase();
+    const code = (codeToApply || (input ? input.value : '')).trim().toUpperCase();
     if (!code) return;
+
+    if (input) input.value = code;
+
+    // تسجيل الكوبون تلقائياً إذا لم يكن مضافاً مسبقاً
+    if (!VALID_COUPONS[code]) {
+        const match = code.match(/\d+/);
+        const percent = match ? parseInt(match[0], 10) / 100 : 0.15;
+        VALID_COUPONS[code] = Math.min(Math.max(percent, 0.05), 0.70); // ما بين 5% إلى 70%
+    }
 
     if (VALID_COUPONS[code]) {
         state.appliedDiscountPercent = VALID_COUPONS[code];
         state.appliedCouponCode = code;
-        msg.innerText = `تم تطبيق كود الخصم بنجاح! (${Math.round(state.appliedDiscountPercent * 100)}% خصم)`;
-        msg.className = "text-xs text-green-600 font-semibold block";
+        if (msg) {
+            msg.innerText = `تم تطبيق كود الخصم بنجاح! (${Math.round(state.appliedDiscountPercent * 100)}% خصم)`;
+            msg.className = "text-xs text-green-600 font-semibold block";
+        }
         updateCartUI();
-        showToast('تم تفعيل كود الخصم!', 'fas fa-percent text-green-500');
+        showToast(`تم تفعيل كود الخصم (${code}) بنجاح!`, 'fas fa-percent text-emerald-500');
     } else {
-        msg.innerText = "كود الخصم غير صالح أو منتهي الصلاحية";
-        msg.className = "text-xs text-red-500 font-semibold block";
+        if (msg) {
+            msg.innerText = "كود الخصم غير صالح أو منتهي الصلاحية";
+            msg.className = "text-xs text-red-500 font-semibold block";
+        }
+    }
+}
+
+// Announcements Bar Logic
+function renderFrontAnnouncement(announcements) {
+    const bar = document.getElementById('dynamicAnnouncementBar');
+    if (!bar) return;
+
+    const list = announcements || JSON.parse(localStorage.getItem('makkah_announcements') || '[]');
+    const activeItems = list.filter(a => a.active !== false);
+
+    if (activeItems.length === 0) {
+        bar.innerHTML = '';
+        bar.classList.add('hidden');
+        return;
+    }
+
+    // عرض الإعلان النشط الأول الذي لم يقم الزائر بإغلاقه في جلسته
+    const activeAnn = activeItems.find(a => !sessionStorage.getItem('makkah_ann_dismissed_' + a.id)) || activeItems[0];
+
+    if (!activeAnn || sessionStorage.getItem('makkah_ann_dismissed_' + activeAnn.id)) {
+        bar.innerHTML = '';
+        bar.classList.add('hidden');
+        return;
+    }
+
+    const themeStyles = {
+        'emerald': 'bg-gradient-to-r from-emerald-950 via-emerald-800 to-emerald-950 text-emerald-50 border-b border-emerald-700/40',
+        'amber': 'bg-gradient-to-r from-amber-900 via-amber-700 to-amber-900 text-amber-50 border-b border-amber-600/40',
+        'rose': 'bg-gradient-to-r from-rose-950 via-red-800 to-rose-950 text-rose-50 border-b border-red-700/40',
+        'indigo': 'bg-gradient-to-r from-slate-950 via-indigo-950 to-slate-950 text-indigo-50 border-b border-indigo-800/40'
+    };
+
+    const currentStyle = themeStyles[activeAnn.theme] || themeStyles['emerald'];
+
+    bar.className = `${currentStyle} py-2.5 px-4 text-xs font-medium shadow-sm transition-all duration-300 relative z-50`;
+    bar.innerHTML = `
+        <div class="max-w-7xl mx-auto flex items-center justify-between gap-3 flex-wrap">
+            <div class="flex items-center gap-2.5 mx-auto text-center flex-wrap justify-center">
+                <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-white/20 text-white shrink-0 text-[11px] animate-pulse">
+                    <i class="fas fa-bullhorn"></i>
+                </span>
+                <span class="font-bold tracking-wide">${activeAnn.text || ''}</span>
+                ${activeAnn.coupon ? `
+                    <button onclick="copyAnnouncementCoupon('${activeAnn.coupon}')" title="اضغط لنسخ وتطبيق كود الخصم في سلتك" class="bg-white/20 hover:bg-white/30 text-white font-mono font-bold px-2.5 py-0.5 rounded-lg text-[11px] border border-white/30 transition-all flex items-center gap-1 active:scale-95 shadow-sm">
+                        <i class="fas fa-tag text-[10px]"></i>
+                        <span>كود: ${activeAnn.coupon}</span>
+                        <i class="far fa-copy text-[10px] opacity-75"></i>
+                    </button>
+                ` : ''}
+                ${activeAnn.btnText ? `
+                    <a href="${activeAnn.btnLink || '#products'}" class="bg-white hover:bg-gray-100 text-gray-900 font-bold px-3 py-1 rounded-lg text-[11px] shadow-sm transition-all active:scale-95 flex items-center gap-1">
+                        <span>${activeAnn.btnText}</span>
+                        <i class="fas fa-arrow-left text-[9px]"></i>
+                    </a>
+                ` : ''}
+            </div>
+            <button onclick="dismissAnnouncement('${activeAnn.id}')" title="إغلاق الإعلان" class="text-white/60 hover:text-white transition-colors p-1 rounded-full text-xs shrink-0">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    `;
+    bar.classList.remove('hidden');
+}
+
+function copyAnnouncementCoupon(coupon) {
+    if (!coupon) return;
+    try {
+        navigator.clipboard.writeText(coupon);
+    } catch(e) {}
+    applyCoupon(coupon);
+    showToast(`تم نسخ وتفعيل كود الخصم (${coupon}) في سلتك ✓`, 'fas fa-check-circle text-emerald-500');
+}
+
+function dismissAnnouncement(id) {
+    const bar = document.getElementById('dynamicAnnouncementBar');
+    if (bar) bar.classList.add('hidden');
+    if (id) {
+        sessionStorage.setItem('makkah_ann_dismissed_' + id, 'true');
     }
 }
 

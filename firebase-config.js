@@ -183,6 +183,112 @@ async function deleteOrderFromFirebase(firebaseKey) {
 }
 
 // ==========================================================
+// دوال إدارة الإعلانات والعروض (Announcements & Banners) في Firebase
+// ==========================================================
+const DEFAULT_ANNOUNCEMENTS = [
+    {
+        id: "1",
+        text: "🔥 خصم حصري 20% على جميع زيوت إنبات الفراغات وعلاج التساقط بمناسبة الافتتاح!",
+        coupon: "MAKKAH20",
+        btnText: "تسوق العرض الآن",
+        btnLink: "#hair-loss",
+        theme: "emerald",
+        active: true,
+        createdAt: Date.now()
+    }
+];
+
+function subscribeToAnnouncements(onDataReceived, onError) {
+    const db = getFirebaseDB();
+    if (!db) {
+        let local = JSON.parse(localStorage.getItem('makkah_announcements') || 'null');
+        if (!local || local.length === 0) {
+            local = DEFAULT_ANNOUNCEMENTS;
+            localStorage.setItem('makkah_announcements', JSON.stringify(local));
+        }
+        if (onDataReceived) onDataReceived(local);
+        return;
+    }
+
+    const annRef = db.ref('announcements');
+    annRef.on('value', (snapshot) => {
+        const val = snapshot.val();
+        let list = [];
+        if (val) {
+            list = Object.keys(val).map(key => ({
+                ...val[key],
+                firebaseKey: key,
+                id: val[key].id || key
+            }));
+            list.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+        } else {
+            // تهيئة إعلان افتراضي أولي إن كانت قاعدة البيانات خالية
+            list = DEFAULT_ANNOUNCEMENTS;
+            try {
+                db.ref('announcements/1').set(DEFAULT_ANNOUNCEMENTS[0]);
+            } catch(e) {}
+        }
+        localStorage.setItem('makkah_announcements', JSON.stringify(list));
+        if (onDataReceived) onDataReceived(list);
+    }, (error) => {
+        console.error("Firebase Announcements Read Error:", error);
+        let fallback = JSON.parse(localStorage.getItem('makkah_announcements') || 'null');
+        if (!fallback || fallback.length === 0) fallback = DEFAULT_ANNOUNCEMENTS;
+        if (onDataReceived) onDataReceived(fallback);
+        if (onError) onError(error);
+    });
+}
+
+async function saveAnnouncementToFirebase(announcement) {
+    const db = getFirebaseDB();
+    const id = announcement.id ? announcement.id.toString() : Date.now().toString();
+    const payload = {
+        ...announcement,
+        id: id,
+        updatedAt: new Date().toISOString()
+    };
+
+    if (!db) {
+        let local = JSON.parse(localStorage.getItem('makkah_announcements') || '[]');
+        const idx = local.findIndex(a => a.id.toString() === id.toString());
+        if (idx > -1) local[idx] = payload;
+        else local.unshift(payload);
+        localStorage.setItem('makkah_announcements', JSON.stringify(local));
+        return true;
+    }
+
+    await db.ref('announcements/' + id).set(payload);
+    return true;
+}
+
+async function deleteAnnouncementFromFirebase(id) {
+    const db = getFirebaseDB();
+    if (!db) {
+        let local = JSON.parse(localStorage.getItem('makkah_announcements') || '[]');
+        local = local.filter(a => a.id.toString() !== id.toString());
+        localStorage.setItem('makkah_announcements', JSON.stringify(local));
+        return true;
+    }
+
+    await db.ref('announcements/' + id.toString()).remove();
+    return true;
+}
+
+async function toggleAnnouncementInFirebase(id, activeStatus) {
+    const db = getFirebaseDB();
+    if (!db) {
+        let local = JSON.parse(localStorage.getItem('makkah_announcements') || '[]');
+        const item = local.find(a => a.id.toString() === id.toString());
+        if (item) item.active = activeStatus;
+        localStorage.setItem('makkah_announcements', JSON.stringify(local));
+        return true;
+    }
+
+    await db.ref('announcements/' + id.toString() + '/active').set(activeStatus);
+    return true;
+}
+
+// ==========================================================
 // التحقق من حساب وكلمة مرور الأدمن عبر Firebase
 // الحساب المعتمد: kanouz123@gmail.com
 // ==========================================================
