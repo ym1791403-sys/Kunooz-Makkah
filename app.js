@@ -722,22 +722,56 @@ function togglePasswordVisibility() {
     }
 }
 
-function handleAdminLogin(e) {
+async function handleAdminLogin(e) {
     e.preventDefault();
     const input = document.getElementById('adminPassInput');
     const err = document.getElementById('adminLoginError');
+    const submitBtn = e.target.querySelector('button[type="submit"]');
     if (!input) return;
 
     const enteredPass = input.value.trim();
-    const correctPass = localStorage.getItem('makkah_admin_password') || '123456';
+    if (!enteredPass) return;
 
-    if (enteredPass === correctPass) {
-        sessionStorage.setItem('makkah_admin_auth', 'authenticated');
-        closeAdminLoginModal();
-        window.location.href = 'admin.html';
-    } else {
-        if (err) err.classList.remove('hidden');
-        input.classList.add('border-red-500');
-        input.select();
+    if (err) err.classList.add('hidden');
+    input.classList.remove('border-red-500');
+
+    const originalBtnHtml = submitBtn ? submitBtn.innerHTML : '';
+    if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري التحقق...';
+    }
+
+    try {
+        let isValid = false;
+        if (typeof verifyAdminPasswordWithFirebase === 'function') {
+            isValid = await verifyAdminPasswordWithFirebase(enteredPass);
+        } else {
+            const localPass = localStorage.getItem('makkah_admin_password');
+            isValid = !!(localPass && enteredPass === localPass);
+        }
+
+        if (isValid) {
+            sessionStorage.setItem('makkah_admin_auth', 'authenticated');
+            closeAdminLoginModal();
+            window.location.href = 'admin.html';
+        } else {
+            if (err) {
+                err.innerText = "كلمة المرور غير صحيحة، حاول مجدداً";
+                err.classList.remove('hidden');
+            }
+            input.classList.add('border-red-500');
+            input.select();
+        }
+    } catch (error) {
+        console.error("Login verification error:", error);
+        if (err) {
+            err.innerText = "حدث خطأ أثناء التحقق، يرجى المحاولة لاحقاً";
+            err.classList.remove('hidden');
+        }
+    } finally {
+        if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalBtnHtml;
+        }
     }
 }

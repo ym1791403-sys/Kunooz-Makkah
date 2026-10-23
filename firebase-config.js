@@ -181,3 +181,42 @@ async function deleteOrderFromFirebase(firebaseKey) {
     if (!db || !firebaseKey) return;
     return db.ref('orders/' + firebaseKey).remove();
 }
+
+// ==========================================================
+// التحقق من كلمة مرور الأدمن عبر Firebase
+// ==========================================================
+async function verifyAdminPasswordWithFirebase(enteredPassword) {
+    const db = getFirebaseDB();
+    if (!db) {
+        const localPass = localStorage.getItem('makkah_admin_password');
+        return !!(localPass && enteredPassword === localPass);
+    }
+
+    try {
+        // فحص القيم المخزنة في قاعدة البيانات في المسارات المحتملة
+        const paths = ['adminPassword', 'settings/adminPassword', 'admin/password', 'password', 'pass'];
+        for (const p of paths) {
+            const snap = await db.ref(p).once('value');
+            if (snap.exists() && snap.val()) {
+                const dbPass = snap.val().toString().trim();
+                if (enteredPassword.toString().trim() === dbPass) {
+                    // حفظها محلياً للجلسة
+                    localStorage.setItem('makkah_admin_password', dbPass);
+                    return true;
+                }
+            }
+        }
+
+        // فحص في localStorage في حال تم تعيينها سابقاً
+        const localPass = localStorage.getItem('makkah_admin_password');
+        if (localPass && enteredPassword === localPass) {
+            return true;
+        }
+
+        return false;
+    } catch (err) {
+        console.error("Firebase Password Verification Error:", err);
+        const localPass = localStorage.getItem('makkah_admin_password');
+        return !!(localPass && enteredPassword === localPass);
+    }
+}

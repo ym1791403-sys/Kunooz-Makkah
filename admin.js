@@ -495,23 +495,57 @@ function checkAdminAuth() {
     }
 }
 
-function handleDirectAdminLogin(e) {
+async function handleDirectAdminLogin(e) {
     e.preventDefault();
     const input = document.getElementById('directAdminPassInput');
     const err = document.getElementById('directLoginError');
     const overlay = document.getElementById('adminAuthLockOverlay');
+    const submitBtn = e.target.querySelector('button[type="submit"]');
     if (!input) return;
 
     const enteredPass = input.value.trim();
-    const correctPass = localStorage.getItem('makkah_admin_password') || '123456';
+    if (!enteredPass) return;
 
-    if (enteredPass === correctPass) {
-        sessionStorage.setItem('makkah_admin_auth', 'authenticated');
-        if (overlay) overlay.classList.add('hidden');
-    } else {
-        if (err) err.classList.remove('hidden');
-        input.classList.add('border-red-500');
-        input.select();
+    if (err) err.classList.add('hidden');
+    input.classList.remove('border-red-500');
+
+    const originalBtnHtml = submitBtn ? submitBtn.innerHTML : '';
+    if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري التحقق...';
+    }
+
+    try {
+        let isValid = false;
+        if (typeof verifyAdminPasswordWithFirebase === 'function') {
+            isValid = await verifyAdminPasswordWithFirebase(enteredPass);
+        } else {
+            const localPass = localStorage.getItem('makkah_admin_password');
+            isValid = !!(localPass && enteredPass === localPass);
+        }
+
+        if (isValid) {
+            sessionStorage.setItem('makkah_admin_auth', 'authenticated');
+            if (overlay) overlay.classList.add('hidden');
+        } else {
+            if (err) {
+                err.innerText = "كلمة المرور غير صحيحة، حاول مجدداً";
+                err.classList.remove('hidden');
+            }
+            input.classList.add('border-red-500');
+            input.select();
+        }
+    } catch (error) {
+        console.error("Direct login verification error:", error);
+        if (err) {
+            err.innerText = "حدث خطأ أثناء الاتصال بقاعدة البيانات";
+            err.classList.remove('hidden');
+        }
+    } finally {
+        if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalBtnHtml;
+        }
     }
 }
 
@@ -537,14 +571,21 @@ function closeChangePasswordModal() {
     if (modal) modal.classList.add('hidden');
 }
 
-function handleChangePasswordSubmit(e) {
+async function handleChangePasswordSubmit(e) {
     e.preventDefault();
     const currentPass = document.getElementById('currentPassInput').value.trim();
     const newPass = document.getElementById('newPassInput').value.trim();
     const err = document.getElementById('changePassError');
-    const correctPass = localStorage.getItem('makkah_admin_password') || '123456';
 
-    if (currentPass !== correctPass) {
+    let isCurrentValid = false;
+    if (typeof verifyAdminPasswordWithFirebase === 'function') {
+        isCurrentValid = await verifyAdminPasswordWithFirebase(currentPass);
+    } else {
+        const localPass = localStorage.getItem('makkah_admin_password');
+        isCurrentValid = !!(localPass && currentPass === localPass);
+    }
+
+    if (!isCurrentValid) {
         if (err) {
             err.innerText = 'كلمة المرور الحالية غير صحيحة!';
             err.classList.remove('hidden');
@@ -560,7 +601,17 @@ function handleChangePasswordSubmit(e) {
         return;
     }
 
+    // حفظ في Firebase Realtime Database
+    try {
+        const db = getFirebaseDB();
+        if (db) {
+            await db.ref('adminPassword').set(newPass);
+        }
+    } catch(errDb) {
+        console.warn("Could not sync new password to Firebase:", errDb);
+    }
+
     localStorage.setItem('makkah_admin_password', newPass);
     closeChangePasswordModal();
-    alert('تم تغيير كلمة مرور لوحة الإدارة بنجاح!');
+    alert('تم تحديث كلمة المرور بنجاح في Firebase والمتجر!');
 }
