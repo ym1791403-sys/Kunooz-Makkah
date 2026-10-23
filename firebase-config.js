@@ -183,30 +183,57 @@ async function deleteOrderFromFirebase(firebaseKey) {
 }
 
 // ==========================================================
-// التحقق من كلمة مرور الأدمن عبر Firebase
+// التحقق من حساب وكلمة مرور الأدمن عبر Firebase
+// الحساب المعتمد: kanouz123@gmail.com
 // ==========================================================
-async function verifyAdminPasswordWithFirebase(enteredPassword) {
-    const db = getFirebaseDB();
-    if (!db) {
-        throw new Error("قاعدة بيانات Firebase غير متصلة");
-    }
+const ADMIN_FIREBASE_EMAIL = "kanouz123@gmail.com";
 
+async function verifyAdminPasswordWithFirebase(enteredPassword) {
     const cleanInput = enteredPassword.toString().trim();
 
+    // 1. محاولة تسجيل الدخول عبر Firebase Authentication بحساب kanouz123@gmail.com
+    if (typeof firebase !== 'undefined' && firebase.auth) {
+        try {
+            const auth = firebase.auth();
+            const userCred = await auth.signInWithEmailAndPassword(ADMIN_FIREBASE_EMAIL, cleanInput);
+            if (userCred && userCred.user) {
+                localStorage.setItem('makkah_admin_password', cleanInput);
+                localStorage.setItem('makkah_admin_email', ADMIN_FIREBASE_EMAIL);
+                return { success: true, user: userCred.user };
+            }
+        } catch (authError) {
+            console.warn("Firebase Auth Login Attempt:", authError.code, authError.message);
+
+            if (authError.code === 'auth/wrong-password' || authError.code === 'auth/invalid-credential' || authError.code === 'auth/invalid-login-credentials') {
+                return { success: false, message: "كلمة المرور غير صحيحة لحساب " + ADMIN_FIREBASE_EMAIL };
+            }
+            if (authError.code === 'auth/user-not-found') {
+                return { success: false, message: "الحساب " + ADMIN_FIREBASE_EMAIL + " غير موجود في Firebase Authentication" };
+            }
+            if (authError.code === 'auth/too-many-requests') {
+                return { success: false, message: "تم إيقاف المحاولات مؤقتاً بسبب كثرة الإدخال الخاطئ. انتظر لحظات ثم أعد المحاولة." };
+            }
+            // في حالة حدوث خطأ آخر نتابع لفحص قاعدة البيانات
+        }
+    }
+
+    // 2. فحص بديل في Firebase Realtime Database
+    const db = getFirebaseDB();
+    if (!db) {
+        return { success: false, message: "تعذر الاتصال بـ Firebase" };
+    }
+
     try {
-        // جلب البيانات من جذر قاعدة بيانات Firebase
         const rootSnap = await db.ref('/').once('value');
         if (!rootSnap.exists() || rootSnap.val() === null) {
             return {
                 success: false,
-                emptyDb: true,
-                message: "قاعدة بيانات Firebase فارغة حالياً ولا تحتوي على كلمة مرور."
+                message: "كلمة المرور غير صحيحة لحساب " + ADMIN_FIREBASE_EMAIL
             };
         }
 
         const data = rootSnap.val();
 
-        // 1. إذا كانت القيمة مخزنة كنص أو رقم مباشر
         if (typeof data === 'string' || typeof data === 'number') {
             if (data.toString().trim() === cleanInput) {
                 localStorage.setItem('makkah_admin_password', cleanInput);
@@ -214,9 +241,7 @@ async function verifyAdminPasswordWithFirebase(enteredPassword) {
             }
         }
 
-        // 2. البحث الذكي في الكائنات والمفاتيح الشائعة
         if (typeof data === 'object' && data !== null) {
-            // فحص مباشر للمفاتيح الشائعة
             const commonKeys = ['adminPassword', 'password', 'admin_password', 'pass', 'adminPass', 'secret', 'pin'];
             for (const k of commonKeys) {
                 if (data[k] !== undefined && data[k] !== null) {
@@ -226,44 +251,11 @@ async function verifyAdminPasswordWithFirebase(enteredPassword) {
                     }
                 }
             }
-
-            // فحص داخل كائن admin أو settings إن وجد
-            if (data.admin && typeof data.admin === 'object') {
-                for (const k of commonKeys) {
-                    if (data.admin[k] !== undefined && data.admin[k] !== null) {
-                        if (data.admin[k].toString().trim() === cleanInput) {
-                            localStorage.setItem('makkah_admin_password', cleanInput);
-                            return { success: true };
-                        }
-                    }
-                }
-            }
-
-            if (data.settings && typeof data.settings === 'object') {
-                for (const k of commonKeys) {
-                    if (data.settings[k] !== undefined && data.settings[k] !== null) {
-                        if (data.settings[k].toString().trim() === cleanInput) {
-                            localStorage.setItem('makkah_admin_password', cleanInput);
-                            return { success: true };
-                        }
-                    }
-                }
-            }
-
-            // فحص عام: هل القيمة المدخلة تطابق أي حقل كلمة سر في القاعدة؟
-            for (const key of Object.keys(data)) {
-                if (key.toLowerCase().includes('pass') || key.toLowerCase().includes('admin')) {
-                    if (data[key] && data[key].toString().trim() === cleanInput) {
-                        localStorage.setItem('makkah_admin_password', cleanInput);
-                        return { success: true };
-                    }
-                }
-            }
         }
 
-        return { success: false, message: "كلمة المرور غير صحيحة، لا تطابق المسجل في Firebase" };
+        return { success: false, message: "كلمة المرور غير صحيحة لحساب " + ADMIN_FIREBASE_EMAIL };
     } catch (err) {
         console.error("Firebase Password Verification Error:", err);
-        return { success: false, error: err, message: "حدث خطأ في صلاحيات القراءة من Firebase: " + err.message };
+        return { success: false, error: err, message: "خطأ في الاتصال بـ Firebase: " + err.message };
     }
 }

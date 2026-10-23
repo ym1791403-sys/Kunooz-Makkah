@@ -552,6 +552,9 @@ async function handleDirectAdminLogin(e) {
 function handleAdminLogout() {
     if (confirm('هل تريد تسجيل الخروج وقفل لوحة الإدارة؟')) {
         sessionStorage.removeItem('makkah_admin_auth');
+        if (typeof firebase !== 'undefined' && firebase.auth) {
+            try { firebase.auth().signOut(); } catch(e) {}
+        }
         window.location.href = 'index.html';
     }
 }
