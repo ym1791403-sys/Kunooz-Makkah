@@ -390,26 +390,29 @@ async function handleProductFormSubmit(e) {
     try {
         if (typeof saveProductToFirebase === 'function') {
             await saveProductToFirebase(productPayload);
-        } else {
-            // حفظ محلي احتياطي
-            const idx = adminState.products.findIndex(p => p.id.toString() === productPayload.id.toString());
-            if (idx > -1) adminState.products[idx] = productPayload;
-            else adminState.products.unshift(productPayload);
-            localStorage.setItem('makkah_real_products', JSON.stringify(adminState.products));
         }
 
+        // حفظ وتحديث فوري للمنتجات والإحصائيات
+        const idx = adminState.products.findIndex(p => p.id.toString() === productPayload.id.toString());
+        if (idx > -1) adminState.products[idx] = productPayload;
+        else adminState.products.unshift(productPayload);
+        localStorage.setItem('makkah_real_products', JSON.stringify(adminState.products));
+        renderAdminProducts();
+        updateDashboardStats();
+
         closeProductModal();
-        alert('تم حفظ وتحديث المنتج بنجاح في قاعدة بيانات Firebase!');
+        alert('تم حفظ وتحديث المنتج بنجاح في قاعدة بيانات Firebase والمتجر ✓');
     } catch (err) {
         console.error("Save product error:", err);
-        alert('تم حفظ المنتج محلياً، وحدث تنبيه من Firebase: ' + err.message + '\nتأكد من تفعيل قواعد القراءة والكتابة في Firebase console.');
         // حفظ محلي لضمان عدم ضياع عمل المستخدم
         const idx = adminState.products.findIndex(p => p.id.toString() === productPayload.id.toString());
         if (idx > -1) adminState.products[idx] = productPayload;
         else adminState.products.unshift(productPayload);
         localStorage.setItem('makkah_real_products', JSON.stringify(adminState.products));
         renderAdminProducts();
+        updateDashboardStats();
         closeProductModal();
+        alert('تم حفظ المنتج محلياً، وحدث تنبيه من Firebase: ' + err.message + '\nيرجى التأكد من ضبط قواعد Realtime Database إلى true للقراءة والكتابة.');
     } finally {
         submitBtn.disabled = false;
         submitBtn.innerHTML = originalBtnText;
@@ -835,14 +838,15 @@ async function handleAnnouncementFormSubmit(e) {
         return;
     }
 
+    const existingAnn = (adminState.announcements || []).find(a => a.id.toString() === (editId || '').toString());
     const payload = {
-        id: editId || Date.now().toString(),
+        id: editId ? editId.toString() : Date.now().toString(),
         text: text,
         btnText: btnText,
         btnLink: btnLink || '#products',
         theme: theme,
         active: active,
-        createdAt: editId ? undefined : Date.now(),
+        createdAt: (existingAnn && existingAnn.createdAt) ? existingAnn.createdAt : Date.now(),
         updatedAt: Date.now()
     };
 
@@ -850,31 +854,39 @@ async function handleAnnouncementFormSubmit(e) {
     const originalBtn = submitBtn ? submitBtn.innerHTML : '';
     if (submitBtn) {
         submitBtn.disabled = true;
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin ml-1"></i> جاري الحفظ...';
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin ml-1"></i> جاري الحفظ في Firebase...';
     }
 
     try {
         if (typeof saveAnnouncementToFirebase === 'function') {
             await saveAnnouncementToFirebase(payload);
-        } else {
-            let list = adminState.announcements || [];
-            if (editId) {
-                const idx = list.findIndex(a => a.id.toString() === editId.toString());
-                if (idx > -1) list[idx] = { ...list[idx], ...payload };
-            } else {
-                list.unshift(payload);
-            }
-            adminState.announcements = list;
-            localStorage.setItem('makkah_announcements', JSON.stringify(list));
-            renderAdminAnnouncements();
-            updateTabBadges();
         }
 
+        // تحديث محلي فوري لضمان ظهور الإعلان مباشرة دون انتظار
+        let list = adminState.announcements || [];
+        const idx = list.findIndex(a => a.id.toString() === payload.id.toString());
+        if (idx > -1) list[idx] = { ...list[idx], ...payload };
+        else list.unshift(payload);
+        adminState.announcements = list;
+        localStorage.setItem('makkah_announcements', JSON.stringify(list));
+        renderAdminAnnouncements();
+        updateTabBadges();
+
         closeAnnouncementModal();
-        alert('تم حفظ ونشر الإعلان بنجاح في متجر كنوز مكة ✓');
+        alert('تم حفظ ونشر الإعلان بنجاح في قاعدة بيانات Firebase والمتجر ✓');
     } catch (err) {
         console.error("Save announcement error:", err);
-        alert('حدث خطأ أثناء حفظ الإعلان، يرجى المحاولة مرة أخرى.');
+        // حفظ محلي احتياطي
+        let list = adminState.announcements || [];
+        const idx = list.findIndex(a => a.id.toString() === payload.id.toString());
+        if (idx > -1) list[idx] = { ...list[idx], ...payload };
+        else list.unshift(payload);
+        adminState.announcements = list;
+        localStorage.setItem('makkah_announcements', JSON.stringify(list));
+        renderAdminAnnouncements();
+        updateTabBadges();
+        closeAnnouncementModal();
+        alert('تم حفظ الإعلان محلياً، وحدث تنبيه من Firebase: ' + err.message + '\nيرجى التأكد من ضبط قواعد Realtime Database إلى true للقراءة والكتابة.');
     } finally {
         if (submitBtn) {
             submitBtn.disabled = false;

@@ -44,6 +44,19 @@ function getFirebaseDB() {
     return fbDatabase;
 }
 
+// دالة تنظيف البيانات لمنع إرسال أي قيم undefined التي يرفضها Firebase
+function cleanForFirebase(obj) {
+    if (!obj || typeof obj !== 'object') return obj;
+    const clean = {};
+    for (const key of Object.keys(obj)) {
+        const val = obj[key];
+        if (val !== undefined) {
+            clean[key] = (val && typeof val === 'object' && !Array.isArray(val)) ? cleanForFirebase(val) : val;
+        }
+    }
+    return clean;
+}
+
 // ==========================================================
 // دوال إدارة المنتجات (Products) في Firebase
 // ==========================================================
@@ -85,12 +98,12 @@ function subscribeToProducts(onDataReceived, onError) {
 async function saveProductToFirebase(product) {
     const db = getFirebaseDB();
     if (!db) {
-        throw new Error("Firebase Database is not connected.");
+        throw new Error("قاعدة بيانات Firebase غير متصلة.");
     }
 
     const productId = product.id.toString();
-    const productRef = db.ref('products/' + productId);
-    await productRef.set(product);
+    const cleanPayload = cleanForFirebase(product);
+    await db.ref('products/' + productId).set(cleanPayload);
     return true;
 }
 
@@ -98,7 +111,7 @@ async function saveProductToFirebase(product) {
 async function deleteProductFromFirebase(productId) {
     const db = getFirebaseDB();
     if (!db) {
-        throw new Error("Firebase Database is not connected.");
+        throw new Error("قاعدة بيانات Firebase غير متصلة.");
     }
 
     const productRef = db.ref('products/' + productId.toString());
@@ -114,7 +127,6 @@ async function deleteProductFromFirebase(productId) {
 async function saveOrderToFirebase(order) {
     const db = getFirebaseDB();
     if (!db) {
-        // حفظ محلي في حالة عدم توفر الاتصال
         const localOrders = JSON.parse(localStorage.getItem('makkah_orders') || '[]');
         localOrders.unshift(order);
         localStorage.setItem('makkah_orders', JSON.stringify(localOrders));
@@ -124,15 +136,14 @@ async function saveOrderToFirebase(order) {
     try {
         const ordersRef = db.ref('orders');
         const newOrderRef = ordersRef.push();
-        const orderData = {
+        const orderData = cleanForFirebase({
             ...order,
             firebaseKey: newOrderRef.key
-        };
+        });
         await newOrderRef.set(orderData);
         return newOrderRef.key;
     } catch (err) {
         console.error("Error saving order to Firebase:", err);
-        // حفظ محلي احتياطي
         const localOrders = JSON.parse(localStorage.getItem('makkah_orders') || '[]');
         localOrders.unshift(order);
         localStorage.setItem('makkah_orders', JSON.stringify(localOrders));
@@ -221,11 +232,11 @@ function subscribeToAnnouncements(onDataReceived, onError) {
 async function saveAnnouncementToFirebase(announcement) {
     const db = getFirebaseDB();
     const id = announcement.id ? announcement.id.toString() : Date.now().toString();
-    const payload = {
+    const payload = cleanForFirebase({
         ...announcement,
         id: id,
         updatedAt: new Date().toISOString()
-    };
+    });
 
     if (!db) {
         let local = JSON.parse(localStorage.getItem('makkah_announcements') || '[]');

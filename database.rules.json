@@ -1,23 +1,6 @@
 {
   "rules": {
-    "products": {
-      ".read": true,
-      ".write": "auth != null && auth.token.email === 'kanouz123@gmail.com'"
-    },
-    "announcements": {
-      ".read": true,
-      ".write": "auth != null && auth.token.email === 'kanouz123@gmail.com'"
-    },
-    "orders": {
-      ".read": "auth != null && auth.token.email === 'kanouz123@gmail.com'",
-      "$orderId": {
-        ".write": "auth != null && auth.token.email === 'kanouz123@gmail.com' || (!data.exists() && newData.exists())",
-        ".validate": "newData.hasChildren(['name', 'phone', 'city', 'address', 'total', 'items']) && newData.child('name').isString() && newData.child('name').val().length >= 2 && newData.child('name').val().length <= 120 && newData.child('phone').isString() && newData.child('phone').val().length >= 9 && newData.child('phone').val().length <= 25 && newData.child('total').isNumber() && newData.child('total').val() >= 0"
-      }
-    },
-    "adminPassword": {
-      ".read": false,
-      ".write": "auth != null && auth.token.email === 'kanouz123@gmail.com'"
-    }
+    ".read": true,
+    ".write": true
   }
 }
