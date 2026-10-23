@@ -1,0 +1,31 @@
+{
+  "name": "كنوز مكة | للزيوت الطبيعية وعلاج مشاكل الشعر",
+  "short_name": "كنوز مكة",
+  "description": "متجر كنوز مكة المتخصص في كورسات الزيوت الطبيعية لعلاج تساقط وهيشان الشعر وتكثيف الفراغات",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#064e3b",
+  "theme_color": "#064e3b",
+  "orientation": "portrait-primary",
+  "lang": "ar",
+  "dir": "rtl",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}

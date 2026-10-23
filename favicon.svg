@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="100%" height="100%">
+  <defs>
+    <linearGradient id="favEmerald" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#047857" />
+      <stop offset="100%" stop-color="#022c22" />
+    </linearGradient>
+    <linearGradient id="favGold" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#d97706" />
+      <stop offset="50%" stop-color="#fbbf24" />
+      <stop offset="100%" stop-color="#fef3c7" />
+    </linearGradient>
+  </defs>
+
+  <rect width="64" height="64" rx="16" fill="url(#favEmerald)" />
+  <rect x="2" y="2" width="60" height="60" rx="14" fill="none" stroke="url(#favGold)" stroke-width="1.5" opacity="0.8" />
+
+  <!-- Oil Droplet & Leaf -->
+  <path d="M 32 10 C 32 10 18 29 18 39 C 18 47 24 53 32 53 C 40 53 46 47 46 39 C 46 29 32 10 32 10 Z" fill="url(#favGold)" />
+  <path d="M 32 16 C 32 16 21 31 21 39 C 21 45 26 50 32 50 C 38 50 43 45 43 39 C 43 31 32 16 32 16 Z" fill="#064e3b" />
+  <path d="M 32 22 C 29 28 25 35 25 41 C 25 45 28 47 32 47 C 36 47 39 45 39 41 C 39 35 35 28 32 22 Z" fill="url(#favGold)" />
+</svg>
