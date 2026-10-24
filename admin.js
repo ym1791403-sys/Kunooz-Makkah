@@ -4,7 +4,7 @@
 // معززة بأنظمة الحماية ومكافحة التخمين و XSS
 // =================================================================
 
-const STORE_WHATSAPP_NUMBER = "201080369841";
+const STORE_WHATSAPP_NUMBER = "201500689251";
 
 // دالة التعقيم الأمني لمنع ثغرات XSS وحقن الأكواد الخبيثة
 function escapeHTML(str) {
@@ -167,7 +167,7 @@ function updateDashboardStats() {
     if (totalProductsEl) totalProductsEl.innerText = totalProducts;
     if (totalOrdersEl) totalOrdersEl.innerText = totalOrders;
     if (totalRevenueEl) totalRevenueEl.innerText = `${totalRevenue.toLocaleString()} ج.م`;
-    if (statWhatsappNum) statWhatsappNum.innerText = STORE_WHATSAPP_NUMBER;
+    if (statWhatsappNum) statWhatsappNum.innerText = "01500689251";
 
     updateTabBadges();
 }
