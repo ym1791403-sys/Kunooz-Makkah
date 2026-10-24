@@ -340,7 +340,7 @@ function renderProducts() {
                     <h3 class="font-bold text-gray-900 text-sm leading-snug line-clamp-2 hover:text-[#c7511f] cursor-pointer" onclick="openQuickView('${product.id}')">
                         ${escapeHTML(product.title)}
                     </h3>
-                    <p class="text-[11px] text-gray-500 line-clamp-1">${escapeHTML(product.description || 'زيوت طبيعية 100% معصورة على البارد لعلاج مشاكل الشعر')}</p>
+                    <p class="text-[11px] text-gray-500 line-clamp-1">${escapeHTML(product.description || 'منتج أصلي عالي الجودة بأفضل سعر مع شحن سريع ومعاينة قبل الاستلام')}</p>
                 </div>
 
                 <!-- Price Section (Amazon Style) -->
@@ -928,7 +928,7 @@ function openQuickView(productId) {
             </div>
 
             <p class="text-xs text-gray-600 leading-relaxed">
-                ${escapeHTML(product.description || 'خلاصات وزيوت طبيعية 100% معصورة على البارد لعلاج مشاكل الشعر والتساقط.')}
+                ${escapeHTML(product.description || 'منتج أصلي عالي الجودة مضمون 100% مع شحن سريع ومعاينة وفحص كامل قبل الدفع والاستلام.')}
             </p>
 
             <!-- Price & Delivery Perks -->
