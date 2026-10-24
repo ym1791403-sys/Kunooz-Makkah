@@ -123,6 +123,84 @@ const BACKUP_CATALOG = [
         reviewsCount: 198,
         image: "https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=700&q=80",
         description: "توليفة مميزة تجمع بين روائح العنبر والأخشاب والزهور برائحة تأسر الحواس وثبات طويل على الملابس."
+    },
+    {
+        id: "km-9",
+        title: "باور بانك 20,000 مللي أمبير شحن فائق السرعة 22.5W بشاشة ديجيتال ومنافذ متعددة",
+        category: "electronics",
+        badge: "تريند عالي",
+        badgeColor: "deal-badge-red",
+        price: 430,
+        oldPrice: 620,
+        rating: 4.9,
+        reviewsCount: 380,
+        image: "https://images.unsplash.com/photo-1609592424367-e9a8f2fca217?auto=format&fit=crop&w=700&q=80",
+        description: "شاحن متنقل بسعة عملاقة يدعم الشحن السريع PD لموبايلات الآيفون والأندرويد مع شاشة رقمية لعرض نسبة الشحن بدقة."
+    },
+    {
+        id: "km-10",
+        title: "ماكينة حلاقة VGR بروفيشنال الأصلية لتحديد الذقن والشعر برؤوس دقيقة ومقاومة للماء",
+        category: "electronics",
+        badge: "الأكثر مبيعاً للرجال",
+        badgeColor: "bestseller-badge",
+        price: 360,
+        oldPrice: 510,
+        rating: 4.9,
+        reviewsCount: 412,
+        image: "https://images.unsplash.com/photo-1621607512214-68297480165e?auto=format&fit=crop&w=700&q=80",
+        description: "ماكينة حلاقة معدنية احترافية بموتور توربو فائق الهدوء وبطارية ليثيوم تدوم 180 دقيقة مع شفرات حادة من التيتانيوم."
+    },
+    {
+        id: "km-11",
+        title: "عرض دستة شرابات رياضية (12 زوج) قطن مصري 100% مانعة للتعرق والانزلاق للجيم والعمل",
+        category: "fashion",
+        badge: "عرض توفير دستة",
+        badgeColor: "bg-emerald-700 text-white font-bold text-[11px] px-2 py-0.5 rounded",
+        price: 195,
+        oldPrice: 300,
+        rating: 5.0,
+        reviewsCount: 520,
+        image: "https://images.unsplash.com/photo-1586350977771-b3b0abd50c82?auto=format&fit=crop&w=700&q=80",
+        description: "باكدج 12 زوج شرابات قطنية عالية النعومة مع نعل مبطن لامتصاص الصدمات وتقنية مقاومة للبكتيريا والروائح."
+    },
+    {
+        id: "km-12",
+        title: "مج حراري ستانلس ستيل حافظ للحرارة والبرودة 12 ساعة بغطاء ذكي مانع للتسريب",
+        category: "home",
+        badge: "اختيار يومي",
+        badgeColor: "bg-blue-700 text-white font-bold text-[11px] px-2 py-0.5 rounded",
+        price: 240,
+        oldPrice: 350,
+        rating: 4.8,
+        reviewsCount: 230,
+        image: "https://images.unsplash.com/photo-1517256064527-09c73fc73e38?auto=format&fit=crop&w=700&q=80",
+        description: "كوب حراري فاخر مزدوج الجدار مصنوع من الستانلس ستيل 304 الآمن، مثالي للقهوة والمشروبات الباردة والساخنة بالسيارة والعمل."
+    },
+    {
+        id: "km-13",
+        title: "مضخة ومنفاخ إطارات سيارات ذكي رقمي لاسلكي قابل للشحن مع كشاف طوارئ LED",
+        category: "home",
+        badge: "ضروري لكل سيارة",
+        badgeColor: "deal-badge-red",
+        price: 490,
+        oldPrice: 720,
+        rating: 4.9,
+        reviewsCount: 275,
+        image: "https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?auto=format&fit=crop&w=700&q=80",
+        description: "كمبروسر هواء محمول دقيق يضبط ضغط الإطارات تلقائياً ويتوقف عند الوصول للمستوى المطلوب، مناسب للسيارات والموتوسيكلات والكرات."
+    },
+    {
+        id: "km-14",
+        title: "شيكر رياضي بروتين سعة 700 مل مع كرة خفق ستانلس وغطاء محكم الإغلاق ضد التسريب",
+        category: "sports",
+        badge: "ملحقات الجيم",
+        badgeColor: "bg-teal-700 text-white font-bold text-[11px] px-2 py-0.5 rounded",
+        price: 130,
+        oldPrice: 200,
+        rating: 4.9,
+        reviewsCount: 190,
+        image: "https://images.unsplash.com/photo-1594882645126-14020914d58d?auto=format&fit=crop&w=700&q=80",
+        description: "شيكر عالي المتانة وخالي من مادة BPA لخلط مكملات الكرياتين ومساحيق البروتين بسلاسة وبدون أي تكتلات."
     }
 ];
 
