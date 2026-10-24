@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>كنوز مكة | متجرك الشامل للتسوق الإلكتروني - جميع المنتجات والعروض</title>
-    <meta name="description" content="متجر كنوز مكة على طراز أمازون - تسوق آلاف المنتجات المميزة، العناية والجمال، العطور والبخور، المنتجات الطبيعية، بأفضل الأسعار مع شحن سريع ومعاينة قبل الدفع.">
+    <title>كنوز مكة | سوق التسوق الإلكتروني الشامل - أزياء، كوتشيات، مكملات، إلكترونيات، وكل المنتجات</title>
+    <meta name="description" content="سوق كنوز مكة للتسوق الإلكتروني الشامل على طراز أمازون - تسوق الملابس، الكوتشيات، مكملات كمال الأجسام والكرياتين، الإلكترونيات، العطور، ومستلزمات المنزل بأفضل الأسعار مع معاينة قبل الدفع.">
     
     <!-- Favicon & Brand Icons -->
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -23,21 +23,21 @@
     <!-- Open Graph / Social Media Preview -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://kunoozmakkah.vercel.app/">
-    <meta property="og:title" content="كنوز مكة | متجرك الشامل للتسوق الإلكتروني - جميع المنتجات">
-    <meta property="og:description" content="متجر كنوز مكة - تسوق كل ما تحتاجه من منتجات العناية والجمال، العطور والبخور، والمنتجات الطبيعية مع شحن سريع لكافة المحافظات ومعاينة قبل الدفع.">
+    <meta property="og:title" content="كنوز مكة | سوق التسوق الإلكتروني الشامل - كل ما تحتاجه في مكان واحد">
+    <meta property="og:description" content="تسوق أزياء، كوتشيات، مكملات كمال أجسام وكرياتين، إلكترونيات، عطور، وكل المنتجات بأفضل الأسعار مع شحن سريع ومعاينة قبل الدفع.">
     <meta property="og:image" content="https://kunoozmakkah.vercel.app/og-image.jpg">
     <meta property="og:image:secure_url" content="https://kunoozmakkah.vercel.app/og-image.jpg">
     <meta property="og:image:type" content="image/jpeg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="كنوز مكة - متجرك الشامل لكل المنتجات">
+    <meta property="og:image:alt" content="كنوز مكة - سوق شامل لكل المنتجات">
     <meta property="og:site_name" content="كنوز مكة | Kunooz Makkah">
     <meta property="og:locale" content="ar_AR">
 
     <!-- Twitter Card Preview -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="كنوز مكة | متجرك الشامل للتسوق الإلكتروني">
-    <meta name="twitter:description" content="متجر كنوز مكة - تسوق كل ما تحتاجه بأفضل الأسعار مع شحن سريع ومعاينة قبل الدفع.">
+    <meta name="twitter:title" content="كنوز مكة | سوق التسوق الإلكتروني الشامل">
+    <meta name="twitter:description" content="تسوق كل ما تحتاجه من أزياء، كوتشيات، مكملات، وإلكترونيات مع شحن سريع ودفع عند الاستلام.">
     <meta name="twitter:image" content="https://kunoozmakkah.vercel.app/og-image.jpg">
 
     <!-- Tailwind CSS CDN -->
@@ -110,8 +110,8 @@
                                 <span class="text-[10px] font-bold text-gray-400 ml-1">.eg</span>
                             </div>
                             <div class="text-[9px] text-amber-300/90 font-semibold -mt-1 flex items-center gap-1">
-                                <i class="fas fa-shopping-bag text-amber-400 text-[8px]"></i>
-                                <span>متجرك الشامل لكل المنتجات</span>
+                                <i class="fas fa-store text-amber-400 text-[8px]"></i>
+                                <span>سوق التسوق الإلكتروني الشامل</span>
                             </div>
                         </div>
                     </a>
@@ -133,11 +133,13 @@
                         <div class="bg-gray-100 hover:bg-gray-200 border-l border-gray-300 text-gray-700 text-xs font-semibold px-2 flex items-center justify-center cursor-pointer shrink-0">
                             <select id="searchCategorySelect" onchange="handleSearchCategoryChange(this.value)" class="bg-transparent border-none text-xs font-bold text-gray-700 focus:outline-none cursor-pointer pr-1">
                                 <option value="all">جميع الأقسام</option>
-                                <option value="beauty">العناية والجمال</option>
-                                <option value="perfumes">العطور والبخور والعود</option>
-                                <option value="skincare">العناية بالبشرة والشعر</option>
-                                <option value="natural">منتجات طبيعية وصحية</option>
-                                <option value="deals">عروض وتخفيضات حصرية</option>
+                                <option value="fashion">أزياء وملابس</option>
+                                <option value="shoes">كوتشيات وأحذية</option>
+                                <option value="sports">مكملات وكمال أجسام</option>
+                                <option value="electronics">إلكترونيات وسماعات</option>
+                                <option value="beauty">عناية وعطور</option>
+                                <option value="home">المنزل والمطبخ</option>
+                                <option value="deals">صفقات وعروض اليوم</option>
                             </select>
                         </div>
 
@@ -146,7 +148,7 @@
                             <input 
                                 type="text" 
                                 id="searchInput" 
-                                placeholder="ابحث في متجر كنوز مكة عن أي منتج، ماركة، قسم، أو عرض ترويجي..." 
+                                placeholder="ابحث في كنوز مكة: تيشيرتات، كوتشيات، كرياتين، سماعات، ساعات، بنطلونات، شورتات..." 
                                 class="w-full text-gray-900 px-3.5 py-2 text-sm focus:outline-none placeholder-gray-500"
                                 oninput="handleSearch(this.value)"
                             >
@@ -214,7 +216,7 @@
                 <form onsubmit="event.preventDefault();" class="flex h-10 rounded-md overflow-hidden shadow">
                     <input 
                         type="text" 
-                        placeholder="ابحث في متجر كنوز مكة عن أي منتج..." 
+                        placeholder="ابحث عن أزياء، كوتشيات، مكملات، إلكترونيات..." 
                         class="flex-1 bg-white text-gray-900 px-3 py-1.5 text-sm focus:outline-none"
                         oninput="handleSearch(this.value)"
                     >
@@ -242,39 +244,43 @@
                     <!-- Today's Deals with Badge -->
                     <button onclick="filterByCategory('deals'); scrollToProducts();" class="flex items-center gap-1 px-2.5 py-1.5 hover:border border-white/40 rounded transition-all text-amber-300 font-bold">
                         <i class="fas fa-bolt text-xs"></i>
-                        <span>عروض اليوم</span>
+                        <span>صفقات اليوم</span>
                     </button>
 
-                    <!-- Best Sellers -->
-                    <button onclick="filterByCategory('all'); scrollToProducts();" class="px-2.5 py-1.5 hover:border border-white/40 rounded transition-all">
-                        الأكثر مبيعاً
+                    <!-- Fashion & Apparel -->
+                    <button onclick="filterByCategory('fashion'); scrollToProducts();" class="px-2.5 py-1.5 hover:border border-white/40 rounded transition-all">
+                        👕 أزياء وملابس
                     </button>
 
-                    <!-- Broad Department Filters -->
-                    <button onclick="filterByCategory('beauty'); scrollToProducts();" class="px-2.5 py-1.5 hover:border border-white/40 rounded transition-all hidden sm:inline-block">
-                        العناية والجمال
+                    <!-- Shoes & Sneakers -->
+                    <button onclick="filterByCategory('shoes'); scrollToProducts();" class="px-2.5 py-1.5 hover:border border-white/40 rounded transition-all">
+                        👟 كوتشيات وأحذية
                     </button>
 
-                    <button onclick="filterByCategory('perfumes'); scrollToProducts();" class="px-2.5 py-1.5 hover:border border-white/40 rounded transition-all hidden md:inline-block">
-                        العطور والبخور
+                    <!-- Sports & Fitness & Creatine -->
+                    <button onclick="filterByCategory('sports'); scrollToProducts();" class="px-2.5 py-1.5 hover:border border-white/40 rounded transition-all hidden sm:inline-block">
+                        💪 مكملات وكرياتين
                     </button>
 
-                    <button onclick="filterByCategory('skincare'); scrollToProducts();" class="px-2.5 py-1.5 hover:border border-white/40 rounded transition-all hidden lg:inline-block">
-                        العناية بالبشرة والشعر
+                    <!-- Electronics -->
+                    <button onclick="filterByCategory('electronics'); scrollToProducts();" class="px-2.5 py-1.5 hover:border border-white/40 rounded transition-all hidden md:inline-block">
+                        🎧 إلكترونيات وسماعات
                     </button>
 
-                    <button onclick="filterByCategory('natural'); scrollToProducts();" class="px-2.5 py-1.5 hover:border border-white/40 rounded transition-all hidden xl:inline-block">
-                        منتجات طبيعية وصحية
+                    <!-- Beauty & Fragrances -->
+                    <button onclick="filterByCategory('beauty'); scrollToProducts();" class="px-2.5 py-1.5 hover:border border-white/40 rounded transition-all hidden lg:inline-block">
+                        ✨ عناية وعطور
+                    </button>
+
+                    <!-- Home & Kitchen -->
+                    <button onclick="filterByCategory('home'); scrollToProducts();" class="px-2.5 py-1.5 hover:border border-white/40 rounded transition-all hidden xl:inline-block">
+                        🏠 مستلزمات المنزل
                     </button>
 
                     <!-- Privacy & Policies Link -->
                     <button onclick="openPolicyModal('privacy')" class="flex items-center gap-1 px-2.5 py-1.5 hover:border border-white/40 rounded transition-all text-teal-300">
                         <i class="fas fa-shield-halved text-xs"></i>
-                        <span>سياسة الخصوصية والاسترجاع</span>
-                    </button>
-
-                    <button onclick="openPolicyModal('shipping')" class="px-2.5 py-1.5 hover:border border-white/40 rounded transition-all hidden 2xl:inline-block">
-                        الشحن والمعاينة عند الاستلام
+                        <span>سياسة الخصوصية والمعاينة</span>
                     </button>
                 </div>
 
@@ -303,8 +309,8 @@
                     <i class="fas fa-circle-user"></i>
                 </div>
                 <div>
-                    <h3 class="font-black text-base text-white">مرحباً بك في كنوز مكة</h3>
-                    <p class="text-xs text-gray-300">متجرك الشامل لكل المنتجات والعروض</p>
+                    <h3 class="font-black text-base text-white">مرحباً بك في سوق كنوز مكة</h3>
+                    <p class="text-xs text-gray-300">سوق شامل لكل المنتجات والبضائع</p>
                 </div>
             </div>
             <button onclick="toggleAmazonSideMenu()" class="text-gray-300 hover:text-white text-xl p-1" aria-label="إغلاق">
@@ -315,31 +321,39 @@
         <!-- Drawer Content Body -->
         <div class="flex-1 overflow-y-auto divide-y divide-gray-200 text-sm text-gray-800">
             
-            <!-- Section 1: Concerns & Categories -->
+            <!-- Section 1: All Departments & Categories -->
             <div class="p-4 space-y-1">
                 <h4 class="font-black text-xs text-gray-900 uppercase tracking-wider mb-2 text-gray-500">تسوق حسب القسم</h4>
                 <a href="javascript:void(0)" onclick="filterByCategory('all'); toggleAmazonSideMenu(); scrollToProducts();" class="flex items-center justify-between py-2.5 px-3 rounded-lg hover:bg-gray-100 font-bold text-gray-900">
-                    <span>جميع المنتجات والعروض</span>
+                    <span>جميع المنتجات والأقسام</span>
+                    <i class="fas fa-chevron-left text-xs text-gray-400"></i>
+                </a>
+                <a href="javascript:void(0)" onclick="filterByCategory('fashion'); toggleAmazonSideMenu(); scrollToProducts();" class="flex items-center justify-between py-2 px-3 rounded-lg hover:bg-gray-100 font-medium">
+                    <span>👕 أزياء وملابس (تيشيرتات، بنطلونات، شورتات، كولونات)</span>
+                    <i class="fas fa-chevron-left text-xs text-gray-400"></i>
+                </a>
+                <a href="javascript:void(0)" onclick="filterByCategory('shoes'); toggleAmazonSideMenu(); scrollToProducts();" class="flex items-center justify-between py-2 px-3 rounded-lg hover:bg-gray-100 font-medium">
+                    <span>👟 كوتشيات وأحذية رياضية</span>
+                    <i class="fas fa-chevron-left text-xs text-gray-400"></i>
+                </a>
+                <a href="javascript:void(0)" onclick="filterByCategory('sports'); toggleAmazonSideMenu(); scrollToProducts();" class="flex items-center justify-between py-2 px-3 rounded-lg hover:bg-gray-100 font-medium">
+                    <span>💪 مكملات غذائية وكمال أجسام (كرياتين، بروتين، طاقة)</span>
+                    <i class="fas fa-chevron-left text-xs text-gray-400"></i>
+                </a>
+                <a href="javascript:void(0)" onclick="filterByCategory('electronics'); toggleAmazonSideMenu(); scrollToProducts();" class="flex items-center justify-between py-2 px-3 rounded-lg hover:bg-gray-100 font-medium">
+                    <span>🎧 إلكترونيات، ساعات ذكية، وسماعات</span>
                     <i class="fas fa-chevron-left text-xs text-gray-400"></i>
                 </a>
                 <a href="javascript:void(0)" onclick="filterByCategory('beauty'); toggleAmazonSideMenu(); scrollToProducts();" class="flex items-center justify-between py-2 px-3 rounded-lg hover:bg-gray-100 font-medium">
-                    <span>العناية والجمال</span>
+                    <span>✨ عناية شخصية، عطور، وتجميل</span>
                     <i class="fas fa-chevron-left text-xs text-gray-400"></i>
                 </a>
-                <a href="javascript:void(0)" onclick="filterByCategory('perfumes'); toggleAmazonSideMenu(); scrollToProducts();" class="flex items-center justify-between py-2 px-3 rounded-lg hover:bg-gray-100 font-medium">
-                    <span>العطور والبخور والعود</span>
-                    <i class="fas fa-chevron-left text-xs text-gray-400"></i>
-                </a>
-                <a href="javascript:void(0)" onclick="filterByCategory('skincare'); toggleAmazonSideMenu(); scrollToProducts();" class="flex items-center justify-between py-2 px-3 rounded-lg hover:bg-gray-100 font-medium">
-                    <span>العناية بالبشرة والشعر</span>
-                    <i class="fas fa-chevron-left text-xs text-gray-400"></i>
-                </a>
-                <a href="javascript:void(0)" onclick="filterByCategory('natural'); toggleAmazonSideMenu(); scrollToProducts();" class="flex items-center justify-between py-2 px-3 rounded-lg hover:bg-gray-100 font-medium">
-                    <span>منتجات طبيعية وصحية</span>
+                <a href="javascript:void(0)" onclick="filterByCategory('home'); toggleAmazonSideMenu(); scrollToProducts();" class="flex items-center justify-between py-2 px-3 rounded-lg hover:bg-gray-100 font-medium">
+                    <span>🏠 مستلزمات المنزل والمطبخ والحياة اليومية</span>
                     <i class="fas fa-chevron-left text-xs text-gray-400"></i>
                 </a>
                 <a href="javascript:void(0)" onclick="filterByCategory('deals'); toggleAmazonSideMenu(); scrollToProducts();" class="flex items-center justify-between py-2 px-3 rounded-lg hover:bg-gray-100 font-bold text-emerald-800">
-                    <span>عروض وتخفيضات وباقات التوفير</span>
+                    <span>🔥 صفقات التوفير وعروض التخفيضات</span>
                     <span class="bg-amber-100 text-amber-800 text-[10px] px-2 py-0.5 rounded-full font-bold">خصومات</span>
                 </a>
             </div>
@@ -361,7 +375,7 @@
                 </a>
             </div>
 
-            <!-- Section 3: Legal, Policies & Trust (Request A) -->
+            <!-- Section 3: Legal, Policies & Trust -->
             <div class="p-4 space-y-1">
                 <h4 class="font-black text-xs text-gray-900 uppercase tracking-wider mb-2 text-gray-500">السياسات والضمانات</h4>
                 <a href="javascript:void(0)" onclick="openPolicyModal('privacy'); toggleAmazonSideMenu();" class="flex items-center justify-between py-2 px-3 rounded-lg hover:bg-gray-100 font-medium">
@@ -412,22 +426,28 @@
         <section class="relative rounded-2xl overflow-hidden mt-3 sm:mt-4 shadow-md bg-gradient-to-r from-[#131921] via-[#1a2332] to-[#064e3b] text-white">
             <div class="min-h-[260px] sm:min-h-[380px] p-6 sm:p-12 flex flex-col justify-center max-w-3xl relative z-10 space-y-3 sm:space-y-4">
                 <div class="inline-flex items-center gap-2 bg-amber-400/20 border border-amber-400/40 text-amber-300 text-xs font-black px-3.5 py-1.5 rounded-full w-max">
-                    <i class="fas fa-crown text-amber-400"></i>
-                    <span>متجرك الشامل لكل المنتجات والعروض الحصرية</span>
+                    <i class="fas fa-bolt text-amber-400"></i>
+                    <span>سوق كنوز مكة الشامل | آلاف المنتجات بضغطة زر</span>
                 </div>
                 <h1 class="text-2xl sm:text-4xl md:text-5xl font-black leading-tight tracking-tight">
-                    وجهتك الأولى للتسوق الإلكتروني | <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-yellow-200 to-emerald-300">كنوز مكة لجميع المنتجات والعروض</span>
+                    وجهتك الأولى للتسوق الإلكتروني | <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-yellow-200 to-emerald-300">كل ما تحتاجه بأفضل الأسعار</span>
                 </h1>
                 <p class="text-gray-300 text-xs sm:text-base leading-relaxed max-w-2xl">
-                    تسوق آلاف المنتجات المختارة بعناية بأعلى جودة وأفضل الأسعار، مع ميزة المعاينة الكاملة قبل الدفع والشحن السريع لكافة محافظات مصر.
+                    تسوق كل ما تحتاجه من أزياء وملابس كاجوال، كوتشيات رياضية، مكملات كمال أجسام وكرياتين، إلكترونيات وسماعات، وعطور ومنتجات متنوعة بأعلى جودة مع ميزة المعاينة الكاملة قبل الدفع والشحن السريع لكافة محافظات مصر.
                 </p>
                 <div class="pt-2 flex flex-wrap items-center gap-3">
                     <a href="#catalogSection" onclick="filterByCategory('all'); scrollToProducts();" class="px-6 py-3 bg-[#ffd814] hover:bg-[#f7ca00] text-gray-900 font-black rounded-lg shadow-md transition-all text-sm inline-flex items-center gap-2">
                         <span>تسوق جميع المنتجات</span>
                         <i class="fas fa-arrow-down text-xs"></i>
                     </a>
-                    <button onclick="filterByCategory('deals'); scrollToProducts();" class="px-5 py-3 bg-white/10 hover:bg-white/20 text-white font-bold rounded-lg border border-white/20 transition-all text-sm">
-                        عروض وتخفيضات اليوم
+                    <button onclick="filterByCategory('fashion'); scrollToProducts();" class="px-5 py-3 bg-white/10 hover:bg-white/20 text-white font-bold rounded-lg border border-white/20 transition-all text-sm">
+                        أزياء وملابس
+                    </button>
+                    <button onclick="filterByCategory('shoes'); scrollToProducts();" class="px-5 py-3 bg-white/10 hover:bg-white/20 text-white font-bold rounded-lg border border-white/20 transition-all text-sm">
+                        كوتشيات رياضية
+                    </button>
+                    <button onclick="filterByCategory('sports'); scrollToProducts();" class="px-5 py-3 bg-white/10 hover:bg-white/20 text-white font-bold rounded-lg border border-white/20 transition-all text-sm">
+                        مكملات وكرياتين
                     </button>
                     <button onclick="openPolicyModal('returns')" class="px-4 py-3 text-gray-300 hover:text-white font-semibold text-xs inline-flex items-center gap-1.5">
                         <i class="fas fa-shield-alt text-amber-400"></i>
@@ -450,7 +470,7 @@
                 <div>
                     <div class="flex items-center justify-between mb-3">
                         <h3 class="font-black text-gray-900 text-lg">صفقة اليوم المميزة</h3>
-                        <span class="deal-badge-red">خصم حتى 40%</span>
+                        <span class="deal-badge-red">خصم حتى 50%</span>
                     </div>
                     <!-- Live Countdown Timer -->
                     <div class="bg-red-50 border border-red-200 rounded-lg p-2.5 mb-3 flex items-center justify-between text-xs">
@@ -460,13 +480,13 @@
                         <span id="dealCountdown" class="font-mono font-black text-red-800 text-sm dir-ltr">04:32:18</span>
                     </div>
                     <div class="aspect-video rounded-lg overflow-hidden bg-gray-100 mb-3 cursor-pointer group" onclick="filterByCategory('deals'); scrollToProducts();">
-                        <img src="og-image.jpg" alt="صفقة اليوم" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                        <img src="https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=700&q=80" alt="صفقة اليوم" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                     </div>
-                    <h4 class="font-bold text-sm text-gray-900 line-clamp-1">باقة التوفير الشاملة VIP</h4>
-                    <p class="text-xs text-gray-500 mt-1">تشكيلة مميزة تضم أفضل المنتجات مع شحن مجاني</p>
+                    <h4 class="font-bold text-sm text-gray-900 line-clamp-1">ساعة يد سمارت ووتش ألترا الذكية</h4>
+                    <p class="text-xs text-gray-500 mt-1">تدعم المكالمات ومتابعة التمارين ومقاومة للماء</p>
                 </div>
                 <a href="#catalogSection" onclick="filterByCategory('deals'); scrollToProducts();" class="text-xs font-bold text-[#007185] hover:text-[#c7511f] hover:underline mt-4 inline-block">
-                    شاهد جميع عروض اليوم ←
+                    شاهد جميع صفقات اليوم ←
                 </a>
             </div>
 
@@ -475,29 +495,29 @@
                 <div>
                     <h3 class="font-black text-gray-900 text-lg mb-3">تسوق حسب القسم</h3>
                     <div class="grid grid-cols-2 gap-2.5">
-                        <div onclick="filterByCategory('beauty'); scrollToProducts();" class="bg-gray-50 hover:bg-emerald-50 p-2.5 rounded-lg text-center cursor-pointer border border-gray-200 transition-colors group">
-                            <div class="w-8 h-8 mx-auto mb-1 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-sm group-hover:scale-110 transition-transform">
-                                <i class="fas fa-wand-magic-sparkles"></i>
-                            </div>
-                            <span class="text-[11px] font-bold text-gray-800 block">العناية والجمال</span>
-                        </div>
-                        <div onclick="filterByCategory('perfumes'); scrollToProducts();" class="bg-gray-50 hover:bg-amber-50 p-2.5 rounded-lg text-center cursor-pointer border border-gray-200 transition-colors group">
+                        <div onclick="filterByCategory('fashion'); scrollToProducts();" class="bg-gray-50 hover:bg-amber-50 p-2.5 rounded-lg text-center cursor-pointer border border-gray-200 transition-colors group">
                             <div class="w-8 h-8 mx-auto mb-1 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center text-sm group-hover:scale-110 transition-transform">
-                                <i class="fas fa-spray-can-sparkles"></i>
+                                <i class="fas fa-shirt"></i>
                             </div>
-                            <span class="text-[11px] font-bold text-gray-800 block">العطور والبخور</span>
+                            <span class="text-[11px] font-bold text-gray-800 block">أزياء وملابس</span>
                         </div>
-                        <div onclick="filterByCategory('skincare'); scrollToProducts();" class="bg-gray-50 hover:bg-teal-50 p-2.5 rounded-lg text-center cursor-pointer border border-gray-200 transition-colors group">
-                            <div class="w-8 h-8 mx-auto mb-1 rounded-full bg-teal-100 text-teal-700 flex items-center justify-center text-sm group-hover:scale-110 transition-transform">
-                                <i class="fas fa-pump-soap"></i>
+                        <div onclick="filterByCategory('shoes'); scrollToProducts();" class="bg-gray-50 hover:bg-emerald-50 p-2.5 rounded-lg text-center cursor-pointer border border-gray-200 transition-colors group">
+                            <div class="w-8 h-8 mx-auto mb-1 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-sm group-hover:scale-110 transition-transform">
+                                <i class="fas fa-shoe-prints"></i>
                             </div>
-                            <span class="text-[11px] font-bold text-gray-800 block">البشرة والشعر</span>
+                            <span class="text-[11px] font-bold text-gray-800 block">كوتشيات وأحذية</span>
                         </div>
-                        <div onclick="filterByCategory('deals'); scrollToProducts();" class="bg-gray-50 hover:bg-blue-50 p-2.5 rounded-lg text-center cursor-pointer border border-gray-200 transition-colors group">
+                        <div onclick="filterByCategory('sports'); scrollToProducts();" class="bg-gray-50 hover:bg-red-50 p-2.5 rounded-lg text-center cursor-pointer border border-gray-200 transition-colors group">
+                            <div class="w-8 h-8 mx-auto mb-1 rounded-full bg-red-100 text-red-700 flex items-center justify-center text-sm group-hover:scale-110 transition-transform">
+                                <i class="fas fa-dumbbell"></i>
+                            </div>
+                            <span class="text-[11px] font-bold text-gray-800 block">مكملات وجيم</span>
+                        </div>
+                        <div onclick="filterByCategory('electronics'); scrollToProducts();" class="bg-gray-50 hover:bg-blue-50 p-2.5 rounded-lg text-center cursor-pointer border border-gray-200 transition-colors group">
                             <div class="w-8 h-8 mx-auto mb-1 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center text-sm group-hover:scale-110 transition-transform">
-                                <i class="fas fa-tags"></i>
+                                <i class="fas fa-headphones"></i>
                             </div>
-                            <span class="text-[11px] font-bold text-gray-800 block">عروض التوفير</span>
+                            <span class="text-[11px] font-bold text-gray-800 block">إلكترونيات وسماعات</span>
                         </div>
                     </div>
                 </div>
@@ -514,16 +534,16 @@
                         <span class="bestseller-badge">اختيار المشترين</span>
                     </div>
                     <div class="aspect-video rounded-lg overflow-hidden bg-gray-100 mb-3 flex items-center justify-center">
-                        <img src="og-image.jpg" alt="الأكثر مبيعاً" class="w-full h-full object-cover">
+                        <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=700&q=80" alt="الأكثر مبيعاً" class="w-full h-full object-cover">
                     </div>
                     <div class="flex items-center gap-1 text-amber-500 text-xs font-bold mb-1">
                         <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                        <span class="text-gray-500 font-normal mr-1">(248 تقييم)</span>
+                        <span class="text-gray-500 font-normal mr-1">(340 تقييم)</span>
                     </div>
-                    <h4 class="font-bold text-sm text-gray-900">مجموعة العناية الملكية الشاملة</h4>
+                    <h4 class="font-bold text-sm text-gray-900">كوتشي فانتوم إير كاجوال طبي مريح</h4>
                     <p class="text-xs text-emerald-700 font-bold mt-1">توصيل سريع مجاني متاح غداً</p>
                 </div>
-                <a href="#catalogSection" onclick="filterByCategory('all'); scrollToProducts();" class="text-xs font-bold text-[#007185] hover:text-[#c7511f] hover:underline mt-4 inline-block">
+                <a href="#catalogSection" onclick="filterByCategory('shoes'); scrollToProducts();" class="text-xs font-bold text-[#007185] hover:text-[#c7511f] hover:underline mt-4 inline-block">
                     عرض المنتجات الأعلى تقييماً ←
                 </a>
             </div>
@@ -531,34 +551,34 @@
             <!-- Card 4: Amazon Prime / Kunooz Gold Trust Badges -->
             <div class="amazon-card p-5 flex flex-col justify-between bg-gradient-to-b from-white to-amber-50/40">
                 <div>
-                    <h3 class="font-black text-gray-900 text-lg mb-3">ضمانات كنوز مكة الذهبية</h3>
+                    <h3 class="font-black text-gray-900 text-lg mb-3">ضمانات كنوز مكة للتسوق</h3>
                     <div class="space-y-3">
                         <div class="flex items-start gap-2.5">
                             <i class="fas fa-box-open text-amber-600 text-base mt-0.5"></i>
                             <div>
                                 <span class="font-bold text-xs text-gray-900 block">معاينة كاملة قبل الدفع</span>
-                                <span class="text-[11px] text-gray-500 block">افحص الطرد وتأكد من المنتجات مع المندوب</span>
+                                <span class="text-[11px] text-gray-500 block">افحص الطرد وتأكد من محتويات طلبك مع المندوب</span>
                             </div>
                         </div>
                         <div class="flex items-start gap-2.5">
                             <i class="fas fa-truck-fast text-emerald-600 text-base mt-0.5"></i>
                             <div>
                                 <span class="font-bold text-xs text-gray-900 block">شحن سريع لكافة المحافظات</span>
-                                <span class="text-[11px] text-gray-500 block">توصيل خلال 24 إلى 48 ساعة</span>
+                                <span class="text-[11px] text-gray-500 block">توصيل خلال 24 إلى 48 ساعة لباب منزلك</span>
                             </div>
                         </div>
                         <div class="flex items-start gap-2.5">
                             <i class="fas fa-shield-halved text-blue-600 text-base mt-0.5"></i>
                             <div>
-                                <span class="font-bold text-xs text-gray-900 block">أصلي ومضمون 100%</span>
-                                <span class="text-[11px] text-gray-500 block">أعلى معايير الجودة والأمان لجميع المنتجات</span>
+                                <span class="font-bold text-xs text-gray-900 block">منتجات ومكملات أصلية 100%</span>
+                                <span class="text-[11px] text-gray-500 block">أعلى معايير الجودة والأمان والفحص</span>
                             </div>
                         </div>
                         <div class="flex items-start gap-2.5">
                             <i class="fab fa-whatsapp text-green-600 text-base mt-0.5"></i>
                             <div>
-                                <span class="font-bold text-xs text-gray-900 block">دعم ومتابعة واتساب مستمرة</span>
-                                <span class="text-[11px] text-gray-500 block">خدمة عملاء جاهزة للرد على كافة استفساراتك</span>
+                                <span class="font-bold text-xs text-gray-900 block">خدمة عملاء واتساب 24/7</span>
+                                <span class="text-[11px] text-gray-500 block">فريق دعم متواجد للرد على كافة استفساراتك</span>
                             </div>
                         </div>
                     </div>
@@ -578,7 +598,7 @@
             <div class="flex items-center justify-between mb-4 border-b border-gray-100 pb-3">
                 <div class="flex items-center gap-3">
                     <h2 class="font-black text-gray-900 text-lg sm:text-xl">صفقات مميزة وتخفيضات اليوم</h2>
-                    <span class="deal-badge-red hidden sm:inline-flex">وفر حتى 40%</span>
+                    <span class="deal-badge-red hidden sm:inline-flex">وفر حتى 50%</span>
                 </div>
                 <div class="flex items-center gap-2">
                     <button onclick="scrollDealsSlider(-300)" class="w-8 h-8 rounded-full border border-gray-300 hover:bg-gray-100 flex items-center justify-center text-gray-700 shadow-sm" aria-label="السابق">
@@ -636,20 +656,26 @@
                                 <span>جميع المنتجات</span>
                                 <span id="count-all" class="text-gray-400 font-normal">(0)</span>
                             </button>
+                            <button onclick="filterByCategory('fashion')" class="category-filter-link w-full text-right py-1 px-2 rounded hover:bg-gray-50 text-gray-700 flex justify-between" data-cat="fashion">
+                                <span>👕 أزياء وملابس (تيشيرتات، بنطلونات، شورتات)</span>
+                            </button>
+                            <button onclick="filterByCategory('shoes')" class="category-filter-link w-full text-right py-1 px-2 rounded hover:bg-gray-50 text-gray-700 flex justify-between" data-cat="shoes">
+                                <span>👟 كوتشيات وأحذية رياضية</span>
+                            </button>
+                            <button onclick="filterByCategory('sports')" class="category-filter-link w-full text-right py-1 px-2 rounded hover:bg-gray-50 text-gray-700 flex justify-between" data-cat="sports">
+                                <span>💪 مكملات غذائية وكمال أجسام (كرياتين)</span>
+                            </button>
+                            <button onclick="filterByCategory('electronics')" class="category-filter-link w-full text-right py-1 px-2 rounded hover:bg-gray-50 text-gray-700 flex justify-between" data-cat="electronics">
+                                <span>🎧 إلكترونيات، سماعات، وساعات ذكية</span>
+                            </button>
                             <button onclick="filterByCategory('beauty')" class="category-filter-link w-full text-right py-1 px-2 rounded hover:bg-gray-50 text-gray-700 flex justify-between" data-cat="beauty">
-                                <span>العناية والجمال</span>
+                                <span>✨ عناية شخصية وعطور وتجميل</span>
                             </button>
-                            <button onclick="filterByCategory('perfumes')" class="category-filter-link w-full text-right py-1 px-2 rounded hover:bg-gray-50 text-gray-700 flex justify-between" data-cat="perfumes">
-                                <span>العطور والبخور والعود</span>
-                            </button>
-                            <button onclick="filterByCategory('skincare')" class="category-filter-link w-full text-right py-1 px-2 rounded hover:bg-gray-50 text-gray-700 flex justify-between" data-cat="skincare">
-                                <span>العناية بالبشرة والشعر</span>
-                            </button>
-                            <button onclick="filterByCategory('natural')" class="category-filter-link w-full text-right py-1 px-2 rounded hover:bg-gray-50 text-gray-700 flex justify-between" data-cat="natural">
-                                <span>منتجات طبيعية وصحية</span>
+                            <button onclick="filterByCategory('home')" class="category-filter-link w-full text-right py-1 px-2 rounded hover:bg-gray-50 text-gray-700 flex justify-between" data-cat="home">
+                                <span>🏠 مستلزمات المنزل والمطبخ</span>
                             </button>
                             <button onclick="filterByCategory('deals')" class="category-filter-link w-full text-right py-1 px-2 rounded hover:bg-gray-50 text-gray-700 flex justify-between" data-cat="deals">
-                                <span>عروض وتخفيضات التوفير</span>
+                                <span>🔥 صفقات وعروض التوفير الحصرية</span>
                             </button>
                         </div>
                     </div>
@@ -706,17 +732,23 @@
                         <button onclick="filterByCategory('all')" class="category-btn active px-4 py-2 rounded-full text-xs font-bold transition-all shrink-0 bg-[#ffd814] text-gray-900 border border-[#fcd200]" data-cat="all">
                             الكل
                         </button>
+                        <button onclick="filterByCategory('fashion')" class="category-btn px-4 py-2 rounded-full text-xs font-bold transition-all shrink-0 bg-white border border-gray-300 text-gray-700" data-cat="fashion">
+                            أزياء وملابس
+                        </button>
+                        <button onclick="filterByCategory('shoes')" class="category-btn px-4 py-2 rounded-full text-xs font-bold transition-all shrink-0 bg-white border border-gray-300 text-gray-700" data-cat="shoes">
+                            كوتشيات وأحذية
+                        </button>
+                        <button onclick="filterByCategory('sports')" class="category-btn px-4 py-2 rounded-full text-xs font-bold transition-all shrink-0 bg-white border border-gray-300 text-gray-700" data-cat="sports">
+                            مكملات وكرياتين
+                        </button>
+                        <button onclick="filterByCategory('electronics')" class="category-btn px-4 py-2 rounded-full text-xs font-bold transition-all shrink-0 bg-white border border-gray-300 text-gray-700" data-cat="electronics">
+                            إلكترونيات
+                        </button>
                         <button onclick="filterByCategory('beauty')" class="category-btn px-4 py-2 rounded-full text-xs font-bold transition-all shrink-0 bg-white border border-gray-300 text-gray-700" data-cat="beauty">
-                            العناية والجمال
+                            عناية وعطور
                         </button>
-                        <button onclick="filterByCategory('perfumes')" class="category-btn px-4 py-2 rounded-full text-xs font-bold transition-all shrink-0 bg-white border border-gray-300 text-gray-700" data-cat="perfumes">
-                            العطور والبخور
-                        </button>
-                        <button onclick="filterByCategory('skincare')" class="category-btn px-4 py-2 rounded-full text-xs font-bold transition-all shrink-0 bg-white border border-gray-300 text-gray-700" data-cat="skincare">
-                            البشرة والشعر
-                        </button>
-                        <button onclick="filterByCategory('natural')" class="category-btn px-4 py-2 rounded-full text-xs font-bold transition-all shrink-0 bg-white border border-gray-300 text-gray-700" data-cat="natural">
-                            طبيعي وصحي
+                        <button onclick="filterByCategory('home')" class="category-btn px-4 py-2 rounded-full text-xs font-bold transition-all shrink-0 bg-white border border-gray-300 text-gray-700" data-cat="home">
+                            المنزل
                         </button>
                         <button onclick="filterByCategory('deals')" class="category-btn px-4 py-2 rounded-full text-xs font-bold transition-all shrink-0 bg-white border border-gray-300 text-gray-700" data-cat="deals">
                             عروض التوفير
@@ -751,7 +783,7 @@
     </main>
 
     <!-- ============================================== -->
-    <!-- COMPREHENSIVE LEGAL & POLICIES MODAL (Request A)-->
+    <!-- COMPREHENSIVE LEGAL & POLICIES MODAL           -->
     <!-- Privacy Policy, Terms, Returns, Shipping       -->
     <!-- ============================================== -->
     <div id="policyModal" class="fixed inset-0 z-50 overflow-y-auto hidden">
@@ -768,7 +800,7 @@
                         </div>
                         <div>
                             <h3 class="font-black text-gray-900 text-lg sm:text-xl">مركز السياسات والخصوصية وحماية المستهلك</h3>
-                            <p class="text-xs text-gray-500">متجر كنوز مكة (Kunooz Makkah) - التزام تام بالأمان والشفافية</p>
+                            <p class="text-xs text-gray-500">سوق كنوز مكة للتسوق الإلكتروني (Kunooz Makkah) - التزام تام بالأمان والشفافية</p>
                         </div>
                     </div>
                     <button onclick="closePolicyModal()" class="w-8 h-8 rounded-full hover:bg-gray-100 flex items-center justify-center text-gray-400" aria-label="إغلاق">
@@ -799,7 +831,7 @@
                 <div id="policyTab-privacy" class="policy-tab-content space-y-3 text-xs text-gray-700 leading-relaxed max-h-[60vh] overflow-y-auto pr-1">
                     <div class="bg-emerald-50 border border-emerald-200 p-3 rounded-xl flex items-center gap-3">
                         <i class="fas fa-lock text-emerald-700 text-xl shrink-0"></i>
-                        <p class="font-bold text-emerald-900">خصوصيتك وأمان بياناتك هي أولويتنا القصوى في متجر كنوز مكة. نحن لا نبيع ولا نشارك بياناتك مع أي طرف ثالث على الإطلاق.</p>
+                        <p class="font-bold text-emerald-900">خصوصيتك وأمان بياناتك هي أولويتنا القصوى في سوق كنوز مكة. نحن لا نبيع ولا نشارك بياناتك مع أي طرف ثالث على الإطلاق.</p>
                     </div>
 
                     <h4 class="font-bold text-sm text-gray-900 pt-2">1. ما هي البيانات التي نجمعها؟</h4>
@@ -856,7 +888,7 @@
                 <!-- Tab 4: Terms of Service -->
                 <div id="policyTab-terms" class="policy-tab-content hidden space-y-3 text-xs text-gray-700 leading-relaxed max-h-[60vh] overflow-y-auto pr-1">
                     <h4 class="font-bold text-sm text-gray-900">شروط الشراء والاستخدام</h4>
-                    <p>باستخدامك لمتجر كنوز مكة أو تقديم طلب شراء، فإنك توافق على الالتزام بالشروط والأحكام التالية:</p>
+                    <p>باستخدامك لسوق كنوز مكة أو تقديم طلب شراء، فإنك توافق على الالتزام بالشروط والأحكام التالية:</p>
                     <ul class="list-disc list-inside space-y-1 pr-2">
                         <li>جميع المنتجات المعروضة في المتجر تخضع لأعلى معايير الجودة والأمان والفحص.</li>
                         <li>الأسعار المعروضة بالجنيه المصري (ج.م) وشاملة للمواصفات الموضحة في تفاصيل المنتج.</li>
@@ -873,7 +905,7 @@
                         </div>
                         <h4 class="font-black text-emerald-950 text-base">ضمان الجودة والأصالة 100%</h4>
                         <p class="text-xs text-emerald-800 max-w-md mx-auto">
-                            نضمن أن جميع منتجاتنا أصلية 100% ومطابقة للمواصفات المعلنة، مع إمكانية المعاينة والفحص الشخصي قبل دفع أي مبلغ.
+                            نضمن أن جميع منتجاتنا وبضائعنا أصلية 100% ومطابقة للمواصفات المعلنة، مع إمكانية المعاينة والفحص الشخصي قبل دفع أي مبلغ.
                         </p>
                     </div>
                 </div>
@@ -1081,7 +1113,7 @@
                     رقم الطلب: <span id="orderNumber" class="font-bold text-emerald-700 font-mono">#94821</span>
                 </p>
                 <p class="text-xs text-gray-500 leading-relaxed">
-                    شكراً لثقتك بمتجر كنوز مكة! يمكنك إرسال بيانات طلبك إلى الواتساب الآن للحصول على الشحن السريع ومتابعة التوصيل.
+                    شكراً لثقتك بسوق كنوز مكة! يمكنك إرسال بيانات طلبك إلى الواتساب الآن للحصول على الشحن السريع ومتابعة التوصيل لباب منزلك.
                 </p>
                 <div class="pt-2 space-y-2">
                     <a id="whatsappOrderBtn" href="#" target="_blank" class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg shadow-md transition-all flex items-center justify-center gap-2 text-xs">
@@ -1196,9 +1228,9 @@
                 
                 <!-- Col 1: About Kunooz Makkah -->
                 <div class="space-y-3">
-                    <h4 class="text-white font-bold text-sm">تعرف على كنوز مكة</h4>
+                    <h4 class="text-white font-bold text-sm">عن سوق كنوز مكة</h4>
                     <p class="text-gray-400 leading-relaxed text-[11px]">
-                        متجر كنوز مكة: وجهتك الأولى للتسوق الإلكتروني الشامل لكافة المنتجات ومستحضرات العناية والعطور والمنتجات الطبيعية بأعلى معايير الجودة مع حق المعاينة عند الاستلام.
+                        سوق كنوز مكة للتسوق الإلكتروني: منصتك الشاملة لكل المنتجات، الأزياء، الأحذية، المكملات، الإلكترونيات، والعطور بأعلى معايير الجودة وأفضل الأسعار مع حق المعاينة عند الاستلام.
                     </p>
                     <div class="flex items-center gap-2 pt-1 text-gray-400">
                         <a href="https://wa.me/201080369841" target="_blank" class="w-7 h-7 rounded bg-gray-700 hover:bg-green-600 hover:text-white flex items-center justify-center transition-colors"><i class="fab fa-whatsapp"></i></a>
@@ -1207,7 +1239,7 @@
                     </div>
                 </div>
 
-                <!-- Col 2: Legal & Policies (Request A) -->
+                <!-- Col 2: Legal & Policies -->
                 <div class="space-y-2">
                     <h4 class="text-white font-bold text-sm">السياسات والضمانات</h4>
                     <ul class="space-y-1.5 text-gray-400 text-[11px]">
@@ -1221,13 +1253,14 @@
 
                 <!-- Col 3: Categories & Solutions -->
                 <div class="space-y-2">
-                    <h4 class="text-white font-bold text-sm">أقسام المتجر الشاملة</h4>
+                    <h4 class="text-white font-bold text-sm">أقسام السوق الشامل</h4>
                     <ul class="space-y-1.5 text-gray-400 text-[11px]">
-                        <li><a href="javascript:void(0)" onclick="filterByCategory('beauty'); scrollToProducts();" class="hover:text-amber-400 transition-colors">العناية والجمال</a></li>
-                        <li><a href="javascript:void(0)" onclick="filterByCategory('perfumes'); scrollToProducts();" class="hover:text-amber-400 transition-colors">العطور والبخور والعود</a></li>
-                        <li><a href="javascript:void(0)" onclick="filterByCategory('skincare'); scrollToProducts();" class="hover:text-amber-400 transition-colors">العناية بالبشرة والشعر</a></li>
-                        <li><a href="javascript:void(0)" onclick="filterByCategory('natural'); scrollToProducts();" class="hover:text-amber-400 transition-colors">منتجات طبيعية وصحية</a></li>
-                        <li><a href="javascript:void(0)" onclick="filterByCategory('deals'); scrollToProducts();" class="hover:text-amber-400 transition-colors">عروض وتخفيضات التوفير</a></li>
+                        <li><a href="javascript:void(0)" onclick="filterByCategory('fashion'); scrollToProducts();" class="hover:text-amber-400 transition-colors">أزياء وملابس كاجوال</a></li>
+                        <li><a href="javascript:void(0)" onclick="filterByCategory('shoes'); scrollToProducts();" class="hover:text-amber-400 transition-colors">كوتشيات وأحذية رياضية</a></li>
+                        <li><a href="javascript:void(0)" onclick="filterByCategory('sports'); scrollToProducts();" class="hover:text-amber-400 transition-colors">مكملات كمال أجسام وكرياتين</a></li>
+                        <li><a href="javascript:void(0)" onclick="filterByCategory('electronics'); scrollToProducts();" class="hover:text-amber-400 transition-colors">إلكترونيات وسماعات وساعات</a></li>
+                        <li><a href="javascript:void(0)" onclick="filterByCategory('beauty'); scrollToProducts();" class="hover:text-amber-400 transition-colors">عناية شخصية وعطور</a></li>
+                        <li><a href="javascript:void(0)" onclick="filterByCategory('deals'); scrollToProducts();" class="hover:text-amber-400 transition-colors">صفقات وعروض التوفير</a></li>
                     </ul>
                 </div>
 
@@ -1239,8 +1272,8 @@
                     </p>
                     <div class="flex flex-wrap gap-2 text-xs">
                         <span class="bg-gray-700 text-gray-200 px-2.5 py-1 rounded">💵 الدفع عند الاستلام (COD)</span>
-                        <span class="bg-gray-700 text-gray-200 px-2.5 py-1 rounded">📱 فودافون كاش</span>
-                        <span class="bg-gray-700 text-gray-200 px-2.5 py-1 rounded">🛡️ فحص قبل الدفع</span>
+                        <span class="bg-gray-700 text-gray-200 px-2.5 py-1 rounded">📱 فودافون كاش ومحافظ</span>
+                        <span class="bg-gray-700 text-gray-200 px-2.5 py-1 rounded">🛡️ فحص ومعاينة أولاً</span>
                     </div>
                 </div>
 
@@ -1263,7 +1296,7 @@
 
             <!-- Tier 4: Legal Copyright & Admin Link -->
             <div class="max-w-4xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between text-[11px] text-gray-500 gap-2 pt-2 border-t border-gray-800/80">
-                <p>© 2026 كنوز مكة (Kunooz Makkah). جميع الحقوق محفوظة.</p>
+                <p>© 2026 سوق كنوز مكة (Kunooz Makkah). جميع الحقوق محفوظة.</p>
                 <div class="flex items-center gap-4">
                     <a href="javascript:void(0)" onclick="openPolicyModal('privacy')" class="hover:text-amber-400">شروط الاستخدام والخصوصية</a>
                     <button onclick="openAdminLoginModal()" class="hover:text-amber-400 flex items-center gap-1">

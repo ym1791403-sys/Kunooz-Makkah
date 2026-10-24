@@ -18,85 +18,111 @@ function escapeHTML(str) {
         .replace(/'/g, '&#39;');
 } 
 
-// كتالوج المنتجات الافتراضي الشامل لكافة الأقسام
+// كتالوج المنتجات الافتراضي الشامل لكافة البضائع والأقسام (أزياء، كوتشيات، مكملات، إلكترونيات، وكل المنتجات)
 const BACKUP_CATALOG = [
     {
         id: "km-1",
-        title: "مجموعة العناية الملكية الشاملة للبشرة والشعر (كورس العناية المتكامل)",
-        category: "skincare",
+        title: "كوتشي رياضي فانتوم إير كاجوال خفيف ومريح للجري والمشي اليومي",
+        category: "shoes",
         badge: "الأكثر مبيعاً #1",
         badgeColor: "bestseller-badge",
-        price: 380,
-        oldPrice: 520,
+        price: 420,
+        oldPrice: 580,
         rating: 4.9,
-        reviewsCount: 248,
-        image: "https://images.unsplash.com/photo-1608248597359-497669d0d3a9?auto=format&fit=crop&w=700&q=80",
-        description: "مجموعة متكاملة للعناية والتغذية العميقة للبشرة والشعر بمستخلصات طبيعية 100% مع شحن سريع ومعاينة قبل الدفع."
+        reviewsCount: 340,
+        image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=700&q=80",
+        description: "حذاء رياضي عصري مريح جداً بنعل طبي ممتص للصدمات وخامات مسامية للتهوية ممتازة للجري والتمارين والاستخدام اليومي."
     },
     {
         id: "km-2",
-        title: "عطر العود الملكي الفاخر ومسك الطهارة الأصلي المركز",
-        category: "perfumes",
-        badge: "عرض محدود",
+        title: "مكمل كرياتين مونوهيدرات نقي 100% ميكرونايزد لكمال الأجسام وزيادة القوة (300 جم)",
+        category: "sports",
+        badge: "الأعلى طلباً في الجيم",
         badgeColor: "deal-badge-red",
-        price: 290,
-        oldPrice: 420,
-        rating: 4.9,
-        reviewsCount: 186,
-        image: "https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=700&q=80",
-        description: "توليفة شرقية فاخرة من خشب العود المعتق ومسك الطهارة برائحة فواحة وثبات يدوم لأكثر من 48 ساعة."
+        price: 390,
+        oldPrice: 520,
+        rating: 5.0,
+        reviewsCount: 295,
+        image: "https://images.unsplash.com/photo-1579722821273-0f6c7d44362f?auto=format&fit=crop&w=700&q=80",
+        description: "كرياتين نقي غير منكه سريع الامتصاص لزيادة الكتلة العضلية ورفع كفاءة التمارين وطاقة التحمل، أصلي 100%."
     },
     {
         id: "km-3",
-        title: "سيروم الهيالورونيك اسيد وفيتامين C المركز لنضارة وترميم البشرة",
-        category: "beauty",
-        badge: "توفير 35%",
-        badgeColor: "deal-badge-red",
-        price: 260,
+        title: "تيشيرت أوفر سايز قطن مصري 100% كاجوال بطباعة عصرية فاخرة",
+        category: "fashion",
+        badge: "وصل حديثاً",
+        badgeColor: "bg-indigo-700 text-white font-bold text-[11px] px-2 py-0.5 rounded",
+        price: 270,
         oldPrice: 380,
-        rating: 5.0,
-        reviewsCount: 195,
-        image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=700&q=80",
-        description: "يمنح البشرة إشراقة ونضارة فورية ويقلل الخطوط التعبيرية والتصبغات مع ترطيب فائق يدوم طوال اليوم."
+        rating: 4.8,
+        reviewsCount: 182,
+        image: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=700&q=80",
+        description: "تيشيرت قطن ممشط فائق النعومة ومريح للغاية مناسب لجميع الأوقات والخروجات مع ثبات عالي للألوان بعد الغسيل."
     },
     {
         id: "km-4",
-        title: "زيت الروزماري والأرجان النقي المركز 100% معصور على البارد",
-        category: "natural",
-        badge: "طبيعي 100%",
-        badgeColor: "bg-teal-700 text-white font-bold text-[11px] px-2 py-0.5 rounded",
-        price: 240,
-        oldPrice: 320,
-        rating: 4.8,
-        reviewsCount: 142,
-        image: "https://images.unsplash.com/photo-1617897903246-719242758050?auto=format&fit=crop&w=700&q=80",
-        description: "مستخلص خام نقي 100% بدون أي إضافات كيميائية أو عطور صناعية متعدد الاستخدامات للشعر والجسم."
+        title: "سماعة بلوتوث برو لاسلكية بعزل الضوضاء وشاشة ديجيتال لعرض الشحن",
+        category: "electronics",
+        badge: "توفير 35%",
+        badgeColor: "deal-badge-red",
+        price: 310,
+        oldPrice: 480,
+        rating: 4.9,
+        reviewsCount: 420,
+        image: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&w=700&q=80",
+        description: "سماعات أيربودز لاسلكية بصوت نقي ونظام بيز قوي مع مايك مدمج للمكالمات وبطارية تدوم حتى 30 ساعة مع علبة الشحن."
     },
     {
         id: "km-5",
-        title: "باقة التوفير الشاملة VIP (مجموعة العطور ومستحضرات العناية الفاخرة)",
-        category: "deals",
-        badge: "أفضل قيمة",
+        title: "بنطلون سويت بانتس قطن ميلتون رياضي مريح للجيم والشارع",
+        category: "fashion",
+        badge: "خامة قطن تقيلة",
         badgeColor: "bestseller-badge",
-        price: 650,
-        oldPrice: 950,
-        rating: 5.0,
-        reviewsCount: 312,
-        image: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=700&q=80",
-        description: "باقة حصرية توفر لك أكثر من 300 جنيه تضم تشكيلة من أفضل منتجات العناية والعطور مع شحن مجاني لكافة المحافظات."
+        price: 340,
+        oldPrice: 460,
+        rating: 4.9,
+        reviewsCount: 215,
+        image: "https://images.unsplash.com/photo-1552902865-b72c031ac5ea?auto=format&fit=crop&w=700&q=80",
+        description: "بنطلون رياضي عملي بجيوب بسوستة واستك مريح وخامات قطنية ممتازة تناسب التمارين والخروجات الكاجوال."
     },
     {
         id: "km-6",
-        title: "كريم زبدة الشيا الإفريقية الخام وزيت اللوز للترطيب الفائق",
-        category: "beauty",
-        badge: "عضوي معتمد",
-        badgeColor: "bg-emerald-800 text-white font-bold text-[11px] px-2 py-0.5 rounded",
-        price: 220,
-        oldPrice: 300,
+        title: "شورت رياضي مبطن للجيم والتمارين مع جيوب سرية بسوستة",
+        category: "fashion",
+        badge: "الأفضل للتمارين",
+        badgeColor: "bg-teal-700 text-white font-bold text-[11px] px-2 py-0.5 rounded",
+        price: 230,
+        oldPrice: 320,
+        rating: 4.8,
+        reviewsCount: 167,
+        image: "https://images.unsplash.com/photo-1591195853828-11db59a44f6b?auto=format&fit=crop&w=700&q=80",
+        description: "شورت 2 في 1 بتصميم مرن ومقاوم للتعرق مع بطانة داخلية ضاغطة ومريحة جداً أثناء ممارسة الرياضة والجري."
+    },
+    {
+        id: "km-7",
+        title: "ساعة يد ذكية سمارت ووتش ألترا تدعم المكالمات ومتابعة اللياقة ومقاومة للماء",
+        category: "electronics",
+        badge: "صفقة اليوم",
+        badgeColor: "deal-badge-red",
+        price: 490,
+        oldPrice: 750,
         rating: 4.9,
-        reviewsCount: 118,
-        image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=700&q=80",
-        description: "زبدة شيا نقية غير مكررة معززة بفيتامين E لعلاج الجفاف الشديد وتنعيم البشرة والمناطق الجافة."
+        reviewsCount: 310,
+        image: "https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=700&q=80",
+        description: "شاشة لمس عالية الدقة تدعم إشعارات الموبايل، قياس نبضات القلب ونسبة الأكسجين، وبطارية قوية مع أساور متعددة."
+    },
+    {
+        id: "km-8",
+        title: "عطر رجالي/حريمي فاخر بتركيز أو دو بارفان ثبات وفوحان يدوم 48 ساعة",
+        category: "beauty",
+        badge: "عطر فخم",
+        badgeColor: "bestseller-badge",
+        price: 320,
+        oldPrice: 480,
+        rating: 5.0,
+        reviewsCount: 198,
+        image: "https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=700&q=80",
+        description: "توليفة مميزة تجمع بين روائح العنبر والأخشاب والزهور برائحة تأسر الحواس وثبات طويل على الملابس."
     }
 ];
 
@@ -185,25 +211,31 @@ function updateCategoryCounts() {
     if (countEl) countEl.innerText = `(${products.length})`;
 }
 
-// تصفية وبحث وترتيب المنتجات لجميع الأقسام
+// تصفية وبحث وترتيب المنتجات لجميع الأقسام (أزياء، كوتشيات، مكملات، إلكترونيات، وكل المنتجات)
 function getFilteredProducts() {
     const products = getStoredProducts();
     return products.filter(product => {
         let matchesCategory = false;
-        if (!state.currentCategory || state.currentCategory === 'all') {
+        const cat = state.currentCategory || 'all';
+
+        if (cat === 'all') {
             matchesCategory = true;
-        } else if (state.currentCategory === 'beauty') {
-            matchesCategory = product.category === 'beauty';
-        } else if (state.currentCategory === 'perfumes') {
-            matchesCategory = product.category === 'perfumes';
-        } else if (state.currentCategory === 'skincare') {
-            matchesCategory = product.category === 'skincare' || product.category === 'hair-loss' || product.category === 'frizz-repair' || product.category === 'growth-length';
-        } else if (state.currentCategory === 'natural') {
-            matchesCategory = product.category === 'natural' || product.category === 'dandruff-scalp';
-        } else if (state.currentCategory === 'deals') {
+        } else if (cat === 'fashion') {
+            matchesCategory = product.category === 'fashion';
+        } else if (cat === 'shoes') {
+            matchesCategory = product.category === 'shoes';
+        } else if (cat === 'sports') {
+            matchesCategory = product.category === 'sports';
+        } else if (cat === 'electronics') {
+            matchesCategory = product.category === 'electronics';
+        } else if (cat === 'beauty') {
+            matchesCategory = product.category === 'beauty' || product.category === 'perfumes' || product.category === 'skincare' || product.category === 'natural' || product.category === 'hair-loss';
+        } else if (cat === 'home') {
+            matchesCategory = product.category === 'home' || product.category === 'general';
+        } else if (cat === 'deals') {
             matchesCategory = product.category === 'deals' || product.category === 'bundles' || (product.oldPrice && product.oldPrice > product.price);
         } else {
-            matchesCategory = product.category === state.currentCategory;
+            matchesCategory = product.category === cat;
         }
 
         const q = state.searchQuery.toLowerCase();
