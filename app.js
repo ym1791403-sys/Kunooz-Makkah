@@ -18,12 +18,12 @@ function escapeHTML(str) {
         .replace(/'/g, '&#39;');
 } 
 
-// كتالوج المنتجات الافتراضي للزيوت الطبيعية
+// كتالوج المنتجات الافتراضي الشامل لكافة الأقسام
 const BACKUP_CATALOG = [
     {
         id: "km-1",
-        title: "كورس إنبات الفراغات والتكثيف الملكي (روزماري + حبة البركة + خروع جمايكي)",
-        category: "hair-loss",
+        title: "مجموعة العناية الملكية الشاملة للبشرة والشعر (كورس العناية المتكامل)",
+        category: "skincare",
         badge: "الأكثر مبيعاً #1",
         badgeColor: "bestseller-badge",
         price: 380,
@@ -31,72 +31,72 @@ const BACKUP_CATALOG = [
         rating: 4.9,
         reviewsCount: 248,
         image: "https://images.unsplash.com/photo-1608248597359-497669d0d3a9?auto=format&fit=crop&w=700&q=80",
-        description: "تركيبة مركزة معصورة على البارد لعلاج الصلع الوراثي وإنبات الفراغات الأمامية وتنشيط الدورة الدموية في البصيلات خلال 30 يوماً."
+        description: "مجموعة متكاملة للعناية والتغذية العميقة للبشرة والشعر بمستخلصات طبيعية 100% مع شحن سريع ومعاينة قبل الدفع."
     },
     {
         id: "km-2",
-        title: "سيروم زيت الروزماري النقي المركز معصور على البارد",
-        category: "growth-length",
+        title: "عطر العود الملكي الفاخر ومسك الطهارة الأصلي المركز",
+        category: "perfumes",
         badge: "عرض محدود",
         badgeColor: "deal-badge-red",
-        price: 240,
-        oldPrice: 320,
-        rating: 4.8,
-        reviewsCount: 164,
-        image: "https://images.unsplash.com/photo-1617897903246-719242758050?auto=format&fit=crop&w=700&q=80",
-        description: "زيت إكليل الجبل (الروزماري) الطبيعي 100% لإطالة الشعر بسرعة فائقة وتقوية الجذور ومنع التساقط اليومي."
+        price: 290,
+        oldPrice: 420,
+        rating: 4.9,
+        reviewsCount: 186,
+        image: "https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=700&q=80",
+        description: "توليفة شرقية فاخرة من خشب العود المعتق ومسك الطهارة برائحة فواحة وثبات يدوم لأكثر من 48 ساعة."
     },
     {
         id: "km-3",
-        title: "كورس علاج الهيشان والتقصف والترميم الحراري بالأرجان والجوجوبا",
-        category: "frizz-repair",
-        badge: "توفير 30%",
+        title: "سيروم الهيالورونيك اسيد وفيتامين C المركز لنضارة وترميم البشرة",
+        category: "beauty",
+        badge: "توفير 35%",
         badgeColor: "deal-badge-red",
-        price: 320,
-        oldPrice: 450,
+        price: 260,
+        oldPrice: 380,
         rating: 5.0,
         reviewsCount: 195,
-        image: "https://images.unsplash.com/photo-1526947425960-945c6e72858f?auto=format&fit=crop&w=700&q=80",
-        description: "يمنح الشعر نعومة ولمعان الحرير ويقضي على الجفاف والهيشان الناتج عن الصبغة والفرد بدون أي ملمس دهني."
+        image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=700&q=80",
+        description: "يمنح البشرة إشراقة ونضارة فورية ويقلل الخطوط التعبيرية والتصبغات مع ترطيب فائق يدوم طوال اليوم."
     },
     {
         id: "km-4",
-        title: "زيت شجرة الشاي واللافندر المركز لعلاج قشرة الشعر وحكة الفروة",
-        category: "dandruff-scalp",
+        title: "زيت الروزماري والأرجان النقي المركز 100% معصور على البارد",
+        category: "natural",
         badge: "طبيعي 100%",
         badgeColor: "bg-teal-700 text-white font-bold text-[11px] px-2 py-0.5 rounded",
-        price: 210,
-        oldPrice: 280,
-        rating: 4.7,
-        reviewsCount: 88,
-        image: "https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?auto=format&fit=crop&w=700&q=80",
-        description: "مضاد فطري ومطهر طبيعي للفروة ينقي المسام ويزيل القشرة الدهنية والجافة من أول أسبوع مع تهدئة الحكة."
+        price: 240,
+        oldPrice: 320,
+        rating: 4.8,
+        reviewsCount: 142,
+        image: "https://images.unsplash.com/photo-1617897903246-719242758050?auto=format&fit=crop&w=700&q=80",
+        description: "مستخلص خام نقي 100% بدون أي إضافات كيميائية أو عطور صناعية متعدد الاستخدامات للشعر والجسم."
     },
     {
         id: "km-5",
-        title: "الباقة الملكية الشاملة لعلاج مشاكل الشعر (كورس 3 عبوات متكامل)",
-        category: "bundles",
+        title: "باقة التوفير الشاملة VIP (مجموعة العطور ومستحضرات العناية الفاخرة)",
+        category: "deals",
         badge: "أفضل قيمة",
         badgeColor: "bestseller-badge",
         price: 650,
         oldPrice: 950,
         rating: 5.0,
         reviewsCount: 312,
-        image: "https://images.unsplash.com/photo-1608248597359-497669d0d3a9?auto=format&fit=crop&w=700&q=80",
-        description: "كورس شامل يجمع بين علاج التساقط الشديد وإنبات الفراغات وتنعيم وتطويل الشعر مع شحن مجاني لكافة المحافظات."
+        image: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=700&q=80",
+        description: "باقة حصرية توفر لك أكثر من 300 جنيه تضم تشكيلة من أفضل منتجات العناية والعطور مع شحن مجاني لكافة المحافظات."
     },
     {
         id: "km-6",
-        title: "زيت الحبة السوداء المعصور على البارد (حبة البركة الحبشية النادرة)",
-        category: "hair-loss",
+        title: "كريم زبدة الشيا الإفريقية الخام وزيت اللوز للترطيب الفائق",
+        category: "beauty",
         badge: "عضوي معتمد",
         badgeColor: "bg-emerald-800 text-white font-bold text-[11px] px-2 py-0.5 rounded",
-        price: 230,
+        price: 220,
         oldPrice: 300,
         rating: 4.9,
-        reviewsCount: 142,
-        image: "https://images.unsplash.com/photo-1617897903246-719242758050?auto=format&fit=crop&w=700&q=80",
-        description: "زيت الحبة السوداء النقي الغني بمضادات الأكسدة لتغذية البصيلات الضعيفة واستعادة كثافة الشعر الطبيعية."
+        reviewsCount: 118,
+        image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=700&q=80",
+        description: "زبدة شيا نقية غير مكررة معززة بفيتامين E لعلاج الجفاف الشديد وتنعيم البشرة والمناطق الجافة."
     }
 ];
 
@@ -174,7 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function setupFloatingWhatsapp() {
     const btn = document.getElementById('floatingWhatsappBtn');
     if (btn) {
-        btn.href = `https://wa.me/${STORE_WHATSAPP_NUMBER}?text=${encodeURIComponent("السلام عليكم، أود استشارة بخصوص مشكلة في شعري واختيار الزيت الأنسب لي من متجر كنوز مكة")}`;
+        btn.href = `https://wa.me/${STORE_WHATSAPP_NUMBER}?text=${encodeURIComponent("السلام عليكم، أريد الاستفسار عن منتجات وعروض متجر كنوز مكة")}`;
     }
 }
 
@@ -185,13 +185,31 @@ function updateCategoryCounts() {
     if (countEl) countEl.innerText = `(${products.length})`;
 }
 
-// تصفية وبحث وترتيب المنتجات
+// تصفية وبحث وترتيب المنتجات لجميع الأقسام
 function getFilteredProducts() {
     const products = getStoredProducts();
     return products.filter(product => {
-        const matchesCategory = state.currentCategory === 'all' || product.category === state.currentCategory;
-        const matchesSearch = product.title.toLowerCase().includes(state.searchQuery.toLowerCase()) ||
-                              (product.description && product.description.toLowerCase().includes(state.searchQuery.toLowerCase()));
+        let matchesCategory = false;
+        if (!state.currentCategory || state.currentCategory === 'all') {
+            matchesCategory = true;
+        } else if (state.currentCategory === 'beauty') {
+            matchesCategory = product.category === 'beauty';
+        } else if (state.currentCategory === 'perfumes') {
+            matchesCategory = product.category === 'perfumes';
+        } else if (state.currentCategory === 'skincare') {
+            matchesCategory = product.category === 'skincare' || product.category === 'hair-loss' || product.category === 'frizz-repair' || product.category === 'growth-length';
+        } else if (state.currentCategory === 'natural') {
+            matchesCategory = product.category === 'natural' || product.category === 'dandruff-scalp';
+        } else if (state.currentCategory === 'deals') {
+            matchesCategory = product.category === 'deals' || product.category === 'bundles' || (product.oldPrice && product.oldPrice > product.price);
+        } else {
+            matchesCategory = product.category === state.currentCategory;
+        }
+
+        const q = state.searchQuery.toLowerCase();
+        const matchesSearch = !q || 
+                              product.title.toLowerCase().includes(q) ||
+                              (product.description && product.description.toLowerCase().includes(q));
         return matchesCategory && matchesSearch;
     }).sort((a, b) => {
         if (state.sortBy === 'price-low') return a.price - b.price;
