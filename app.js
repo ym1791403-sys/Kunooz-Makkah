@@ -1,16 +1,16 @@
 // =================================================================
-// متجر كنوز مكة | Kunooz Makkah
-// الواجهة الرئيسية لمتجر الزيوت الطبيعية لعلاج مشاكل الشعر
-// متصل مباشرة بقاعدة بيانات Firebase Realtime Database في الوقت الفعلي
+// متجر كنوز مكة | Kunooz Makkah - نمط أمازون (Amazon E-Commerce Experience)
+// متجر احترافي للزيوت الطبيعية المعصورة على البارد لعلاج مشاكل الشعر
+// متصل مباشرة بقاعدة بيانات Firebase Realtime Database
 // =================================================================
 
-// رقم الواتساب الخاص بالمتجر لاستقبال الطلبات
+// رقم الواتساب الخاص بالمتجر لاستقبال الطلبات وتأكيد الشحن
 const STORE_WHATSAPP_NUMBER = "201080369841"; 
 
-// دالة التعقيم الأمني لمنع ثغرات XSS
+// تنظيف النصوص لمنع ثغرات XSS وحقن الأكواد
 function escapeHTML(str) {
-    if (str === null || str === undefined) return '';
-    return String(str)
+    if (!str) return '';
+    return str.toString()
         .replace(/&/g, '&amp;')
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;')
@@ -18,14 +18,99 @@ function escapeHTML(str) {
         .replace(/'/g, '&#39;');
 } 
 
+// كتالوج المنتجات الافتراضي للزيوت الطبيعية
+const BACKUP_CATALOG = [
+    {
+        id: "km-1",
+        title: "كورس إنبات الفراغات والتكثيف الملكي (روزماري + حبة البركة + خروع جمايكي)",
+        category: "hair-loss",
+        badge: "الأكثر مبيعاً #1",
+        badgeColor: "bestseller-badge",
+        price: 380,
+        oldPrice: 520,
+        rating: 4.9,
+        reviewsCount: 248,
+        image: "https://images.unsplash.com/photo-1608248597359-497669d0d3a9?auto=format&fit=crop&w=700&q=80",
+        description: "تركيبة مركزة معصورة على البارد لعلاج الصلع الوراثي وإنبات الفراغات الأمامية وتنشيط الدورة الدموية في البصيلات خلال 30 يوماً."
+    },
+    {
+        id: "km-2",
+        title: "سيروم زيت الروزماري النقي المركز معصور على البارد",
+        category: "growth-length",
+        badge: "عرض محدود",
+        badgeColor: "deal-badge-red",
+        price: 240,
+        oldPrice: 320,
+        rating: 4.8,
+        reviewsCount: 164,
+        image: "https://images.unsplash.com/photo-1617897903246-719242758050?auto=format&fit=crop&w=700&q=80",
+        description: "زيت إكليل الجبل (الروزماري) الطبيعي 100% لإطالة الشعر بسرعة فائقة وتقوية الجذور ومنع التساقط اليومي."
+    },
+    {
+        id: "km-3",
+        title: "كورس علاج الهيشان والتقصف والترميم الحراري بالأرجان والجوجوبا",
+        category: "frizz-repair",
+        badge: "توفير 30%",
+        badgeColor: "deal-badge-red",
+        price: 320,
+        oldPrice: 450,
+        rating: 5.0,
+        reviewsCount: 195,
+        image: "https://images.unsplash.com/photo-1526947425960-945c6e72858f?auto=format&fit=crop&w=700&q=80",
+        description: "يمنح الشعر نعومة ولمعان الحرير ويقضي على الجفاف والهيشان الناتج عن الصبغة والفرد بدون أي ملمس دهني."
+    },
+    {
+        id: "km-4",
+        title: "زيت شجرة الشاي واللافندر المركز لعلاج قشرة الشعر وحكة الفروة",
+        category: "dandruff-scalp",
+        badge: "طبيعي 100%",
+        badgeColor: "bg-teal-700 text-white font-bold text-[11px] px-2 py-0.5 rounded",
+        price: 210,
+        oldPrice: 280,
+        rating: 4.7,
+        reviewsCount: 88,
+        image: "https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?auto=format&fit=crop&w=700&q=80",
+        description: "مضاد فطري ومطهر طبيعي للفروة ينقي المسام ويزيل القشرة الدهنية والجافة من أول أسبوع مع تهدئة الحكة."
+    },
+    {
+        id: "km-5",
+        title: "الباقة الملكية الشاملة لعلاج مشاكل الشعر (كورس 3 عبوات متكامل)",
+        category: "bundles",
+        badge: "أفضل قيمة",
+        badgeColor: "bestseller-badge",
+        price: 650,
+        oldPrice: 950,
+        rating: 5.0,
+        reviewsCount: 312,
+        image: "https://images.unsplash.com/photo-1608248597359-497669d0d3a9?auto=format&fit=crop&w=700&q=80",
+        description: "كورس شامل يجمع بين علاج التساقط الشديد وإنبات الفراغات وتنعيم وتطويل الشعر مع شحن مجاني لكافة المحافظات."
+    },
+    {
+        id: "km-6",
+        title: "زيت الحبة السوداء المعصور على البارد (حبة البركة الحبشية النادرة)",
+        category: "hair-loss",
+        badge: "عضوي معتمد",
+        badgeColor: "bg-emerald-800 text-white font-bold text-[11px] px-2 py-0.5 rounded",
+        price: 230,
+        oldPrice: 300,
+        rating: 4.9,
+        reviewsCount: 142,
+        image: "https://images.unsplash.com/photo-1617897903246-719242758050?auto=format&fit=crop&w=700&q=80",
+        description: "زيت الحبة السوداء النقي الغني بمضادات الأكسدة لتغذية البصيلات الضعيفة واستعادة كثافة الشعر الطبيعية."
+    }
+];
+
 // قائمة المنتجات المخزنة / المحملة من Firebase
 let liveFirebaseProducts = JSON.parse(localStorage.getItem('makkah_real_products') || '[]');
 
 function getStoredProducts() {
-    return liveFirebaseProducts;
+    if (liveFirebaseProducts && liveFirebaseProducts.length > 0) {
+        return liveFirebaseProducts;
+    }
+    return BACKUP_CATALOG;
 }
 
-// حالة المتجر
+// حالة المتجر (State Management)
 let state = {
     currentCategory: 'all',
     searchQuery: '',
@@ -44,21 +129,26 @@ const VALID_COUPONS = {
     'KUNOOZ50': 0.50
 };
 
-// بدء التشغيل
+// بدء التشغيل عند اكتمال تحميل الصفحة
 document.addEventListener('DOMContentLoaded', () => {
     updateCategoryCounts();
     renderProducts();
+    renderDealsSlider();
     updateCartUI();
     updateWishlistUI();
     setupFloatingWhatsapp();
     renderFrontAnnouncement();
+    initDealCountdown();
 
-    // الاستماع المباشر للمنتجات من Firebase
+    // الاستماع المباشر للمنتجات من Firebase Realtime Database
     if (typeof subscribeToProducts === 'function') {
         subscribeToProducts(
             (products) => {
-                liveFirebaseProducts = products;
+                if (products && products.length > 0) {
+                    liveFirebaseProducts = products;
+                }
                 renderProducts();
+                renderDealsSlider();
                 updateCategoryCounts();
             },
             (error) => {
@@ -80,6 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+// إعداد زر الواتساب العائم
 function setupFloatingWhatsapp() {
     const btn = document.getElementById('floatingWhatsappBtn');
     if (btn) {
@@ -87,13 +178,14 @@ function setupFloatingWhatsapp() {
     }
 }
 
+// عداد المنتجات في الأقسام
 function updateCategoryCounts() {
     const countEl = document.getElementById('count-all');
     const products = getStoredProducts();
     if (countEl) countEl.innerText = `(${products.length})`;
 }
 
-// تصفية، بحث، وترتيب المنتجات
+// تصفية وبحث وترتيب المنتجات
 function getFilteredProducts() {
     const products = getStoredProducts();
     return products.filter(product => {
@@ -109,134 +201,249 @@ function getFilteredProducts() {
     });
 }
 
-// عرض المنتجات في المتجر
+// عرض المنتجات بنمط بطاقات أمازون الاحترافية
 function renderProducts() {
     const container = document.getElementById('productsGrid');
     const noResults = document.getElementById('noProductsFound');
-    const noProductsTitle = document.getElementById('noProductsTitle');
-    const noProductsDesc = document.getElementById('noProductsDesc');
-    const showAllBtn = document.getElementById('showAllProductsBtn');
+    const catalogCount = document.getElementById('catalogResultsCount');
     const filtered = getFilteredProducts();
     const allStored = getStoredProducts();
 
     updateCategoryCounts();
 
+    if (catalogCount) {
+        catalogCount.innerText = `(${filtered.length} منتج)`;
+    }
+
+    // تحديث حالة الأزرار في القائمة الجانبية والأزرار المحمولة
+    updateCategoryActiveUI();
+
     if (allStored.length === 0) {
-        container.innerHTML = '';
-        noResults.classList.remove('hidden');
-        if (noProductsTitle) noProductsTitle.innerText = "لا توجد منتجات مسجلة في المتجر حتى الآن";
-        if (noProductsDesc) noProductsDesc.innerText = "يمكنك الدخول إلى لوحة الإدارة وإضافة أول منتج حقيقي إلى قاعدة بيانات Firebase.";
-        if (showAllBtn) showAllBtn.classList.add('hidden');
+        if (container) container.innerHTML = '';
+        if (noResults) noResults.classList.remove('hidden');
         return;
     }
 
     if (filtered.length === 0) {
-        container.innerHTML = '';
-        noResults.classList.remove('hidden');
-        if (noProductsTitle) noProductsTitle.innerText = "لم يتم العثور على أي نتائج";
-        if (noProductsDesc) noProductsDesc.innerText = "جرب البحث بكلمات أخرى أو تغيير قسم مشكلة الشعر المحدد.";
-        if (showAllBtn) showAllBtn.classList.remove('hidden');
+        if (container) container.innerHTML = '';
+        if (noResults) noResults.classList.remove('hidden');
         return;
     }
 
-    noResults.classList.add('hidden');
+    if (noResults) noResults.classList.add('hidden');
+
+    if (!container) return;
 
     container.innerHTML = filtered.map(product => {
-        const isWishlisted = state.wishlist.includes(product.id);
-        const isInCart = state.cart.some(item => item.id === product.id);
+        const isWishlisted = state.wishlist.some(wid => wid.toString() === product.id.toString());
+        const isInCart = state.cart.some(item => item.id.toString() === product.id.toString());
         const imgSrc = product.image || 'https://images.unsplash.com/photo-1608248597359-497669d0d3a9?auto=format&fit=crop&w=700&q=80';
+        
+        let discountPercent = 0;
+        if (product.oldPrice && product.oldPrice > product.price) {
+            discountPercent = Math.round(((product.oldPrice - product.price) / product.oldPrice) * 100);
+        }
+
+        let badgeHtml = '';
+        if (product.badge) {
+            const badgeClass = product.badgeColor || 'bestseller-badge';
+            badgeHtml = `<span class="${badgeClass}">${escapeHTML(product.badge)}</span>`;
+        } else if (discountPercent > 0) {
+            badgeHtml = `<span class="deal-badge-red">خصم ${discountPercent}%</span>`;
+        }
 
         return `
-            <div class="product-card bg-white rounded-3xl border border-gray-100 overflow-hidden flex flex-col group relative shadow-sm hover:border-emerald-200">
-                <!-- Badges & Wishlist -->
-                <div class="absolute top-3 right-3 left-3 flex justify-between items-center z-10 pointer-events-none">
-                    ${product.badge ? `
-                        <span class="${product.badgeColor || 'bg-emerald-700'} text-white text-[11px] font-black px-2.5 py-1 rounded-full shadow-md">
-                            ${product.badge}
-                        </span>
-                    ` : '<span></span>'}
+            <div class="amazon-card flex flex-col justify-between overflow-hidden group relative p-4 bg-white">
+                <!-- Top Badges & Wishlist -->
+                <div class="flex justify-between items-start mb-2">
+                    <div>
+                        ${badgeHtml}
+                    </div>
                     <button 
                         onclick="toggleWishlist('${product.id}')" 
-                        class="pointer-events-auto w-9 h-9 rounded-full bg-white/90 backdrop-blur-md shadow-md flex items-center justify-center text-gray-400 hover:text-red-500 hover:scale-110 active:scale-90 transition-all"
-                        title="أضف إلى المفضلة"
+                        class="w-8 h-8 rounded-full bg-gray-50 hover:bg-red-50 flex items-center justify-center text-gray-400 hover:text-red-500 transition-colors"
+                        title="أضف للمفضلة"
                     >
-                        <i class="${isWishlisted ? 'fas fa-heart text-red-500' : 'far fa-heart'} text-base"></i>
+                        <i class="${isWishlisted ? 'fas fa-heart text-red-500' : 'far fa-heart'} text-sm"></i>
                     </button>
                 </div>
 
-                <!-- Product Image -->
-                <div class="product-image-container relative bg-gray-50 h-56 overflow-hidden cursor-pointer" onclick="openQuickView('${product.id}')">
-                    <img src="${imgSrc}" alt="${product.title}" class="w-full h-full object-cover">
-                    <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                        <span class="bg-white/90 text-gray-900 text-xs font-bold px-3 py-1.5 rounded-full shadow-md flex items-center gap-1.5 backdrop-blur-sm">
-                            <i class="fas fa-eye text-emerald-600"></i> تفاصيل المنتج والفوائد
+                <!-- Product Image with Zoom -->
+                <div class="product-image-container relative bg-gray-50 h-52 sm:h-56 rounded-lg overflow-hidden cursor-pointer flex items-center justify-center mb-3" onclick="openQuickView('${product.id}')">
+                    <img src="${imgSrc}" alt="${escapeHTML(product.title)}" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <span class="bg-white/95 text-gray-900 text-xs font-bold px-3 py-1.5 rounded-full shadow-md flex items-center gap-1.5">
+                            <i class="fas fa-eye text-amber-600"></i> تفاصيل المنتج
                         </span>
                     </div>
                 </div>
 
-                <!-- Product Body Details -->
-                <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
-                    <div class="space-y-1.5">
-                        <div class="flex items-center gap-1 text-amber-500 text-xs font-bold">
-                            <i class="fas fa-star"></i>
-                            <span>${product.rating || 5.0}</span>
-                            <span class="text-gray-400 font-normal">(${product.reviewsCount || 1} تجربة حقيقية)</span>
+                <!-- Title & Reviews -->
+                <div class="space-y-1.5 flex-1">
+                    <div class="flex items-center gap-1 text-amber-500 text-xs font-bold">
+                        <div class="flex items-center text-[11px] text-amber-500">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
                         </div>
-                        <h3 class="font-bold text-gray-900 text-base leading-snug line-clamp-2 hover:text-emerald-700 cursor-pointer" onclick="openQuickView('${product.id}')">
-                            ${product.title}
-                        </h3>
+                        <span class="text-gray-900 font-bold mr-1">${product.rating || 4.9}</span>
+                        <span class="text-gray-400 font-normal">(${product.reviewsCount || 48})</span>
                     </div>
+                    <h3 class="font-bold text-gray-900 text-sm leading-snug line-clamp-2 hover:text-[#c7511f] cursor-pointer" onclick="openQuickView('${product.id}')">
+                        ${escapeHTML(product.title)}
+                    </h3>
+                    <p class="text-[11px] text-gray-500 line-clamp-1">${escapeHTML(product.description || 'زيوت طبيعية 100% معصورة على البارد لعلاج مشاكل الشعر')}</p>
+                </div>
 
-                    <div class="pt-2 border-t border-gray-100 flex items-center justify-between">
-                        <div>
-                            <div class="text-lg font-black text-emerald-800">
-                                ${(product.price || 0).toLocaleString()} <span class="text-xs font-bold text-gray-500">ج.م</span>
-                            </div>
-                            ${product.oldPrice ? `
-                                <div class="text-xs text-gray-400 line-through">
-                                    ${product.oldPrice.toLocaleString()} ج.م
-                                </div>
-                            ` : ''}
+                <!-- Price Section (Amazon Style) -->
+                <div class="pt-3 border-t border-gray-100 space-y-1 mt-2">
+                    <div class="flex items-baseline gap-2">
+                        ${discountPercent > 0 ? `<span class="deal-badge-red text-[10px] py-0.5 px-1.5">خصم ${discountPercent}%</span>` : ''}
+                        <div class="text-xl font-black text-gray-900">
+                            ${(product.price || 0).toLocaleString()} <span class="text-xs font-bold text-gray-600">ج.م</span>
                         </div>
-
-                        <!-- Add to Cart Button -->
-                        <button 
-                            onclick="addToCart('${product.id}')" 
-                            class="px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 active:scale-95 ${
-                                isInCart 
-                                ? 'bg-emerald-100 text-emerald-800 hover:bg-emerald-200' 
-                                : 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white hover:from-emerald-700 hover:to-teal-700 shadow-md shadow-emerald-600/20'
-                            }"
-                        >
-                            <i class="${isInCart ? 'fas fa-check' : 'fas fa-cart-plus'}"></i>
-                            <span>${isInCart ? 'في السلة' : 'إضافة'}</span>
-                        </button>
                     </div>
+                    ${product.oldPrice ? `
+                        <div class="text-xs text-gray-400">
+                            السعر السابق: <span class="line-through">${product.oldPrice.toLocaleString()} ج.م</span>
+                        </div>
+                    ` : ''}
+
+                    <div class="text-[11px] text-emerald-700 font-bold flex items-center gap-1 pt-1">
+                        <i class="fas fa-truck-fast"></i>
+                        <span>توصيل سريع متاح غداً • معاينة مجانية</span>
+                    </div>
+                </div>
+
+                <!-- Amazon Dual Action Buttons -->
+                <div class="pt-3 space-y-2 mt-2">
+                    <button 
+                        onclick="addToCart('${product.id}')" 
+                        class="w-full py-2.5 rounded-lg text-xs font-bold btn-amazon-yellow flex items-center justify-center gap-2"
+                    >
+                        <i class="${isInCart ? 'fas fa-check text-green-700' : 'fas fa-cart-plus'}"></i>
+                        <span>${isInCart ? 'في السلة (إضافة عبوة أخرى)' : 'أضف إلى العربة'}</span>
+                    </button>
+                    <button 
+                        onclick="buyNow('${product.id}')" 
+                        class="w-full py-2.5 rounded-lg text-xs font-bold btn-amazon-orange flex items-center justify-center gap-2"
+                    >
+                        <i class="fas fa-bolt"></i>
+                        <span>اشتري الآن (دفع عند الاستلام)</span>
+                    </button>
                 </div>
             </div>
         `;
     }).join('');
 }
 
-// Category Filter Click
+// عرض سلايدر العروض والصفقات الخاطفة (Amazon Horizontal Carousel)
+function renderDealsSlider() {
+    const container = document.getElementById('dealsSliderContainer');
+    if (!container) return;
+    const products = getStoredProducts();
+    if (!products || products.length === 0) return;
+
+    container.innerHTML = products.map(product => {
+        const discountPercent = product.oldPrice ? Math.round(((product.oldPrice - product.price) / product.oldPrice) * 100) : 25;
+        const imgSrc = product.image || 'https://images.unsplash.com/photo-1608248597359-497669d0d3a9?auto=format&fit=crop&w=400&q=80';
+        return `
+            <div class="amazon-card p-3 min-w-[210px] sm:min-w-[240px] max-w-[240px] flex flex-col justify-between shrink-0 bg-white">
+                <div>
+                    <div class="relative bg-gray-50 h-36 rounded-lg overflow-hidden mb-2 cursor-pointer" onclick="openQuickView('${product.id}')">
+                        <img src="${imgSrc}" alt="${escapeHTML(product.title)}" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
+                        <span class="deal-badge-red absolute top-2 right-2 text-[10px]">خصم ${discountPercent}%</span>
+                    </div>
+                    <div class="flex items-center gap-1 text-amber-500 text-[11px] mb-1 font-bold">
+                        <i class="fas fa-star"></i>
+                        <span>${product.rating || 4.9}</span>
+                        <span class="text-gray-400 font-normal">(${product.reviewsCount || 50})</span>
+                    </div>
+                    <h4 class="font-bold text-xs text-gray-900 line-clamp-2 hover:text-[#c7511f] cursor-pointer" onclick="openQuickView('${product.id}')">
+                        ${escapeHTML(product.title)}
+                    </h4>
+                </div>
+                <div class="pt-2 border-t border-gray-100 mt-2 space-y-2">
+                    <div class="flex items-baseline gap-1.5">
+                        <span class="text-base font-black text-gray-900">${(product.price || 0).toLocaleString()} <span class="text-[10px]">ج.م</span></span>
+                        ${product.oldPrice ? `<span class="text-[11px] text-gray-400 line-through">${product.oldPrice.toLocaleString()} ج.م</span>` : ''}
+                    </div>
+                    <button onclick="addToCart('${product.id}')" class="w-full py-1.5 btn-amazon-yellow rounded-md text-xs font-bold flex items-center justify-center gap-1.5">
+                        <i class="fas fa-cart-plus text-xs"></i>
+                        <span>أضف للعربة</span>
+                    </button>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+// تمرير سلايدر العروض يميناً ويساراً
+function scrollDealsSlider(offset) {
+    const container = document.getElementById('dealsSliderContainer');
+    if (container) {
+        container.scrollBy({ left: offset, behavior: 'smooth' });
+    }
+}
+
+// مؤقت العد التنازلي لصفقة اليوم
+function initDealCountdown() {
+    function tick() {
+        const now = new Date();
+        const midnight = new Date();
+        midnight.setHours(23, 59, 59, 999);
+        const diff = Math.max(0, midnight - now);
+
+        const hours = Math.floor(diff / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+        const pad = (n) => n.toString().padStart(2, '0');
+        const timerEl = document.getElementById('dealCountdown');
+        if (timerEl) {
+            timerEl.innerText = `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+        }
+    }
+    tick();
+    setInterval(tick, 1000);
+}
+
+// تصفية حسب القسم
 function filterByCategory(cat) {
     state.currentCategory = cat;
     
-    const pills = document.querySelectorAll('.category-btn');
-    pills.forEach(btn => {
-        if (btn.getAttribute('data-cat') === cat) {
-            btn.classList.add('active');
-            btn.classList.remove('bg-white', 'text-gray-700');
-        } else {
-            btn.classList.remove('active');
-            btn.classList.add('bg-white', 'text-gray-700');
-        }
-    });
+    // تحديث محدد قسم البحث في الشريط العلوي إذا وجد
+    const searchCatSelect = document.getElementById('searchCategorySelect');
+    if (searchCatSelect) {
+        searchCatSelect.value = cat;
+    }
 
     renderProducts();
 }
 
-// Search Input Handler
+function updateCategoryActiveUI() {
+    // الأزرار المحمولة (Chips)
+    const pills = document.querySelectorAll('.category-btn');
+    pills.forEach(btn => {
+        if (btn.getAttribute('data-cat') === state.currentCategory) {
+            btn.className = 'category-btn active px-4 py-2 rounded-full text-xs font-bold transition-all shrink-0 bg-[#ffd814] text-gray-900 border border-[#fcd200] shadow-sm';
+        } else {
+            btn.className = 'category-btn px-4 py-2 rounded-full text-xs font-bold transition-all shrink-0 bg-white border border-gray-300 text-gray-700 hover:bg-gray-50';
+        }
+    });
+
+    // الروابط الجانبية للديسكتوب
+    const sideLinks = document.querySelectorAll('.category-filter-link');
+    sideLinks.forEach(link => {
+        if (link.getAttribute('data-cat') === state.currentCategory) {
+            link.classList.add('bg-amber-50', 'text-amber-900', 'font-black');
+            link.classList.remove('text-gray-700');
+        } else {
+            link.classList.remove('bg-amber-50', 'text-amber-900', 'font-black');
+            link.classList.add('text-gray-700');
+        }
+    });
+}
+
+// البحث
 function handleSearch(val) {
     state.searchQuery = val.trim();
     const clearBtn = document.getElementById('clearSearchBtn');
@@ -259,13 +466,30 @@ function clearSearch() {
     renderProducts();
 }
 
-// Sort Selection
 function handleSort(val) {
     state.sortBy = val;
     renderProducts();
 }
 
-// Cart Operations
+function handleSearchCategoryChange(cat) {
+    filterByCategory(cat);
+    scrollToProducts();
+}
+
+function executeSearchClick() {
+    const input = document.getElementById('searchInput');
+    if (input) {
+        handleSearch(input.value);
+        scrollToProducts();
+    }
+}
+
+function scrollToProducts() {
+    const el = document.getElementById('catalogSection');
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+}
+
+// إضافة منتج إلى السلة
 function addToCart(productId) {
     const products = getStoredProducts();
     const product = products.find(p => p.id.toString() === productId.toString());
@@ -287,7 +511,7 @@ function addToCart(productId) {
     saveCart();
     updateCartUI();
     renderProducts();
-    showToast(`تمت إضافة "${product.title}" إلى السلة`, 'fas fa-cart-plus text-emerald-500');
+    showToast(`تمت إضافة "${product.title}" إلى عربة التسوق`, 'fas fa-cart-plus text-amber-400');
 
     const badge = document.getElementById('cartBadge');
     if (badge) {
@@ -295,6 +519,27 @@ function addToCart(productId) {
         void badge.offsetWidth;
         badge.classList.add('badge-pop');
     }
+}
+
+// الشراء الفوري بنمط أمازون (Buy Now)
+function buyNow(productId) {
+    const products = getStoredProducts();
+    const product = products.find(p => p.id.toString() === productId.toString());
+    if (!product) return;
+
+    const existingIndex = state.cart.findIndex(item => item.id.toString() === productId.toString());
+    if (existingIndex === -1) {
+        state.cart.push({
+            id: product.id,
+            title: product.title,
+            price: product.price,
+            image: product.image,
+            qty: 1
+        });
+        saveCart();
+        updateCartUI();
+    }
+    openCheckoutModal();
 }
 
 function updateCartQty(productId, delta) {
@@ -315,13 +560,14 @@ function removeFromCart(productId) {
     saveCart();
     updateCartUI();
     renderProducts();
-    showToast('تم حذف المنتج من السلة', 'fas fa-trash text-red-400');
+    showToast('تم حذف المنتج من العربة', 'fas fa-trash text-red-400');
 }
 
 function saveCart() {
     localStorage.setItem('makkah_oils_cart', JSON.stringify(state.cart));
 }
 
+// تحديث واجهة عربة التسوق
 function updateCartUI() {
     const totalCount = state.cart.reduce((sum, item) => sum + item.qty, 0);
     const subtotal = state.cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
@@ -330,15 +576,16 @@ function updateCartUI() {
 
     const cartBadge = document.getElementById('cartBadge');
     const drawerCartCount = document.getElementById('drawerCartCount');
+    const headerCartTotal = document.getElementById('headerCartTotal');
+
     if (cartBadge) cartBadge.innerText = totalCount;
     if (drawerCartCount) drawerCartCount.innerText = `${totalCount} عناصر`;
+    if (headerCartTotal) headerCartTotal.innerText = `${finalTotal.toLocaleString()} ج.م`;
 
     const itemsList = document.getElementById('cartItemsList');
     const emptyView = document.getElementById('emptyCartView');
     const cartFooter = document.getElementById('cartFooter');
     const subtotalEl = document.getElementById('cartSubtotal');
-    const discountRow = document.getElementById('discountRow');
-    const discountEl = document.getElementById('cartDiscount');
     const totalEl = document.getElementById('cartTotal');
     const checkoutTotalVal = document.getElementById('checkoutTotalVal');
 
@@ -352,25 +599,25 @@ function updateCartUI() {
             itemsList.classList.remove('hidden');
             itemsList.innerHTML = state.cart.map(item => `
                 <div class="flex items-center gap-3 pt-3 first:pt-0">
-                    <img src="${item.image || 'https://images.unsplash.com/photo-1608248597359-497669d0d3a9?auto=format&fit=crop&w=300&q=80'}" alt="${item.title}" class="w-16 h-16 rounded-xl object-cover bg-gray-100 shrink-0 border border-gray-100">
+                    <img src="${item.image || 'https://images.unsplash.com/photo-1608248597359-497669d0d3a9?auto=format&fit=crop&w=300&q=80'}" alt="${item.title}" class="w-16 h-16 rounded-lg object-cover bg-gray-100 shrink-0 border border-gray-200">
                     <div class="flex-1 min-w-0">
                         <h4 class="font-bold text-xs text-gray-800 truncate">${item.title}</h4>
-                        <div class="text-emerald-700 font-black text-xs mt-1">
+                        <div class="text-gray-900 font-black text-xs mt-0.5">
                             ${(item.price || 0).toLocaleString()} ج.م
                         </div>
                         <div class="flex items-center gap-2 mt-2">
-                            <button onclick="updateCartQty('${item.id}', -1)" class="w-6 h-6 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 flex items-center justify-center text-xs font-bold transition-colors">
+                            <button onclick="updateCartQty('${item.id}', -1)" class="w-6 h-6 rounded bg-gray-200 hover:bg-gray-300 text-gray-800 flex items-center justify-center text-xs font-bold transition-colors">
                                 -
                             </button>
                             <span class="text-xs font-bold w-5 text-center">${item.qty}</span>
-                            <button onclick="updateCartQty('${item.id}', 1)" class="w-6 h-6 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 flex items-center justify-center text-xs font-bold transition-colors">
+                            <button onclick="updateCartQty('${item.id}', 1)" class="w-6 h-6 rounded bg-gray-200 hover:bg-gray-300 text-gray-800 flex items-center justify-center text-xs font-bold transition-colors">
                                 +
+                            </button>
+                            <button onclick="removeFromCart('${item.id}')" class="text-xs text-[#007185] hover:underline mr-2">
+                                حذف
                             </button>
                         </div>
                     </div>
-                    <button onclick="removeFromCart('${item.id}')" class="text-gray-400 hover:text-red-500 p-2 transition-colors">
-                        <i class="far fa-trash-alt text-sm"></i>
-                    </button>
                 </div>
             `).join('');
         }
@@ -378,19 +625,11 @@ function updateCartUI() {
     }
 
     if (subtotalEl) subtotalEl.innerText = `${subtotal.toLocaleString()} ج.م`;
-    if (discountRow) {
-        if (discountAmount > 0) {
-            discountRow.style.display = 'flex';
-            if (discountEl) discountEl.innerText = `-${discountAmount.toLocaleString()} ج.م (${Math.round(state.appliedDiscountPercent * 100)}%)`;
-        } else {
-            discountRow.style.display = 'none';
-        }
-    }
     if (totalEl) totalEl.innerText = `${finalTotal.toLocaleString()} ج.م`;
     if (checkoutTotalVal) checkoutTotalVal.innerText = `${finalTotal.toLocaleString()} ج.م`;
 }
 
-// Drawer Toggle
+// فتح وإغلاق درج عربة التسوق
 function toggleCartDrawer() {
     const drawer = document.getElementById('cartDrawer');
     const panel = document.getElementById('cartPanel');
@@ -417,41 +656,68 @@ function toggleCartDrawer() {
     }
 }
 
-// Coupon Logic
-function applyCoupon(codeToApply = null) {
-    const input = document.getElementById('couponInput');
-    const msg = document.getElementById('couponMsg');
+// فتح وإغلاق القائمة الجانبية لأمازون (Side Menu Drawer)
+function toggleAmazonSideMenu() {
+    const drawer = document.getElementById('amazonSideMenu');
+    const backdrop = document.getElementById('amazonSideMenuBackdrop');
+    if (!drawer || !backdrop) return;
 
-    const code = (codeToApply || (input ? input.value : '')).trim().toUpperCase();
-    if (!code) return;
-
-    if (input) input.value = code;
-
-    // تسجيل الكوبون تلقائياً إذا لم يكن مضافاً مسبقاً
-    if (!VALID_COUPONS[code]) {
-        const match = code.match(/\d+/);
-        const percent = match ? parseInt(match[0], 10) / 100 : 0.15;
-        VALID_COUPONS[code] = Math.min(Math.max(percent, 0.05), 0.70); // ما بين 5% إلى 70%
-    }
-
-    if (VALID_COUPONS[code]) {
-        state.appliedDiscountPercent = VALID_COUPONS[code];
-        state.appliedCouponCode = code;
-        if (msg) {
-            msg.innerText = `تم تطبيق كود الخصم بنجاح! (${Math.round(state.appliedDiscountPercent * 100)}% خصم)`;
-            msg.className = "text-xs text-green-600 font-semibold block";
-        }
-        updateCartUI();
-        showToast(`تم تفعيل كود الخصم (${code}) بنجاح!`, 'fas fa-percent text-emerald-500');
+    if (backdrop.classList.contains('hidden')) {
+        backdrop.classList.remove('hidden');
+        setTimeout(() => {
+            backdrop.classList.remove('opacity-0');
+            backdrop.classList.add('opacity-100');
+            drawer.classList.remove('translate-x-full');
+            drawer.classList.add('translate-x-0');
+        }, 10);
     } else {
-        if (msg) {
-            msg.innerText = "كود الخصم غير صالح أو منتهي الصلاحية";
-            msg.className = "text-xs text-red-500 font-semibold block";
-        }
+        backdrop.classList.remove('opacity-100');
+        backdrop.classList.add('opacity-0');
+        drawer.classList.remove('translate-x-0');
+        drawer.classList.add('translate-x-full');
+        setTimeout(() => {
+            backdrop.classList.add('hidden');
+        }, 300);
     }
 }
 
-// Announcements Bar Logic
+// مركز السياسات والخصوصية (Request A)
+function openPolicyModal(tabKey = 'privacy') {
+    const modal = document.getElementById('policyModal');
+    if (modal) {
+        modal.classList.remove('hidden');
+        switchPolicyTab(tabKey);
+    }
+}
+
+function closePolicyModal() {
+    const modal = document.getElementById('policyModal');
+    if (modal) modal.classList.add('hidden');
+}
+
+function switchPolicyTab(tabKey) {
+    const tabs = ['privacy', 'returns', 'shipping', 'terms', 'guarantee'];
+    tabs.forEach(t => {
+        const btn = document.getElementById(`tabBtn-${t}`);
+        const content = document.getElementById(`policyTab-${t}`);
+        if (btn) {
+            if (t === tabKey) {
+                btn.className = "policy-tab-btn active px-3.5 py-2 rounded-lg bg-[#232f3e] text-white shrink-0";
+            } else {
+                btn.className = "policy-tab-btn px-3.5 py-2 rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200 shrink-0";
+            }
+        }
+        if (content) {
+            if (t === tabKey) {
+                content.classList.remove('hidden');
+            } else {
+                content.classList.add('hidden');
+            }
+        }
+    });
+}
+
+// عرض الإعلانات والعروض في شريط أعلى الصفحة
 function renderFrontAnnouncement(announcements) {
     const bar = document.getElementById('dynamicAnnouncementBar');
     if (!bar) return;
@@ -465,7 +731,6 @@ function renderFrontAnnouncement(announcements) {
         return;
     }
 
-    // عرض الإعلان النشط الأول الذي لم يقم الزائر بإغلاقه في جلسته
     const activeAnn = activeItems.find(a => !sessionStorage.getItem('makkah_ann_dismissed_' + a.id)) || activeItems[0];
 
     if (!activeAnn || sessionStorage.getItem('makkah_ann_dismissed_' + activeAnn.id)) {
@@ -474,36 +739,27 @@ function renderFrontAnnouncement(announcements) {
         return;
     }
 
-    const themeStyles = {
-        'emerald': 'bg-gradient-to-r from-emerald-950 via-emerald-800 to-emerald-950 text-emerald-50 border-b border-emerald-700/40',
-        'amber': 'bg-gradient-to-r from-amber-900 via-amber-700 to-amber-900 text-amber-50 border-b border-amber-600/40',
-        'rose': 'bg-gradient-to-r from-rose-950 via-red-800 to-rose-950 text-rose-50 border-b border-red-700/40',
-        'indigo': 'bg-gradient-to-r from-slate-950 via-indigo-950 to-slate-950 text-indigo-50 border-b border-indigo-800/40'
-    };
-
-    const currentStyle = themeStyles[activeAnn.theme] || themeStyles['emerald'];
-
     const cleanText = escapeHTML(activeAnn.text || '');
     const cleanBtnText = escapeHTML(activeAnn.btnText || '');
-    const cleanBtnLink = escapeHTML(activeAnn.btnLink || '#products');
+    const cleanBtnLink = escapeHTML(activeAnn.btnLink || '#catalogSection');
     const cleanId = escapeHTML(activeAnn.id);
 
-    bar.className = `${currentStyle} py-2.5 px-4 text-xs font-medium shadow-sm transition-all duration-300 relative z-50`;
+    bar.className = `bg-[#232f3e] text-amber-300 py-2 px-4 text-xs font-bold border-b border-gray-700 shadow-sm transition-all duration-300 relative z-50`;
     bar.innerHTML = `
-        <div class="max-w-7xl mx-auto flex items-center justify-between gap-3 flex-wrap">
+        <div class="max-w-[1500px] mx-auto flex items-center justify-between gap-3 flex-wrap">
             <div class="flex items-center gap-2.5 mx-auto text-center flex-wrap justify-center">
-                <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-white/20 text-white shrink-0 text-[11px] animate-pulse">
+                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-amber-400/20 text-amber-400 shrink-0 text-[10px] animate-pulse">
                     <i class="fas fa-bullhorn"></i>
                 </span>
-                <span class="font-bold tracking-wide">${cleanText}</span>
+                <span class="tracking-wide">${cleanText}</span>
                 ${cleanBtnText ? `
-                    <a href="${cleanBtnLink}" class="bg-white hover:bg-gray-100 text-gray-900 font-bold px-3 py-1 rounded-lg text-[11px] shadow-sm transition-all active:scale-95 flex items-center gap-1">
+                    <a href="${cleanBtnLink}" class="bg-amber-400 hover:bg-amber-500 text-gray-900 font-bold px-3 py-0.5 rounded text-[11px] transition-all shadow-sm">
                         <span>${cleanBtnText}</span>
-                        <i class="fas fa-arrow-left text-[9px]"></i>
+                        <i class="fas fa-arrow-left text-[9px] mr-1"></i>
                     </a>
                 ` : ''}
             </div>
-            <button onclick="dismissAnnouncement('${cleanId}')" title="إغلاق الإعلان" class="text-white/60 hover:text-white transition-colors p-1 rounded-full text-xs shrink-0">
+            <button onclick="dismissAnnouncement('${cleanId}')" title="إغلاق الإعلان" class="text-gray-400 hover:text-white transition-colors p-1 text-xs shrink-0">
                 <i class="fas fa-times"></i>
             </button>
         </div>
@@ -519,15 +775,15 @@ function dismissAnnouncement(id) {
     }
 }
 
-// Wishlist Logic
+// قائمة المفضلة
 function toggleWishlist(productId) {
     const index = state.wishlist.findIndex(id => id.toString() === productId.toString());
     if (index > -1) {
         state.wishlist.splice(index, 1);
-        showToast('تمت الإزالة من قائمة المفضلة', 'far fa-heart text-gray-300');
+        showToast('تمت الإزالة من المفضلة', 'far fa-heart text-gray-300');
     } else {
         state.wishlist.push(productId);
-        showToast('تمت الإضافة إلى قائمة المفضلة ♥', 'fas fa-heart text-red-400');
+        showToast('تمت الإضافة إلى المفضلة ♥', 'fas fa-heart text-red-500');
     }
     localStorage.setItem('makkah_oils_wishlist', JSON.stringify(state.wishlist));
     updateWishlistUI();
@@ -559,27 +815,27 @@ function toggleWishlistModal() {
         const items = products.filter(p => state.wishlist.some(wid => wid.toString() === p.id.toString()));
         if (items.length === 0) {
             container.innerHTML = `
-                <div class="text-center py-8 text-gray-500">
-                    <i class="far fa-heart text-4xl mb-2 text-gray-300"></i>
-                    <p class="text-sm font-semibold">قائمتك المفضلة فارغة حالياً</p>
+                <div class="text-center py-8 text-gray-400">
+                    <i class="far fa-heart text-3xl mb-2"></i>
+                    <p class="text-xs">قائمة المفضلة فارغة حالياً</p>
                 </div>
             `;
         } else {
-            container.innerHTML = items.map(item => `
-                <div class="flex items-center justify-between gap-3 p-3 bg-gray-50 rounded-2xl">
-                    <div class="flex items-center gap-3">
-                        <img src="${item.image || 'https://images.unsplash.com/photo-1608248597359-497669d0d3a9?auto=format&fit=crop&w=300&q=80'}" alt="${item.title}" class="w-12 h-12 rounded-xl object-cover">
+            container.innerHTML = items.map(p => `
+                <div class="flex items-center justify-between gap-3 p-2 bg-gray-50 rounded-lg">
+                    <div class="flex items-center gap-2">
+                        <img src="${p.image}" class="w-12 h-12 object-cover rounded">
                         <div>
-                            <h4 class="text-xs font-bold text-gray-900 line-clamp-1">${item.title}</h4>
-                            <span class="text-emerald-700 font-black text-xs">${(item.price || 0).toLocaleString()} ج.م</span>
+                            <h5 class="text-xs font-bold text-gray-900 line-clamp-1">${p.title}</h5>
+                            <span class="text-xs font-black text-gray-900">${(p.price || 0).toLocaleString()} ج.م</span>
                         </div>
                     </div>
-                    <div class="flex items-center gap-2">
-                        <button onclick="addToCart('${item.id}'); toggleWishlistModal();" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold">
-                            إضافة للسلة
+                    <div class="flex items-center gap-1.5">
+                        <button onclick="addToCart('${p.id}')" class="btn-amazon-yellow text-xs px-2.5 py-1 rounded font-bold">
+                            أضف للعربة
                         </button>
-                        <button onclick="toggleWishlist('${item.id}'); toggleWishlistModal(); toggleWishlistModal();" class="p-1.5 text-gray-400 hover:text-red-500">
-                            <i class="fas fa-trash-alt text-xs"></i>
+                        <button onclick="toggleWishlist('${p.id}'); toggleWishlistModal();" class="text-gray-400 hover:text-red-500 p-1">
+                            <i class="fas fa-trash text-xs"></i>
                         </button>
                     </div>
                 </div>
@@ -590,7 +846,7 @@ function toggleWishlistModal() {
     }
 }
 
-// Quick View Modal
+// نافذة التفاصيل السريعة (Amazon Buy Box Style)
 function openQuickView(productId) {
     const products = getStoredProducts();
     const product = products.find(p => p.id.toString() === productId.toString());
@@ -601,49 +857,62 @@ function openQuickView(productId) {
     const isInCart = state.cart.some(item => item.id.toString() === product.id.toString());
 
     content.innerHTML = `
-        <div class="rounded-2xl overflow-hidden bg-gray-100 aspect-square">
-            <img src="${product.image || 'https://images.unsplash.com/photo-1608248597359-497669d0d3a9?auto=format&fit=crop&w=700&q=80'}" alt="${product.title}" class="w-full h-full object-cover">
+        <div class="rounded-xl overflow-hidden bg-gray-100 aspect-square border border-gray-200">
+            <img src="${product.image || 'https://images.unsplash.com/photo-1608248597359-497669d0d3a9?auto=format&fit=crop&w=700&q=80'}" alt="${escapeHTML(product.title)}" class="w-full h-full object-cover">
         </div>
-        <div class="space-y-4">
+        <div class="space-y-3">
             <div>
                 ${product.badge ? `
-                    <span class="${product.badgeColor || 'bg-emerald-700'} text-white text-xs font-black px-2.5 py-1 rounded-full inline-block mb-2">
-                        ${product.badge}
+                    <span class="${product.badgeColor || 'bestseller-badge'} mb-2 inline-block">
+                        ${escapeHTML(product.badge)}
                     </span>
                 ` : ''}
-                <h2 class="text-xl sm:text-2xl font-black text-gray-900 leading-snug">${product.title}</h2>
-                <div class="flex items-center gap-2 mt-2 text-amber-500 text-sm">
-                    <i class="fas fa-star"></i>
-                    <span class="font-bold">${product.rating || 5.0}</span>
-                    <span class="text-gray-400 text-xs">(${product.reviewsCount || 1} تجربة وتقييم عملاء)</span>
+                <h2 class="text-lg sm:text-xl font-black text-gray-900 leading-snug">${escapeHTML(product.title)}</h2>
+                <div class="flex items-center gap-2 mt-1.5 text-amber-500 text-xs font-bold">
+                    <div class="flex items-center text-amber-500 text-[11px]">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <span class="text-gray-900 font-bold">${product.rating || 4.9}</span>
+                    <span class="text-gray-400 text-[11px]">(${product.reviewsCount || 48} تقييم مشترين)</span>
                 </div>
             </div>
 
-            <p class="text-sm text-gray-600 leading-relaxed">
-                ${product.description || 'خلاصات وزيوت طبيعية 100% معصورة على البارد لعلاج مشاكل الشعر.'}
+            <p class="text-xs text-gray-600 leading-relaxed">
+                ${escapeHTML(product.description || 'خلاصات وزيوت طبيعية 100% معصورة على البارد لعلاج مشاكل الشعر والتساقط.')}
             </p>
 
-            <div class="pt-2 border-t border-gray-100">
+            <!-- Price & Delivery Perks -->
+            <div class="pt-2 border-t border-gray-100 space-y-1">
                 <div class="flex items-baseline gap-2">
-                    <span class="text-3xl font-black text-emerald-800">${(product.price || 0).toLocaleString()}</span>
-                    <span class="text-sm font-bold text-gray-600">جنيه مصري</span>
-                    ${product.oldPrice ? `<span class="text-sm text-gray-400 line-through mr-2">${product.oldPrice.toLocaleString()} ج.م</span>` : ''}
+                    <span class="text-2xl font-black text-gray-900">${(product.price || 0).toLocaleString()}</span>
+                    <span class="text-xs font-bold text-gray-600">جنيه مصري</span>
+                    ${product.oldPrice ? `<span class="text-xs text-gray-400 line-through mr-1">${product.oldPrice.toLocaleString()} ج.م</span>` : ''}
+                </div>
+                <div class="text-xs text-emerald-700 font-bold flex items-center gap-1.5">
+                    <i class="fas fa-check-circle"></i>
+                    <span>متوفر في المخزن - شحن سريع متاح غداً</span>
+                </div>
+                <div class="text-[11px] text-gray-600 flex items-center gap-1.5">
+                    <i class="fas fa-box-open text-amber-600"></i>
+                    <span>يحق لك فتح الطرد ومعاينته قبل دفع أي جنيه للمندوب</span>
                 </div>
             </div>
 
-            <div class="flex gap-3 pt-2">
+            <!-- Amazon Dual Buttons -->
+            <div class="space-y-2 pt-2">
                 <button 
                     onclick="addToCart('${product.id}'); closeQuickView();" 
-                    class="flex-1 py-3 px-6 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-bold rounded-xl shadow-lg shadow-emerald-600/20 active:scale-95 transition-all flex items-center justify-center gap-2"
+                    class="w-full py-2.5 rounded-lg text-xs font-bold btn-amazon-yellow flex items-center justify-center gap-2"
                 >
                     <i class="${isInCart ? 'fas fa-check' : 'fas fa-cart-plus'}"></i>
-                    <span>${isInCart ? 'إضافة عبوة أخرى للسلة' : 'إضافة إلى السلة'}</span>
+                    <span>${isInCart ? 'إضافة عبوة أخرى للسلة' : 'أضف إلى العربة'}</span>
                 </button>
                 <button 
-                    onclick="toggleWishlist('${product.id}')" 
-                    class="p-3 border border-gray-200 hover:bg-gray-50 rounded-xl text-gray-600 hover:text-red-500 transition-colors"
+                    onclick="closeQuickView(); buyNow('${product.id}');" 
+                    class="w-full py-2.5 rounded-lg text-xs font-bold btn-amazon-orange flex items-center justify-center gap-2"
                 >
-                    <i class="${state.wishlist.some(wid => wid.toString() === product.id.toString()) ? 'fas fa-heart text-red-500' : 'far fa-heart'} text-lg"></i>
+                    <i class="fas fa-bolt"></i>
+                    <span>اشتري الآن مباشرة (الدفع عند الاستلام)</span>
                 </button>
             </div>
         </div>
@@ -657,13 +926,12 @@ function closeQuickView() {
     if (modal) modal.classList.add('hidden');
 }
 
-// Checkout & Direct WhatsApp Integration + Log Order to Firebase Realtime Database
+// فتح نافذة الدفع
 function openCheckoutModal() {
     if (state.cart.length === 0) {
-        showToast('سلتك فارغة! أضف منتجات أولاً', 'fas fa-exclamation-circle text-amber-500');
+        showToast('عربة التسوق فارغة، يرجى إضافة منتج أولاً', 'fas fa-exclamation-circle text-amber-400');
         return;
     }
-    toggleCartDrawer();
     const modal = document.getElementById('checkoutModal');
     if (modal) modal.classList.remove('hidden');
 }
@@ -673,22 +941,24 @@ function closeCheckoutModal() {
     if (modal) modal.classList.add('hidden');
 }
 
+// تأكيد الطلب وحفظه في Firebase + التحويل للواتساب
 async function handleCheckoutSubmit(e) {
     e.preventDefault();
 
-    // 1. حماية ضد روبوتات السخام (Honeypot Trap Protection)
+    // فحص مصيدة البوتات (Honeypot)
     const honeypot = document.getElementById('custHoneypot');
-    if (honeypot && honeypot.value.trim() !== '') {
-        console.warn("Spam Bot Detected and Blocked via Honeypot.");
-        closeCheckoutModal();
+    if (honeypot && honeypot.value.trim() !== "") {
+        console.warn("Bot detected via honeypot trap.");
+        showToast("حدث خطأ أثناء معالجة الطلب، يرجى المحاولة لاحقاً.", "fas fa-shield-alt text-red-500");
         return;
     }
 
-    // 2. كبح الطلبات المتتالية ومكافحة الإغراق (Anti-Flood / Anti-DDoS Cooldown)
-    const lastOrderTime = parseInt(sessionStorage.getItem('makkah_last_order_ts') || '0', 10);
+    // فحص حد تكرار إرسال الطلبات (Rate Limiting) لمنع الإغراق
+    const lastOrderTs = parseInt(sessionStorage.getItem('makkah_last_order_ts') || '0', 10);
     const now = Date.now();
-    if (now - lastOrderTime < 15000) { // 15 ثانية كحد أدنى بين كل طلب والآخر
-        showToast('يرجى الانتظار بضع ثوانٍ قبل محاولة إرسال طلب جديد', 'fas fa-shield-alt text-amber-500');
+    if (now - lastOrderTs < 15000) { // 15 ثانية بين كل طلب
+        const waitLeft = Math.ceil((15000 - (now - lastOrderTs)) / 1000);
+        alert(`تم استلام طلبك مؤخراً. يرجى الانتظار (${waitLeft}) ثانية قبل تأكيد طلب آخر.`);
         return;
     }
 
@@ -698,14 +968,12 @@ async function handleCheckoutSubmit(e) {
     const address = document.getElementById('custAddress').value.trim();
 
     if (!name || !phone || !city || !address) {
-        showToast('يرجى استكمال جميع البيانات المطلوبة', 'fas fa-exclamation-triangle text-amber-500');
+        alert("يرجى ملء جميع الحقول المطلوبة للمتابعة.");
         return;
     }
 
-    // 3. التحقق من صحة رقم الهاتف
-    const phoneClean = phone.replace(/[^0-9]/g, '');
-    if (phoneClean.length < 9 || phoneClean.length > 15) {
-        showToast('يرجى كتابة رقم هاتف صحيح للتواصل وتأكيد الشحن', 'fas fa-phone text-red-500');
+    if (phone.length < 9 || phone.length > 25) {
+        alert("يرجى إدخال رقم هاتف صحيح (من 9 إلى 25 رقماً).");
         return;
     }
 
@@ -741,58 +1009,53 @@ async function handleCheckoutSubmit(e) {
         console.error("Error pushing order to Firebase:", err);
     }
 
-    // Format products list for WhatsApp
+    // تجهيز رسالة الواتساب
     const itemsLines = state.cart.map((item, idx) => 
-        `🌿 ${idx + 1}. *${item.title}* \n   الكمية: (${item.qty}) عبوة | السعر: ${(item.price * item.qty).toLocaleString()} ج.م`
+        `▫️ ${idx + 1}. *${item.title}* \n   الكمية: (${item.qty}) عبوة | السعر: ${(item.price * item.qty).toLocaleString()} ج.م`
     ).join('\n');
 
-    // Build WhatsApp message
     const waMessage = 
-`السلام عليكم ورحمة الله وبركاته،
-أود تأكيد طلبي من متجر *كنوز مكة للزيوت الطبيعية وعلاج مشاكل الشعر* 🌿
+`مرحباً، أريد تأكيد طلب جديد من متجر *كنوز مكة للزيوت الطبيعية* 🌿
 
-📋 *بيانات العميل والشحن:*
+📋 *بيانات العميل للشحن:*
 👤 الاسم: ${name}
 📱 رقم الهاتف: ${phone}
 📍 المحافظة / المدينة: ${city}
 🏠 العنوان بالتفصيل: ${address}
 
-🧴 *الزيوت والكورسات المطلوبة:*
+📦 *المنتجات المطلوبة:*
 ${itemsLines}
 
-💰 *ملخص الحساب:*
-• المجموع الفرعي: ${subtotal.toLocaleString()} ج.م
-${discountAmount > 0 ? `• الخصم المطبق (${state.appliedCouponCode}): -${discountAmount.toLocaleString()} ج.م\n` : ''}• تكلفة الشحن: مجاني لكافة المحافظات
-💵 *الإجمالي المطلوب سداده عند الاستلام:* *${finalTotal.toLocaleString()} ج.م*
-🚚 طريقة الدفع: نقدياً عند الاستلام (معاينة قبل الدفع)
+💰 *إجمالي الفاتورة المطلوب سداده عند الاستلام:*
+*${finalTotal.toLocaleString()} جنيه مصري* (معاينة مجانية قبل الدفع)
 
-🔖 رقم الطلب: #${randomOrderNum}
-برجاء تأكيد استلام الطلب وإرسال إرشادات الاستخدام الصحيحة، شكراً لكم!`;
+🔖 *رقم الطلب:* #${randomOrderNum}
+
+أرجو تأكيد الشحن وإرسال جدول الاستخدام المناسب لشعري. شكراً لكم!`;
 
     const waUrl = `https://wa.me/${STORE_WHATSAPP_NUMBER}?text=${encodeURIComponent(waMessage)}`;
 
-    const orderNumberEl = document.getElementById('orderNumber');
-    if (orderNumberEl) orderNumberEl.innerText = `#${randomOrderNum}`;
+    closeCheckoutModal();
 
-    const waBtn = document.getElementById('whatsappOrderBtn');
-    if (waBtn) waBtn.href = waUrl;
-
-    // Reset Cart
+    // تفريغ السلة بعد الطلب
     state.cart = [];
-    state.appliedDiscountPercent = 0;
-    state.appliedCouponCode = '';
     saveCart();
     updateCartUI();
     renderProducts();
 
-    closeCheckoutModal();
-
-    // Open WhatsApp in new tab
-    window.open(waUrl, '_blank');
-
-    // Show Success Modal
+    // عرض نافذة نجاح الطلب
     const successModal = document.getElementById('orderSuccessModal');
+    const orderNumSpan = document.getElementById('orderNumber');
+    const waBtn = document.getElementById('whatsappOrderBtn');
+
+    if (orderNumSpan) orderNumSpan.innerText = `#${randomOrderNum}`;
+    if (waBtn) waBtn.href = waUrl;
     if (successModal) successModal.classList.remove('hidden');
+
+    // فتح نافذة الواتساب تلقائياً
+    setTimeout(() => {
+        window.open(waUrl, '_blank');
+    }, 600);
 }
 
 function closeOrderSuccessModal() {
@@ -800,9 +1063,9 @@ function closeOrderSuccessModal() {
     if (successModal) successModal.classList.add('hidden');
 }
 
-// Toast Alert
+// التنبيهات المنبثقة (Toast)
 let toastTimer = null;
-function showToast(message, iconClass = 'fas fa-check-circle text-emerald-500') {
+function showToast(message, iconClass = 'fas fa-check-circle text-amber-400') {
     const toast = document.getElementById('toast');
     const toastMsg = document.getElementById('toastMsg');
     const toastIcon = document.getElementById('toastIcon');
@@ -820,9 +1083,7 @@ function showToast(message, iconClass = 'fas fa-check-circle text-emerald-500') 
     }, 3200);
 }
 
-// ==========================================
-// Secret Admin Login via Lock Icon
-// ==========================================
+// لوحة الإدارة السرية
 function openAdminLoginModal() {
     const modal = document.getElementById('adminLoginModal');
     const input = document.getElementById('adminPassInput');
@@ -864,7 +1125,7 @@ async function handleAdminLogin(e) {
     const submitBtn = e.target.querySelector('button[type="submit"]');
     if (!input) return;
 
-    // 1. فحص القفل المؤقت ضد هجمات القوة الغاشمة والتخمين
+    // 1. فحص القفل المؤقت ضد هجمات القوة الغاشمة
     const now = Date.now();
     if (now < secretLoginLimiter.lockoutUntil) {
         const remainingSeconds = Math.ceil((secretLoginLimiter.lockoutUntil - now) / 1000);
@@ -878,7 +1139,6 @@ async function handleAdminLogin(e) {
     const enteredPass = input.value.trim();
     if (!enteredPass) return;
 
-    // 2. فحص أقصى طول لكلمة المرور
     if (enteredPass.length > 64) {
         if (err) {
             err.innerText = "كلمة المرور تتجاوز الحد المسموح (64 حرفاً).";

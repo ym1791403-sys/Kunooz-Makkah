@@ -1,4 +1,6 @@
-/* Custom animations and styling enhancements */
+/* ==============================================================
+   كنوز مكة | Kunooz Makkah - Amazon Theme Styles & Animations
+   ============================================================== */
 
 /* Smooth scroll */
 html {
@@ -21,31 +23,116 @@ html {
     background: #94a3b8;
 }
 
-/* Card hover animation */
-.product-card {
-    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+/* Amazon Custom Palette */
+:root {
+    --amz-dark: #131921;
+    --amz-subnav: #232f3e;
+    --amz-btn-yellow: #ffd814;
+    --amz-btn-yellow-hover: #f7ca00;
+    --amz-btn-orange: #ffa41c;
+    --amz-btn-orange-hover: #fa8900;
+    --amz-search-amber: #febd69;
+    --amz-search-hover: #f3a847;
+    --amz-link: #007185;
+    --amz-deal-red: #cc0c39;
+    --amz-bg: #eaeded;
 }
 
-.product-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.08);
+/* Amazon Body Background */
+body {
+    background-color: #eaeded;
 }
 
-/* Category Button active styles */
-.category-btn.active {
-    background: linear-gradient(135deg, #059669, #047857) !important;
-    color: #ffffff !important;
-    border-color: #047857 !important;
-    box-shadow: 0 4px 14px 0 rgba(5, 150, 105, 0.35);
+/* Product Card Styling */
+.amazon-card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.amazon-card:hover {
+    border-color: #cbd5e1;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+    transform: translateY(-2px);
+}
+
+/* Amazon Yellow Button */
+.btn-amazon-yellow {
+    background-color: #ffd814;
+    border: 1px solid #fcd200;
+    color: #0f1111;
+    font-weight: 700;
+    box-shadow: 0 2px 5px 0 rgba(213, 217, 217, 0.5);
+    transition: all 0.15s ease-in-out;
+}
+.btn-amazon-yellow:hover {
+    background-color: #f7ca00;
+    border-color: #f2c200;
+}
+.btn-amazon-yellow:active {
+    background-color: #f0b800;
+    transform: scale(0.98);
+}
+
+/* Amazon Orange Button (Buy Now) */
+.btn-amazon-orange {
+    background-color: #ffa41c;
+    border: 1px solid #ff8f00;
+    color: #0f1111;
+    font-weight: 700;
+    box-shadow: 0 2px 5px 0 rgba(213, 217, 217, 0.5);
+    transition: all 0.15s ease-in-out;
+}
+.btn-amazon-orange:hover {
+    background-color: #fa8900;
+    border-color: #e57c00;
+}
+.btn-amazon-orange:active {
+    background-color: #f07b00;
+    transform: scale(0.98);
+}
+
+/* Deal Badge */
+.deal-badge-red {
+    background-color: #cc0c39;
+    color: #ffffff;
+    font-weight: 800;
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* Best Seller Badge */
+.bestseller-badge {
+    background-color: #e67a00;
+    color: #ffffff;
+    font-weight: 800;
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
 }
 
 /* Image zoom effect on hover */
 .product-image-container img {
-    transition: transform 0.4s ease;
+    transition: transform 0.35s ease;
+}
+.amazon-card:hover .product-image-container img {
+    transform: scale(1.05);
 }
 
-.product-card:hover .product-image-container img {
-    transform: scale(1.06);
+/* Horizontal Deals Slider */
+.deals-slider {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+.deals-slider::-webkit-scrollbar {
+    display: none;
 }
 
 /* Toast animation */
@@ -60,7 +147,11 @@ html {
     50% { transform: scale(1.35); }
     100% { transform: scale(1); }
 }
-
 .badge-pop {
     animation: popBadge 0.3s ease-out;
+}
+
+/* Amazon Sidebar Drawer Slide In */
+.sidebar-open {
+    transform: translateX(0) !important;
 }

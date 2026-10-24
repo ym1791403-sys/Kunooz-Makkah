@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>كنوز مكة | للزيوت الطبيعية وعلاج مشاكل الشعر</title>
-    <meta name="description" content="متجر كنوز مكة المتخصص في كورسات الزيوت الطبيعية المعصورة على البارد لعلاج تساقط وهيشان الشعر وإنبات الفراغات وتكثيف وتطويل الشعر. شحن سريع ومعاينة مجانية عند الاستلام.">
+    <title>كنوز مكة | متجر الزيوت الطبيعية وعلاج مشاكل الشعر</title>
+    <meta name="description" content="متجر كنوز مكة على طراز أمازون للزيوت الطبيعية المعصورة على البارد لعلاج تساقط وهيشان الشعر وإنبات الفراغات وتكثيف وتطويل الشعر. شحن سريع ومعاينة قبل الاستلام.">
     
     <!-- Favicon & Brand Icons -->
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -14,19 +14,19 @@
 
     <!-- Progressive Web App (PWA) & Mobile Home Screen -->
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#064e3b">
+    <meta name="theme-color" content="#131921">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="كنوز مكة">
     <meta name="application-name" content="كنوز مكة">
 
-    <!-- Open Graph / Facebook / WhatsApp Social Share Preview -->
+    <!-- Open Graph / Social Media Preview -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://ym1791403-sys.github.io/Kunooz-Makkah/">
+    <meta property="og:url" content="https://kunoozmakkah.vercel.app/">
     <meta property="og:title" content="كنوز مكة | زيوت طبيعية 100% لعلاج مشاكل الشعر">
     <meta property="og:description" content="متجر كنوز مكة المتخصص في كورسات الزيوت الطبيعية لعلاج التساقط وإنبات الفراغات وتنعيم وتطويل الشعر. شحن لكافة المحافظات ودفع كاش بعد المعاينة.">
-    <meta property="og:image" content="https://ym1791403-sys.github.io/Kunooz-Makkah/og-image.jpg">
-    <meta property="og:image:secure_url" content="https://ym1791403-sys.github.io/Kunooz-Makkah/og-image.jpg">
+    <meta property="og:image" content="https://kunoozmakkah.vercel.app/og-image.jpg">
+    <meta property="og:image:secure_url" content="https://kunoozmakkah.vercel.app/og-image.jpg">
     <meta property="og:image:type" content="image/jpeg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -38,7 +38,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="كنوز مكة | زيوت طبيعية 100% لعلاج مشاكل الشعر">
     <meta name="twitter:description" content="متجر كنوز مكة المتخصص في كورسات الزيوت الطبيعية لعلاج التساقط وإنبات الفراغات وتنعيم وتطويل الشعر.">
-    <meta name="twitter:image" content="https://ym1791403-sys.github.io/Kunooz-Makkah/og-image.jpg">
+    <meta name="twitter:image" content="https://kunoozmakkah.vercel.app/og-image.jpg">
 
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -47,16 +47,23 @@
             theme: {
                 extend: {
                     colors: {
-                        brand: {
-                            50: '#eff6ff',
-                            100: '#dbeafe',
-                            500: '#3b82f6',
-                            600: '#2563eb',
-                            700: '#1d4ed8',
-                            800: '#1e40af',
-                            900: '#1e3a8a',
+                        amazon: {
+                            dark: '#131921',
+                            subnav: '#232f3e',
+                            hover: '#37475a',
+                            yellow: '#ffd814',
+                            yellowHover: '#f7ca00',
+                            orange: '#ffa41c',
+                            orangeHover: '#fa8900',
+                            searchAmber: '#febd69',
+                            link: '#007185',
+                            dealRed: '#cc0c39',
+                            bg: '#eaeded'
                         },
-                        accent: '#f97316'
+                        emerald: {
+                            850: '#064e3b',
+                            950: '#022c22'
+                        }
                     },
                     fontFamily: {
                         cairo: ['Cairo', 'sans-serif'],
@@ -65,281 +72,810 @@
             }
         }
     </script>
+    
     <!-- Google Fonts Cairo -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-gray-50 text-gray-800 font-cairo antialiased min-h-screen flex flex-col">
+<body class="bg-[#eaeded] text-gray-800 font-cairo antialiased min-h-screen flex flex-col">
 
-    <!-- Dynamic Admin Announcements & Promotions Bar -->
+    <!-- Dynamic Admin Announcements Bar -->
     <div id="dynamicAnnouncementBar" class="hidden transition-all duration-300"></div>
 
-    <!-- Navigation Header -->
-    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-100">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-20 gap-4">
+    <!-- ========================================== -->
+    <!-- AMAZON HEADER TIER 1: Main Dark Navigation -->
+    <!-- ========================================== -->
+    <header class="sticky top-0 z-40 bg-[#131921] text-white select-none shadow-md">
+        <div class="max-w-[1500px] mx-auto px-3 sm:px-4">
+            <div class="flex items-center justify-between h-16 sm:h-[68px] gap-2 sm:gap-4">
                 
-                <!-- Logo -->
-                <div class="flex items-center gap-3 cursor-pointer select-none" onclick="filterByCategory('all')">
-                    <img src="logo.svg" alt="شعار كنوز مكة" class="w-12 h-12 rounded-2xl shadow-lg shadow-emerald-700/20 object-cover border border-amber-400/40">
-                    <div>
-                        <span class="text-2xl font-black tracking-tight text-gray-900">كنوز <span class="text-emerald-600">مكة</span></span>
-                        <p class="text-[10px] text-emerald-700 font-bold -mt-1 tracking-wider">للزيوت الطبيعية وعلاج الشعر</p>
+                <!-- Right Side (RTL): Mobile Menu + Amazon-style Logo -->
+                <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+                    <!-- Mobile Hamburger Button -->
+                    <button onclick="toggleAmazonSideMenu()" class="p-2 -mr-2 text-white hover:border border-white/40 rounded flex items-center justify-center lg:hidden" aria-label="القائمة الجانبية">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+
+                    <!-- Store Logo with Amazon Smile / Golden Droplet Accent -->
+                    <a href="javascript:void(0)" onclick="filterByCategory('all')" class="flex items-center gap-2 p-1.5 hover:border border-white/40 rounded transition-all group">
+                        <img src="logo.svg" alt="شعار كنوز مكة" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl object-cover shadow-sm border border-amber-400/30">
+                        <div class="leading-tight">
+                            <div class="flex items-center">
+                                <span class="text-xl sm:text-2xl font-black text-white tracking-tight">كنوز<span class="text-amber-400">مكة</span></span>
+                                <span class="text-[10px] font-bold text-gray-400 ml-1">.eg</span>
+                            </div>
+                            <div class="text-[9px] text-amber-300/90 font-semibold -mt-1 flex items-center gap-1">
+                                <i class="fas fa-droplet text-amber-400 text-[8px]"></i>
+                                <span>زيوت طبيعية معصورة</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Deliver To Location Block (Desktop) -->
+                <div class="hidden xl:flex items-center gap-2 px-2.5 py-1 hover:border border-white/40 rounded cursor-pointer shrink-0" onclick="openPolicyModal('shipping')">
+                    <i class="fas fa-location-dot text-amber-400 text-lg mt-1"></i>
+                    <div class="text-xs leading-snug">
+                        <span class="text-gray-300 text-[11px] block">التوصيل إلى</span>
+                        <span class="font-bold text-white block">مصر (شحن ومعاينة)</span>
                     </div>
                 </div>
 
-                <!-- Search Input Bar -->
-                <div class="flex-1 max-w-xl mx-2 hidden sm:block">
-                    <div class="relative">
-                        <input 
-                            type="text" 
-                            id="searchInput" 
-                            placeholder="ابحث عن: زيت تساقط، إنبات الفراغات، هيشان، روزماري، تطويل..." 
-                            class="w-full bg-gray-100 text-gray-800 pl-4 pr-11 py-2.5 rounded-full border border-transparent focus:border-emerald-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-emerald-100 transition-all text-sm"
-                            oninput="handleSearch(this.value)"
-                        >
-                        <i class="fas fa-search absolute right-4 top-3.5 text-gray-400"></i>
-                        <button id="clearSearchBtn" onclick="clearSearch()" class="hidden absolute left-4 top-3 text-gray-400 hover:text-gray-600 text-sm">
-                            <i class="fas fa-times-circle"></i>
+                <!-- Central Amazon-style Search Bar -->
+                <div class="flex-1 max-w-3xl mx-1 sm:mx-3 hidden md:block">
+                    <form onsubmit="event.preventDefault();" class="flex h-11 rounded-md overflow-hidden shadow-inner focus-within:ring-2 focus-within:ring-amber-500">
+                        <!-- Department / Category Selector Dropdown -->
+                        <div class="bg-gray-100 hover:bg-gray-200 border-l border-gray-300 text-gray-700 text-xs font-semibold px-2 flex items-center justify-center cursor-pointer shrink-0">
+                            <select id="searchCategorySelect" onchange="handleSearchCategoryChange(this.value)" class="bg-transparent border-none text-xs font-bold text-gray-700 focus:outline-none cursor-pointer pr-1">
+                                <option value="all">جميع الأقسام</option>
+                                <option value="hair-loss">علاج التساقط والإنبات</option>
+                                <option value="frizz-repair">الهيشان والتقصف</option>
+                                <option value="growth-length">التطويل والتكثيف</option>
+                                <option value="dandruff-scalp">علاج القشرة</option>
+                                <option value="bundles">كورسات التوفير</option>
+                            </select>
+                        </div>
+
+                        <!-- Main Search Text Input -->
+                        <div class="relative flex-1 bg-white flex items-center">
+                            <input 
+                                type="text" 
+                                id="searchInput" 
+                                placeholder="ابحث في متجر كنوز مكة عن: زيت تساقط، إنبات الفراغات، هيشان، تطويل، روزماري..." 
+                                class="w-full text-gray-900 px-3.5 py-2 text-sm focus:outline-none placeholder-gray-500"
+                                oninput="handleSearch(this.value)"
+                            >
+                            <button id="clearSearchBtn" onclick="clearSearch()" class="hidden absolute left-3 text-gray-400 hover:text-gray-700 text-sm">
+                                <i class="fas fa-times-circle"></i>
+                            </button>
+                        </div>
+
+                        <!-- Amazon Orange Search Button -->
+                        <button type="button" onclick="executeSearchClick()" class="bg-[#febd69] hover:bg-[#f3a847] text-gray-900 px-5 flex items-center justify-center transition-colors shrink-0" aria-label="بحث">
+                            <i class="fas fa-search text-lg"></i>
                         </button>
-                    </div>
+                    </form>
                 </div>
 
-                <!-- Action Buttons: Wishlist & Cart -->
-                <div class="flex items-center gap-2 sm:gap-3">
+                <!-- Left Side: Language, Account/Admin, Orders & Cart -->
+                <div class="flex items-center gap-1 sm:gap-2 shrink-0">
+                    
+                    <!-- Language & Country Badge -->
+                    <div class="hidden lg:flex items-center gap-1.5 px-2 py-1.5 hover:border border-white/40 rounded cursor-pointer text-xs font-bold">
+                        <span class="text-base">🇪🇬</span>
+                        <span>مصر</span>
+                        <i class="fas fa-caret-down text-[10px] text-gray-400"></i>
+                    </div>
+
+                    <!-- Account / Admin Login Shortcut -->
+                    <div onclick="openAdminLoginModal()" class="px-2 py-1 hover:border border-white/40 rounded cursor-pointer text-right hidden sm:block">
+                        <span class="text-[11px] text-gray-300 block">مرحباً بك، تسجيل الدخول</span>
+                        <span class="font-bold text-xs sm:text-sm text-white flex items-center gap-1">
+                            <span>الحساب والإدارة</span>
+                            <i class="fas fa-caret-down text-[10px] text-gray-400"></i>
+                        </span>
+                    </div>
+
+                    <!-- Orders / Tracking Button -->
+                    <div onclick="openPolicyModal('shipping')" class="px-2 py-1 hover:border border-white/40 rounded cursor-pointer text-right hidden md:block">
+                        <span class="text-[11px] text-gray-300 block">الشحن والإرجاع</span>
+                        <span class="font-bold text-xs sm:text-sm text-white">المشتريات والطلبات</span>
+                    </div>
+
                     <!-- Wishlist Button -->
-                    <button onclick="toggleWishlistModal()" class="relative p-2.5 rounded-xl hover:bg-gray-100 text-gray-600 hover:text-red-500 transition-colors">
+                    <button onclick="toggleWishlistModal()" class="relative p-2 hover:border border-white/40 rounded text-white hover:text-red-400 transition-colors" title="قائمة الرغبات">
                         <i class="far fa-heart text-xl"></i>
-                        <span id="wishlistBadge" class="absolute -top-1 -right-1 bg-red-500 text-white text-[11px] font-bold w-5 h-5 rounded-full flex items-center justify-center scale-0 transition-transform">0</span>
+                        <span id="wishlistBadge" class="absolute top-1 right-1 bg-red-600 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center scale-0 transition-transform">0</span>
                     </button>
 
-                    <!-- Cart Trigger Button -->
-                    <button onclick="toggleCartDrawer()" class="relative flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white rounded-xl shadow-md shadow-emerald-600/20 active:scale-95 transition-all">
-                        <i class="fas fa-cart-shopping text-lg"></i>
-                        <span class="font-bold hidden md:inline text-sm">السلة</span>
-                        <span id="cartBadge" class="bg-white text-emerald-800 text-xs font-black px-2 py-0.5 rounded-full ml-1">0</span>
+                    <!-- Amazon Shopping Cart Button -->
+                    <button onclick="toggleCartDrawer()" class="flex items-center gap-2 p-1.5 hover:border border-white/40 rounded transition-all group">
+                        <div class="relative flex items-center">
+                            <i class="fas fa-cart-shopping text-2xl text-white group-hover:text-amber-400 transition-colors"></i>
+                            <span id="cartBadge" class="absolute -top-2 right-1.5 bg-[#f08804] text-white text-xs font-black px-1.5 py-0.2 rounded-full min-w-[20px] text-center shadow">0</span>
+                        </div>
+                        <div class="hidden sm:block text-right leading-tight">
+                            <span class="text-[10px] text-gray-300 block font-normal">عربة التسوق</span>
+                            <span id="headerCartTotal" class="text-xs font-bold text-amber-400 block">0 ج.م</span>
+                        </div>
                     </button>
+
                 </div>
 
             </div>
 
-            <!-- Mobile Search Bar (under header) -->
-            <div class="pb-3 pt-1 sm:hidden">
-                <div class="relative">
+            <!-- Mobile Search Bar (Below Header on phones) -->
+            <div class="pb-2.5 pt-0.5 md:hidden">
+                <form onsubmit="event.preventDefault();" class="flex h-10 rounded-md overflow-hidden shadow">
                     <input 
                         type="text" 
-                        placeholder="ابحث عن منتج..." 
-                        class="w-full bg-gray-100 text-gray-800 pl-4 pr-10 py-2 rounded-xl text-sm border focus:outline-none focus:border-amber-500 focus:bg-white"
+                        placeholder="ابحث في متجر كنوز مكة..." 
+                        class="flex-1 bg-white text-gray-900 px-3 py-1.5 text-sm focus:outline-none"
                         oninput="handleSearch(this.value)"
                     >
-                    <i class="fas fa-search absolute right-3.5 top-3 text-gray-400 text-sm"></i>
-                </div>
+                    <button type="button" class="bg-[#febd69] hover:bg-[#f3a847] text-gray-900 px-4 flex items-center justify-center">
+                        <i class="fas fa-search text-base"></i>
+                    </button>
+                </form>
             </div>
         </div>
+
+        <!-- ============================================ -->
+        <!-- AMAZON HEADER TIER 2: Secondary Slate Subnav -->
+        <!-- ============================================ -->
+        <nav class="bg-[#232f3e] text-white text-xs font-semibold border-t border-gray-700/50 shadow-sm">
+            <div class="max-w-[1500px] mx-auto px-3 sm:px-4 flex items-center justify-between overflow-x-auto scrollbar-none">
+                
+                <!-- Left Nav Links -->
+                <div class="flex items-center gap-1 sm:gap-2 py-1.5 shrink-0">
+                    <!-- "All" Hamburger Button -->
+                    <button onclick="toggleAmazonSideMenu()" class="flex items-center gap-1.5 px-2.5 py-1.5 hover:border border-white/40 rounded text-white font-bold transition-all">
+                        <i class="fas fa-bars text-sm"></i>
+                        <span>الكل</span>
+                    </button>
+
+                    <!-- Today's Deals with Badge -->
+                    <button onclick="filterByCategory('all'); scrollToProducts();" class="flex items-center gap-1 px-2.5 py-1.5 hover:border border-white/40 rounded transition-all text-amber-300 font-bold">
+                        <i class="fas fa-bolt text-xs"></i>
+                        <span>عروض اليوم</span>
+                    </button>
+
+                    <!-- Best Sellers -->
+                    <button onclick="filterByCategory('bundles'); scrollToProducts();" class="px-2.5 py-1.5 hover:border border-white/40 rounded transition-all">
+                        الأكثر مبيعاً
+                    </button>
+
+                    <!-- Concern Filters -->
+                    <button onclick="filterByCategory('hair-loss'); scrollToProducts();" class="px-2.5 py-1.5 hover:border border-white/40 rounded transition-all hidden sm:inline-block">
+                        علاج التساقط والإنبات
+                    </button>
+
+                    <button onclick="filterByCategory('frizz-repair'); scrollToProducts();" class="px-2.5 py-1.5 hover:border border-white/40 rounded transition-all hidden md:inline-block">
+                        علاج الهيشان والتقصف
+                    </button>
+
+                    <button onclick="filterByCategory('growth-length'); scrollToProducts();" class="px-2.5 py-1.5 hover:border border-white/40 rounded transition-all hidden lg:inline-block">
+                        التطويل والتكثيف
+                    </button>
+
+                    <!-- Privacy & Policies Link -->
+                    <button onclick="openPolicyModal('privacy')" class="flex items-center gap-1 px-2.5 py-1.5 hover:border border-white/40 rounded transition-all text-teal-300">
+                        <i class="fas fa-shield-halved text-xs"></i>
+                        <span>سياسة الخصوصية والاسترجاع</span>
+                    </button>
+
+                    <button onclick="openPolicyModal('shipping')" class="px-2.5 py-1.5 hover:border border-white/40 rounded transition-all hidden xl:inline-block">
+                        الشحن والمعاينة عند الاستلام
+                    </button>
+                </div>
+
+                <!-- Customer Care / WhatsApp Direct Hotline -->
+                <div class="shrink-0 py-1 hidden sm:block">
+                    <a href="https://wa.me/201080369841" target="_blank" class="flex items-center gap-1.5 text-emerald-400 hover:text-emerald-300 px-2 py-1 hover:border border-white/40 rounded">
+                        <i class="fab fa-whatsapp text-sm text-green-400"></i>
+                        <span>خدمة العملاء والاستشارات</span>
+                    </a>
+                </div>
+
+            </div>
+        </nav>
     </header>
 
-    <!-- Main Content -->
-    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-8">
+    <!-- ============================================== -->
+    <!-- AMAZON SIDE MENU DRAWER (Slides from Right RTL) -->
+    <!-- ============================================== -->
+    <div id="amazonSideMenuBackdrop" onclick="toggleAmazonSideMenu()" class="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 hidden transition-opacity opacity-0"></div>
 
-        <!-- Hero Banner Section -->
-        <section class="relative rounded-3xl overflow-hidden bg-gradient-to-br from-emerald-950 via-slate-900 to-teal-950 text-white p-6 sm:p-12 shadow-2xl border border-emerald-900/40">
-            <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-emerald-500/20 rounded-full blur-3xl pointer-events-none"></div>
-            <div class="absolute -left-20 -top-20 w-80 h-80 bg-teal-500/20 rounded-full blur-3xl pointer-events-none"></div>
+    <aside id="amazonSideMenu" class="fixed top-0 right-0 bottom-0 w-80 sm:w-96 bg-white z-50 shadow-2xl flex flex-col transform translate-x-full transition-transform duration-300 ease-in-out">
+        <!-- Drawer Header -->
+        <div class="bg-[#232f3e] text-white p-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-xl text-amber-400">
+                    <i class="fas fa-circle-user"></i>
+                </div>
+                <div>
+                    <h3 class="font-black text-base text-white">مرحباً بك في كنوز مكة</h3>
+                    <p class="text-xs text-gray-300">متجرك الأول للعناية الطبيعية بالشعر</p>
+                </div>
+            </div>
+            <button onclick="toggleAmazonSideMenu()" class="text-gray-300 hover:text-white text-xl p-1" aria-label="إغلاق">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
 
-            <div class="relative z-10 max-w-2xl space-y-4">
-                <span class="inline-flex items-center gap-2 bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 text-xs font-bold px-3 py-1 rounded-full">
-                    <i class="fas fa-droplet text-amber-400"></i> زيوت طبيعية 100% معصورة على البارد
-                </span>
-                <h1 class="text-3xl sm:text-5xl font-black leading-tight">
-                    الحل النهائي للتساقط والفراغات مع <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 via-teal-200 to-amber-300">كنوز مكة</span>
+        <!-- Drawer Content Body -->
+        <div class="flex-1 overflow-y-auto divide-y divide-gray-200 text-sm text-gray-800">
+            
+            <!-- Section 1: Concerns & Categories -->
+            <div class="p-4 space-y-1">
+                <h4 class="font-black text-xs text-gray-900 uppercase tracking-wider mb-2 text-gray-500">تسوق حسب مشكلة الشعر</h4>
+                <a href="javascript:void(0)" onclick="filterByCategory('all'); toggleAmazonSideMenu(); scrollToProducts();" class="flex items-center justify-between py-2.5 px-3 rounded-lg hover:bg-gray-100 font-bold text-gray-900">
+                    <span>جميع المنتجات والزيوت</span>
+                    <i class="fas fa-chevron-left text-xs text-gray-400"></i>
+                </a>
+                <a href="javascript:void(0)" onclick="filterByCategory('hair-loss'); toggleAmazonSideMenu(); scrollToProducts();" class="flex items-center justify-between py-2 px-3 rounded-lg hover:bg-gray-100 font-medium">
+                    <span>علاج التساقط وإنبات الفراغات</span>
+                    <i class="fas fa-chevron-left text-xs text-gray-400"></i>
+                </a>
+                <a href="javascript:void(0)" onclick="filterByCategory('frizz-repair'); toggleAmazonSideMenu(); scrollToProducts();" class="flex items-center justify-between py-2 px-3 rounded-lg hover:bg-gray-100 font-medium">
+                    <span>علاج الهيشان والتقصف</span>
+                    <i class="fas fa-chevron-left text-xs text-gray-400"></i>
+                </a>
+                <a href="javascript:void(0)" onclick="filterByCategory('growth-length'); toggleAmazonSideMenu(); scrollToProducts();" class="flex items-center justify-between py-2 px-3 rounded-lg hover:bg-gray-100 font-medium">
+                    <span>تطويل وتكثيف الشعر</span>
+                    <i class="fas fa-chevron-left text-xs text-gray-400"></i>
+                </a>
+                <a href="javascript:void(0)" onclick="filterByCategory('dandruff-scalp'); toggleAmazonSideMenu(); scrollToProducts();" class="flex items-center justify-between py-2 px-3 rounded-lg hover:bg-gray-100 font-medium">
+                    <span>علاج القشرة وحكة الفروة</span>
+                    <i class="fas fa-chevron-left text-xs text-gray-400"></i>
+                </a>
+                <a href="javascript:void(0)" onclick="filterByCategory('bundles'); toggleAmazonSideMenu(); scrollToProducts();" class="flex items-center justify-between py-2 px-3 rounded-lg hover:bg-gray-100 font-bold text-emerald-800">
+                    <span>كورسات التوفير والباقات الملكية</span>
+                    <span class="bg-amber-100 text-amber-800 text-[10px] px-2 py-0.5 rounded-full font-bold">خصومات</span>
+                </a>
+            </div>
+
+            <!-- Section 2: Deals & Perks -->
+            <div class="p-4 space-y-1">
+                <h4 class="font-black text-xs text-gray-900 uppercase tracking-wider mb-2 text-gray-500">العروض والمزايا</h4>
+                <a href="javascript:void(0)" onclick="filterByCategory('all'); toggleAmazonSideMenu(); scrollToProducts();" class="flex items-center justify-between py-2 px-3 rounded-lg hover:bg-gray-100 font-medium text-amber-700">
+                    <span class="flex items-center gap-2"><i class="fas fa-bolt text-amber-500"></i> صفقات اليوم الخاطفة</span>
+                    <i class="fas fa-chevron-left text-xs text-gray-400"></i>
+                </a>
+                <a href="javascript:void(0)" onclick="openPolicyModal('returns'); toggleAmazonSideMenu();" class="flex items-center justify-between py-2 px-3 rounded-lg hover:bg-gray-100 font-medium">
+                    <span class="flex items-center gap-2"><i class="fas fa-box-open text-teal-600"></i> المعاينة قبل الدفع</span>
+                    <i class="fas fa-chevron-left text-xs text-gray-400"></i>
+                </a>
+                <a href="javascript:void(0)" onclick="openPolicyModal('shipping'); toggleAmazonSideMenu();" class="flex items-center justify-between py-2 px-3 rounded-lg hover:bg-gray-100 font-medium">
+                    <span class="flex items-center gap-2"><i class="fas fa-truck-fast text-emerald-600"></i> الشحن السريع لكافة المحافظات</span>
+                    <i class="fas fa-chevron-left text-xs text-gray-400"></i>
+                </a>
+            </div>
+
+            <!-- Section 3: Legal, Policies & Trust (Request A) -->
+            <div class="p-4 space-y-1">
+                <h4 class="font-black text-xs text-gray-900 uppercase tracking-wider mb-2 text-gray-500">السياسات والضمانات</h4>
+                <a href="javascript:void(0)" onclick="openPolicyModal('privacy'); toggleAmazonSideMenu();" class="flex items-center justify-between py-2 px-3 rounded-lg hover:bg-gray-100 font-medium">
+                    <span>سياسة الخصوصية وسرية البيانات</span>
+                    <i class="fas fa-shield-alt text-xs text-gray-400"></i>
+                </a>
+                <a href="javascript:void(0)" onclick="openPolicyModal('terms'); toggleAmazonSideMenu();" class="flex items-center justify-between py-2 px-3 rounded-lg hover:bg-gray-100 font-medium">
+                    <span>الشروط والأحكام وسياسة الشراء</span>
+                    <i class="fas fa-file-contract text-xs text-gray-400"></i>
+                </a>
+                <a href="javascript:void(0)" onclick="openPolicyModal('returns'); toggleAmazonSideMenu();" class="flex items-center justify-between py-2 px-3 rounded-lg hover:bg-gray-100 font-medium">
+                    <span>سياسة المعاينة والاسترجاع (14 يوماً)</span>
+                    <i class="fas fa-arrow-rotate-left text-xs text-gray-400"></i>
+                </a>
+                <a href="javascript:void(0)" onclick="openPolicyModal('shipping'); toggleAmazonSideMenu();" class="flex items-center justify-between py-2 px-3 rounded-lg hover:bg-gray-100 font-medium">
+                    <span>سياسة الشحن والتسليم والمتابعة</span>
+                    <i class="fas fa-truck text-xs text-gray-400"></i>
+                </a>
+                <a href="javascript:void(0)" onclick="openPolicyModal('guarantee'); toggleAmazonSideMenu();" class="flex items-center justify-between py-2 px-3 rounded-lg hover:bg-gray-100 font-medium text-emerald-700">
+                    <span>ضمان الجودة الطبيعية 100%</span>
+                    <i class="fas fa-certificate text-xs text-emerald-500"></i>
+                </a>
+            </div>
+
+            <!-- Section 4: Customer Support & Admin Login -->
+            <div class="p-4 space-y-2">
+                <a href="https://wa.me/201080369841" target="_blank" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl flex items-center justify-center gap-2 text-xs transition-colors shadow-sm">
+                    <i class="fab fa-whatsapp text-base"></i>
+                    <span>تواصل مع الدعم عبر الواتساب</span>
+                </a>
+                <button onclick="openAdminLoginModal(); toggleAmazonSideMenu();" class="w-full py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold rounded-xl flex items-center justify-center gap-2 text-xs transition-colors">
+                    <i class="fas fa-lock"></i>
+                    <span>لوحة تحكم المتجر (للإدارة)</span>
+                </button>
+            </div>
+
+        </div>
+    </aside>
+
+    <!-- ============================================== -->
+    <!-- MAIN CONTENT CONTAINER (Amazon Style Layout)   -->
+    <!-- ============================================== -->
+    <main class="flex-1 w-full max-w-[1500px] mx-auto px-3 sm:px-4 pb-12 space-y-6">
+
+        <!-- ========================================== -->
+        <!-- AMAZON HERO BANNER SLIDER                  -->
+        <!-- ========================================== -->
+        <section class="relative rounded-2xl overflow-hidden mt-3 sm:mt-4 shadow-md bg-gradient-to-r from-[#131921] via-[#1a2332] to-[#064e3b] text-white">
+            <div class="min-h-[260px] sm:min-h-[380px] p-6 sm:p-12 flex flex-col justify-center max-w-3xl relative z-10 space-y-3 sm:space-y-4">
+                <div class="inline-flex items-center gap-2 bg-amber-400/20 border border-amber-400/40 text-amber-300 text-xs font-black px-3.5 py-1.5 rounded-full w-max">
+                    <i class="fas fa-crown text-amber-400"></i>
+                    <span>عروض وتخفيضات كنوز مكة الحصرية</span>
+                </div>
+                <h1 class="text-2xl sm:text-4xl md:text-5xl font-black leading-tight tracking-tight">
+                    أقوى كورسات الزيوت الطبيعية لعلاج <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-yellow-200 to-emerald-300">التساقط والإنبات والهيشان</span>
                 </h1>
-                <p class="text-gray-300 text-sm sm:text-base leading-relaxed">
-                    تركيبات عشبية وزيوت خام نقية لعلاج التساقط الشديد، إنبات الفراغات، تكثيف وتطويل الشعر، وعلاج الهيشان والقشرة من الجذور. نتائج مجربة ومعاينة قبل الاستلام.
+                <p class="text-gray-300 text-xs sm:text-base leading-relaxed max-w-2xl">
+                    معصورة على البارد 100% بدون أي مواد كيميائية أو سيليكون. احصل على كورس العناية بشعرك مع حق المعاينة الكامل قبل دفع أي جنيه عند الاستلام.
                 </p>
-                <div class="pt-2 flex flex-wrap gap-3">
-                    <a href="#productsSection" class="px-6 py-3 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold rounded-xl shadow-lg shadow-emerald-600/30 active:scale-95 transition-all text-sm inline-flex items-center gap-2">
-                        <span>اختر علاج مشكلة شعرك</span>
+                <div class="pt-2 flex flex-wrap items-center gap-3">
+                    <a href="#catalogSection" onclick="scrollToProducts()" class="px-6 py-3 bg-[#ffd814] hover:bg-[#f7ca00] text-gray-900 font-black rounded-lg shadow-md transition-all text-sm inline-flex items-center gap-2">
+                        <span>تسوق صفقات اليوم</span>
                         <i class="fas fa-arrow-down text-xs"></i>
                     </a>
-                    <button onclick="filterByCategory('hair-loss')" class="px-5 py-3 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-xl backdrop-blur-md transition-all text-sm border border-white/10">
-                        علاج التساقط والإنبات
+                    <button onclick="filterByCategory('hair-loss'); scrollToProducts();" class="px-5 py-3 bg-white/10 hover:bg-white/20 text-white font-bold rounded-lg border border-white/20 transition-all text-sm">
+                        كورس التساقط والإنبات
+                    </button>
+                    <button onclick="openPolicyModal('returns')" class="px-4 py-3 text-gray-300 hover:text-white font-semibold text-xs inline-flex items-center gap-1.5">
+                        <i class="fas fa-shield-alt text-amber-400"></i>
+                        <span>معاينة قبل الدفع</span>
                     </button>
                 </div>
             </div>
+
+            <!-- Amazon-style Hero Gradient Bottom Blend into Cards -->
+            <div class="absolute bottom-0 inset-x-0 h-24 bg-gradient-to-t from-[#eaeded] to-transparent pointer-events-none"></div>
         </section>
 
-        <!-- Feature Trust Badges -->
-        <section class="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex items-center gap-3">
-                <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center text-xl shrink-0">
-                    <i class="fas fa-seedling"></i>
-                </div>
+        <!-- ========================================== -->
+        <!-- AMAZON SIGNATURE 4-CARD HOMEPAGE QUAD GRID -->
+        <!-- ========================================== -->
+        <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 -mt-6 sm:-mt-12 relative z-20">
+            
+            <!-- Card 1: Deal of the Day with Countdown -->
+            <div class="amazon-card p-5 flex flex-col justify-between">
                 <div>
-                    <h4 class="font-bold text-sm text-gray-900">خام معصور على البارد</h4>
-                    <p class="text-xs text-gray-500">بدون إضافات كيميائية أو سيليكون</p>
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="font-black text-gray-900 text-lg">صفقة اليوم المميزة</h3>
+                        <span class="deal-badge-red">خصم 35%</span>
+                    </div>
+                    <!-- Live Countdown Timer -->
+                    <div class="bg-red-50 border border-red-200 rounded-lg p-2.5 mb-3 flex items-center justify-between text-xs">
+                        <span class="text-red-700 font-bold flex items-center gap-1.5">
+                            <i class="fas fa-clock animate-pulse"></i> ينتهي العرض خلال:
+                        </span>
+                        <span id="dealCountdown" class="font-mono font-black text-red-800 text-sm dir-ltr">04:32:18</span>
+                    </div>
+                    <div class="aspect-video rounded-lg overflow-hidden bg-gray-100 mb-3 cursor-pointer group" onclick="filterByCategory('bundles'); scrollToProducts();">
+                        <img src="og-image.jpg" alt="صفقة اليوم" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                    </div>
+                    <h4 class="font-bold text-sm text-gray-900 line-clamp-1">كورس الإنبات الملكي المتكامل</h4>
+                    <p class="text-xs text-gray-500 mt-1">علاج التساقط المزمن وإنبات الفراغات وتغذية الجذور</p>
                 </div>
+                <a href="#catalogSection" onclick="filterByCategory('bundles'); scrollToProducts();" class="text-xs font-bold text-[#007185] hover:text-[#c7511f] hover:underline mt-4 inline-block">
+                    شاهد جميع عروض اليوم ←
+                </a>
             </div>
-            <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex items-center gap-3">
-                <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center text-xl shrink-0">
-                    <i class="fas fa-certificate"></i>
-                </div>
+
+            <!-- Card 2: 4-Grid "Shop by Concern" -->
+            <div class="amazon-card p-5 flex flex-col justify-between">
                 <div>
-                    <h4 class="font-bold text-sm text-gray-900">نتائج مثبتة ومجربة</h4>
-                    <p class="text-xs text-gray-500">توقف التساقط وإنبات حقيقي</p>
+                    <h3 class="font-black text-gray-900 text-lg mb-3">تسوق حسب مشكلة شعرك</h3>
+                    <div class="grid grid-cols-2 gap-2.5">
+                        <div onclick="filterByCategory('hair-loss'); scrollToProducts();" class="bg-gray-50 hover:bg-emerald-50 p-2.5 rounded-lg text-center cursor-pointer border border-gray-200 transition-colors group">
+                            <div class="w-8 h-8 mx-auto mb-1 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-sm group-hover:scale-110 transition-transform">
+                                <i class="fas fa-spa"></i>
+                            </div>
+                            <span class="text-[11px] font-bold text-gray-800 block">تساقط الشعر</span>
+                        </div>
+                        <div onclick="filterByCategory('growth-length'); scrollToProducts();" class="bg-gray-50 hover:bg-amber-50 p-2.5 rounded-lg text-center cursor-pointer border border-gray-200 transition-colors group">
+                            <div class="w-8 h-8 mx-auto mb-1 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center text-sm group-hover:scale-110 transition-transform">
+                                <i class="fas fa-seedling"></i>
+                            </div>
+                            <span class="text-[11px] font-bold text-gray-800 block">إنبات الفراغات</span>
+                        </div>
+                        <div onclick="filterByCategory('frizz-repair'); scrollToProducts();" class="bg-gray-50 hover:bg-teal-50 p-2.5 rounded-lg text-center cursor-pointer border border-gray-200 transition-colors group">
+                            <div class="w-8 h-8 mx-auto mb-1 rounded-full bg-teal-100 text-teal-700 flex items-center justify-center text-sm group-hover:scale-110 transition-transform">
+                                <i class="fas fa-feather"></i>
+                            </div>
+                            <span class="text-[11px] font-bold text-gray-800 block">الهيشان والتقصف</span>
+                        </div>
+                        <div onclick="filterByCategory('dandruff-scalp'); scrollToProducts();" class="bg-gray-50 hover:bg-blue-50 p-2.5 rounded-lg text-center cursor-pointer border border-gray-200 transition-colors group">
+                            <div class="w-8 h-8 mx-auto mb-1 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center text-sm group-hover:scale-110 transition-transform">
+                                <i class="fas fa-snowflake"></i>
+                            </div>
+                            <span class="text-[11px] font-bold text-gray-800 block">علاج القشرة</span>
+                        </div>
+                    </div>
                 </div>
+                <a href="#catalogSection" onclick="filterByCategory('all'); scrollToProducts();" class="text-xs font-bold text-[#007185] hover:text-[#c7511f] hover:underline mt-4 inline-block">
+                    استكشف جميع الأقسام ←
+                </a>
             </div>
-            <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex items-center gap-3">
-                <div class="w-12 h-12 rounded-xl bg-teal-50 text-teal-700 flex items-center justify-center text-xl shrink-0">
-                    <i class="fas fa-box-open"></i>
-                </div>
+
+            <!-- Card 3: Best Seller Oil Highlight -->
+            <div class="amazon-card p-5 flex flex-col justify-between">
                 <div>
-                    <h4 class="font-bold text-sm text-gray-900">معاينة قبل الدفع</h4>
-                    <p class="text-xs text-gray-500">افحص طلبك وتأكد من الجودة عند الاستلام</p>
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="font-black text-gray-900 text-lg">الأكثر مبيعاً #1</h3>
+                        <span class="bestseller-badge">اختيار المشترين</span>
+                    </div>
+                    <div class="aspect-video rounded-lg overflow-hidden bg-gray-100 mb-3 flex items-center justify-center">
+                        <img src="og-image.jpg" alt="الأكثر مبيعاً" class="w-full h-full object-cover">
+                    </div>
+                    <div class="flex items-center gap-1 text-amber-500 text-xs font-bold mb-1">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        <span class="text-gray-500 font-normal mr-1">(184 تقييم)</span>
+                    </div>
+                    <h4 class="font-bold text-sm text-gray-900">سيروم زيت الروزماري المعصور على البارد</h4>
+                    <p class="text-xs text-emerald-700 font-bold mt-1">توصيل سريع مجاني متاح غداً</p>
                 </div>
+                <a href="#catalogSection" onclick="filterByCategory('all'); scrollToProducts();" class="text-xs font-bold text-[#007185] hover:text-[#c7511f] hover:underline mt-4 inline-block">
+                    عرض المنتجات الأعلى تقييماً ←
+                </a>
             </div>
-            <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex items-center gap-3">
-                <div class="w-12 h-12 rounded-xl bg-green-50 text-green-700 flex items-center justify-center text-xl shrink-0">
-                    <i class="fab fa-whatsapp"></i>
-                </div>
+
+            <!-- Card 4: Amazon Prime / Kunooz Gold Trust Badges -->
+            <div class="amazon-card p-5 flex flex-col justify-between bg-gradient-to-b from-white to-amber-50/40">
                 <div>
-                    <h4 class="font-bold text-sm text-gray-900">استشارة ومتابعة واتساب</h4>
-                    <p class="text-xs text-gray-500">طريقة استخدام مخصصة لحالة شعرك</p>
+                    <h3 class="font-black text-gray-900 text-lg mb-3">ضمانات كنوز مكة الذهبية</h3>
+                    <div class="space-y-3">
+                        <div class="flex items-start gap-2.5">
+                            <i class="fas fa-box-open text-amber-600 text-base mt-0.5"></i>
+                            <div>
+                                <span class="font-bold text-xs text-gray-900 block">معاينة قبل الدفع</span>
+                                <span class="text-[11px] text-gray-500 block">افحص الطرد وتأكد من الزيوت مع المندوب</span>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-2.5">
+                            <i class="fas fa-truck-fast text-emerald-600 text-base mt-0.5"></i>
+                            <div>
+                                <span class="font-bold text-xs text-gray-900 block">شحن سريع لكافة المحافظات</span>
+                                <span class="text-[11px] text-gray-500 block">توصيل خلال 24 إلى 48 ساعة</span>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-2.5">
+                            <i class="fas fa-shield-halved text-blue-600 text-base mt-0.5"></i>
+                            <div>
+                                <span class="font-bold text-xs text-gray-900 block">أصلي وطبيعي 100%</span>
+                                <span class="text-[11px] text-gray-500 block">معصور على البارد بدون كيماويات</span>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-2.5">
+                            <i class="fab fa-whatsapp text-green-600 text-base mt-0.5"></i>
+                            <div>
+                                <span class="font-bold text-xs text-gray-900 block">استشارة ومتابعة واتساب</span>
+                                <span class="text-[11px] text-gray-500 block">طريقة استخدام مخصصة لحالة شعرك</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                <button onclick="openPolicyModal('guarantee')" class="text-xs font-bold text-[#007185] hover:text-[#c7511f] hover:underline mt-4 text-right">
+                    تعرف على سياسة الضمان والمعاينة ←
+                </button>
             </div>
+
         </section>
 
-        <!-- Product Filter & Controls Bar -->
-        <section id="productsSection" class="space-y-6">
-            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-200 pb-4">
-                <div>
-                    <h2 class="text-2xl font-black text-gray-900">اختر علاج مشكلة شعرك</h2>
-                    <p class="text-sm text-gray-500">خلاصات وزيوت طبيعية نقية 100% موجهة لعلاج الفروة وتغذية البصيلات</p>
-                </div>
-
-                <!-- Filter Controls (Sorting & View) -->
+        <!-- ========================================== -->
+        <!-- AMAZON HORIZONTAL PRODUCT CAROUSEL         -->
+        <!-- "صفقات مميزة وتخفيضات خاطفة"              -->
+        <!-- ========================================== -->
+        <section class="amazon-card p-5 relative">
+            <div class="flex items-center justify-between mb-4 border-b border-gray-100 pb-3">
                 <div class="flex items-center gap-3">
-                    <span class="text-xs text-gray-500 font-medium">الترتيب حسب:</span>
-                    <select id="sortSelect" onchange="handleSort(this.value)" class="bg-white border border-gray-200 text-sm font-semibold rounded-xl px-3 py-2 text-gray-700 focus:outline-none focus:border-emerald-500 shadow-sm">
-                        <option value="default">المقترحة لك</option>
+                    <h2 class="font-black text-gray-900 text-lg sm:text-xl">صفقات مميزة وتخفيضات اليوم</h2>
+                    <span class="deal-badge-red hidden sm:inline-flex">وفر حتى 40%</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick="scrollDealsSlider(-300)" class="w-8 h-8 rounded-full border border-gray-300 hover:bg-gray-100 flex items-center justify-center text-gray-700 shadow-sm" aria-label="السابق">
+                        <i class="fas fa-chevron-right text-xs"></i>
+                    </button>
+                    <button onclick="scrollDealsSlider(300)" class="w-8 h-8 rounded-full border border-gray-300 hover:bg-gray-100 flex items-center justify-center text-gray-700 shadow-sm" aria-label="التالي">
+                        <i class="fas fa-chevron-left text-xs"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Horizontal Scroll Container -->
+            <div id="dealsSliderContainer" class="deals-slider flex gap-4 overflow-x-auto pb-2 scroll-smooth">
+                <!-- Dynamically populated or filled from products list -->
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- MAIN CATALOG SECTION: Filter Sidebar + Grid -->
+        <!-- ========================================== -->
+        <section id="catalogSection" class="pt-4 space-y-4">
+            
+            <!-- Amazon Filter & Category Header Bar -->
+            <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-3">
+                <div>
+                    <h2 class="text-xl font-black text-gray-900 flex items-center gap-2">
+                        <span>كتالوج المنتجات والزيوت الطبيعية</span>
+                        <span id="catalogResultsCount" class="text-xs font-bold text-gray-500 bg-gray-100 px-2.5 py-1 rounded-full"></span>
+                    </h2>
+                    <p class="text-xs text-gray-500 mt-0.5">معاينة كاملة قبل الدفع عند الاستلام مع شحن سريع لكافة محافظات مصر</p>
+                </div>
+
+                <!-- Sorting and View Controls -->
+                <div class="flex items-center gap-2 shrink-0">
+                    <label for="sortSelect" class="text-xs font-bold text-gray-600">ترتيب حسب:</label>
+                    <select id="sortSelect" onchange="handleSort(this.value)" class="bg-gray-50 border border-gray-300 text-xs font-bold rounded-lg px-3 py-2 text-gray-800 focus:outline-none focus:border-amber-500 cursor-pointer">
+                        <option value="default">المقترحة لك (الأفضل)</option>
                         <option value="price-low">السعر: من الأقل للأعلى</option>
                         <option value="price-high">السعر: من الأعلى للأقل</option>
-                        <option value="rating">الأعلى تقييماً ★</option>
+                        <option value="rating">الأعلى تقييماً ★★★★★</option>
                     </select>
                 </div>
             </div>
 
-            <!-- Category Pills -->
-            <div class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none" id="categoryPills">
-                <button onclick="filterByCategory('all')" class="category-btn active px-5 py-2.5 rounded-full text-sm font-bold transition-all shrink-0 bg-emerald-600 text-white shadow-sm shadow-emerald-500/20" data-cat="all">
-                    جميع المنتجات <span id="count-all" class="text-xs opacity-80">(0)</span>
-                </button>
-                <button onclick="filterByCategory('hair-loss')" class="category-btn px-5 py-2.5 rounded-full text-sm font-bold transition-all shrink-0 bg-white border border-gray-200 text-gray-700 hover:bg-gray-100" data-cat="hair-loss">
-                    التساقط وإنبات الفراغات
-                </button>
-                <button onclick="filterByCategory('frizz-repair')" class="category-btn px-5 py-2.5 rounded-full text-sm font-bold transition-all shrink-0 bg-white border border-gray-200 text-gray-700 hover:bg-gray-100" data-cat="frizz-repair">
-                    علاج الهيشان والتقصف
-                </button>
-                <button onclick="filterByCategory('growth-length')" class="category-btn px-5 py-2.5 rounded-full text-sm font-bold transition-all shrink-0 bg-white border border-gray-200 text-gray-700 hover:bg-gray-100" data-cat="growth-length">
-                    التطويل وتكثيف الشعر
-                </button>
-                <button onclick="filterByCategory('dandruff-scalp')" class="category-btn px-5 py-2.5 rounded-full text-sm font-bold transition-all shrink-0 bg-white border border-gray-200 text-gray-700 hover:bg-gray-100" data-cat="dandruff-scalp">
-                    علاج القشرة والفروة
-                </button>
-                <button onclick="filterByCategory('bundles')" class="category-btn px-5 py-2.5 rounded-full text-sm font-bold transition-all shrink-0 bg-white border border-gray-200 text-gray-700 hover:bg-gray-100" data-cat="bundles">
-                    الكورسات وعروض التوفير
-                </button>
+            <!-- 2-Column Layout: Sidebar Filters + Products Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 items-start">
+                
+                <!-- RIGHT SIDEBAR: Amazon Faceted Filters -->
+                <aside class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm space-y-5 hidden lg:block">
+                    <!-- Category Filter -->
+                    <div>
+                        <h4 class="font-black text-sm text-gray-900 mb-2.5 pb-1 border-b border-gray-100">القسم ومشكلة الشعر</h4>
+                        <div class="space-y-1.5 text-xs">
+                            <button onclick="filterByCategory('all')" class="category-filter-link w-full text-right py-1 px-2 rounded hover:bg-amber-50 hover:text-amber-800 font-bold text-amber-900 flex justify-between" data-cat="all">
+                                <span>جميع المنتجات</span>
+                                <span id="count-all" class="text-gray-400 font-normal">(0)</span>
+                            </button>
+                            <button onclick="filterByCategory('hair-loss')" class="category-filter-link w-full text-right py-1 px-2 rounded hover:bg-gray-50 text-gray-700 flex justify-between" data-cat="hair-loss">
+                                <span>علاج التساقط وإنبات الفراغات</span>
+                            </button>
+                            <button onclick="filterByCategory('frizz-repair')" class="category-filter-link w-full text-right py-1 px-2 rounded hover:bg-gray-50 text-gray-700 flex justify-between" data-cat="frizz-repair">
+                                <span>الهيشان والتقصف وتنعيم الشعر</span>
+                            </button>
+                            <button onclick="filterByCategory('growth-length')" class="category-filter-link w-full text-right py-1 px-2 rounded hover:bg-gray-50 text-gray-700 flex justify-between" data-cat="growth-length">
+                                <span>التطويل والتكثيف السريع</span>
+                            </button>
+                            <button onclick="filterByCategory('dandruff-scalp')" class="category-filter-link w-full text-right py-1 px-2 rounded hover:bg-gray-50 text-gray-700 flex justify-between" data-cat="dandruff-scalp">
+                                <span>علاج القشرة والفروة</span>
+                            </button>
+                            <button onclick="filterByCategory('bundles')" class="category-filter-link w-full text-right py-1 px-2 rounded hover:bg-gray-50 text-gray-700 flex justify-between" data-cat="bundles">
+                                <span>الكورسات وعروض التوفير</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Customer Reviews Filter -->
+                    <div>
+                        <h4 class="font-black text-sm text-gray-900 mb-2.5 pb-1 border-b border-gray-100">تقييمات المشترين</h4>
+                        <div class="space-y-1.5 text-xs">
+                            <div class="flex items-center gap-1.5 text-amber-500 cursor-pointer hover:text-amber-600" onclick="handleSort('rating')">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
+                                <span class="text-gray-700 font-bold mr-1">4 نجوم فما فوق</span>
+                            </div>
+                            <div class="flex items-center gap-1.5 text-amber-500 cursor-pointer hover:text-amber-600" onclick="handleSort('rating')">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i>
+                                <span class="text-gray-700 font-bold mr-1">3 نجوم فما فوق</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Prime / Delivery Perks -->
+                    <div>
+                        <h4 class="font-black text-sm text-gray-900 mb-2.5 pb-1 border-b border-gray-100">خدمات التسليم</h4>
+                        <div class="space-y-2 text-xs">
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" checked disabled class="rounded text-amber-500">
+                                <span class="font-bold text-gray-800">معاينة قبل الدفع مجانية</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" checked disabled class="rounded text-amber-500">
+                                <span class="font-bold text-gray-800">شحن سريع متوفر غداً</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Policies & Help Banner -->
+                    <div class="bg-amber-50/70 border border-amber-200 rounded-lg p-3 text-xs space-y-2">
+                        <span class="font-bold text-amber-900 block flex items-center gap-1.5">
+                            <i class="fas fa-shield-alt text-amber-600"></i> حماية المشتري 100%
+                        </span>
+                        <p class="text-[11px] text-gray-600 leading-relaxed">
+                            جميع طلباتك محمية بموجب سياسة الخصوصية والمعاينة والاسترجاع لمدة 14 يوماً.
+                        </p>
+                        <button onclick="openPolicyModal('privacy')" class="text-[11px] font-bold text-amber-800 hover:underline">
+                            اقرأ سياسة الخصوصية ←
+                        </button>
+                    </div>
+                </aside>
+
+                <!-- LEFT MAIN: Products Grid -->
+                <div class="lg:col-span-3 space-y-4">
+                    
+                    <!-- Mobile Category Chips (Horizontal Scroll) -->
+                    <div class="flex items-center gap-2 overflow-x-auto pb-1 lg:hidden scrollbar-none" id="categoryPills">
+                        <button onclick="filterByCategory('all')" class="category-btn active px-4 py-2 rounded-full text-xs font-bold transition-all shrink-0 bg-[#ffd814] text-gray-900 border border-[#fcd200]" data-cat="all">
+                            الكل
+                        </button>
+                        <button onclick="filterByCategory('hair-loss')" class="category-btn px-4 py-2 rounded-full text-xs font-bold transition-all shrink-0 bg-white border border-gray-300 text-gray-700" data-cat="hair-loss">
+                            التساقط والإنبات
+                        </button>
+                        <button onclick="filterByCategory('frizz-repair')" class="category-btn px-4 py-2 rounded-full text-xs font-bold transition-all shrink-0 bg-white border border-gray-300 text-gray-700" data-cat="frizz-repair">
+                            الهيشان والتقصف
+                        </button>
+                        <button onclick="filterByCategory('growth-length')" class="category-btn px-4 py-2 rounded-full text-xs font-bold transition-all shrink-0 bg-white border border-gray-300 text-gray-700" data-cat="growth-length">
+                            التطويل والتكثيف
+                        </button>
+                        <button onclick="filterByCategory('bundles')" class="category-btn px-4 py-2 rounded-full text-xs font-bold transition-all shrink-0 bg-white border border-gray-300 text-gray-700" data-cat="bundles">
+                            الكورسات
+                        </button>
+                    </div>
+
+                    <!-- Products Grid Container -->
+                    <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-5">
+                        <!-- Products dynamically rendered here in Amazon style via JavaScript -->
+                    </div>
+
+                    <!-- Empty State (When no products match search or category) -->
+                    <div id="noProductsFound" class="hidden text-center py-16 bg-white rounded-2xl border border-dashed border-gray-300 p-6">
+                        <div class="w-16 h-16 bg-amber-50 text-amber-600 rounded-full flex items-center justify-center mx-auto text-3xl mb-3">
+                            <i class="fas fa-box-open"></i>
+                        </div>
+                        <h3 id="noProductsTitle" class="text-lg font-bold text-gray-900">لم يتم العثور على أي منتجات</h3>
+                        <p id="noProductsDesc" class="text-xs text-gray-500 mt-1 max-w-sm mx-auto">جرب البحث بكلمة أخرى أو تصفح جميع الأقسام المتاحة.</p>
+                        <div class="mt-4 flex gap-3 justify-center">
+                            <button id="showAllProductsBtn" onclick="filterByCategory('all'); clearSearch();" class="px-5 py-2.5 bg-[#ffd814] hover:bg-[#f7ca00] text-gray-900 rounded-lg text-xs font-bold shadow-sm">
+                                عرض جميع المنتجات
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
             </div>
 
-            <!-- Products Grid Container -->
-            <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                <!-- Products dynamically injected via JavaScript -->
-            </div>
-
-            <!-- Empty State (hidden by default) -->
-            <div id="noProductsFound" class="hidden text-center py-16 bg-white rounded-3xl border border-dashed border-gray-300 p-6">
-                <div class="w-20 h-20 bg-emerald-50 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-3xl mb-4">
-                    <i class="fas fa-box-open"></i>
-                </div>
-                <h3 id="noProductsTitle" class="text-xl font-bold text-gray-800">لا توجد منتجات معروضة</h3>
-                <p id="noProductsDesc" class="text-sm text-gray-500 mt-1 max-w-sm mx-auto">يمكنك إضافة وتعديل منتجاتك الحقيقية الآن من خلال لوحة الإدارة بكل سهولة.</p>
-                <div class="mt-5 flex flex-wrap gap-3 justify-center">
-                    <a href="admin.html" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-sm font-bold shadow-md shadow-emerald-600/20 inline-flex items-center gap-2">
-                        <i class="fas fa-plus-circle"></i>
-                        <span>إضافة منتج من لوحة الإدارة</span>
-                    </a>
-                    <button id="showAllProductsBtn" onclick="filterByCategory('all'); clearSearch();" class="px-5 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl text-sm font-semibold">
-                        عرض الكل
-                    </button>
-                </div>
-            </div>
         </section>
 
     </main>
 
-    <!-- Slide-Over Shopping Cart Drawer -->
-    <div id="cartDrawer" class="fixed inset-0 z-50 overflow-hidden hidden">
-        <!-- Backdrop -->
-        <div id="cartBackdrop" onclick="toggleCartDrawer()" class="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity opacity-0"></div>
-
-        <div class="absolute inset-y-0 left-0 max-w-full flex pl-0 sm:pl-10">
-            <div id="cartPanel" class="w-screen max-w-md bg-white shadow-2xl flex flex-col transform -translate-x-full transition-transform duration-300 ease-in-out">
+    <!-- ============================================== -->
+    <!-- COMPREHENSIVE LEGAL & POLICIES MODAL (Request A)-->
+    <!-- Privacy Policy, Terms, Returns, Shipping       -->
+    <!-- ============================================== -->
+    <div id="policyModal" class="fixed inset-0 z-50 overflow-y-auto hidden">
+        <div class="min-h-screen px-4 flex items-center justify-center py-6">
+            <div class="fixed inset-0 bg-black/60 backdrop-blur-xs" onclick="closePolicyModal()"></div>
+            
+            <div class="relative bg-white rounded-2xl max-w-3xl w-full p-6 sm:p-8 shadow-2xl z-10 space-y-4">
                 
-                <!-- Drawer Header -->
-                <div class="p-5 border-b border-gray-100 flex items-center justify-between bg-gray-50">
-                    <div class="flex items-center gap-2">
-                        <i class="fas fa-shopping-cart text-amber-600 text-lg"></i>
-                        <h3 class="font-black text-gray-900 text-lg">سلة المشتريات</h3>
-                        <span id="drawerCartCount" class="bg-amber-100 text-amber-800 text-xs px-2.5 py-0.5 rounded-full font-bold">0 عناصر</span>
+                <!-- Modal Header -->
+                <div class="flex items-center justify-between pb-4 border-b border-gray-200">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center text-xl">
+                            <i class="fas fa-shield-halved"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-black text-gray-900 text-lg sm:text-xl">مركز السياسات والخصوصية وحماية المستهلك</h3>
+                            <p class="text-xs text-gray-500">متجر كنوز مكة (Kunooz Makkah) - التزام تام بالأمان والشفافية</p>
+                        </div>
                     </div>
-                    <button onclick="toggleCartDrawer()" class="w-8 h-8 rounded-full hover:bg-gray-200 flex items-center justify-center text-gray-500">
+                    <button onclick="closePolicyModal()" class="w-8 h-8 rounded-full hover:bg-gray-100 flex items-center justify-center text-gray-400" aria-label="إغلاق">
                         <i class="fas fa-times"></i>
                     </button>
                 </div>
 
-                <!-- Drawer Cart Items Body -->
-                <div id="cartItemsList" class="flex-1 overflow-y-auto p-5 space-y-4 divide-y divide-gray-100">
-                    <!-- Dynamic cart items will be rendered here -->
-                </div>
-
-                <!-- Empty Cart Message -->
-                <div id="emptyCartView" class="hidden flex-1 flex flex-col items-center justify-center p-6 text-center">
-                    <div class="w-24 h-24 bg-amber-50 text-amber-500 rounded-full flex items-center justify-center text-4xl mb-4">
-                        <i class="fas fa-cart-arrow-down"></i>
-                    </div>
-                    <h4 class="font-bold text-gray-800 text-lg">سلتك فارغة حالياً</h4>
-                    <p class="text-sm text-gray-500 mt-1 max-w-xs">استكشف نفحات ومقتنيات كنوز مكة وأضف ما يعجبك إلى السلة!</p>
-                    <button onclick="toggleCartDrawer()" class="mt-5 px-6 py-2.5 bg-amber-600 text-white rounded-xl font-bold text-sm hover:bg-amber-700 transition-colors">
-                        ابدأ التسوق الآن
+                <!-- Policy Tabs Navigation -->
+                <div class="flex items-center gap-2 overflow-x-auto pb-2 border-b border-gray-100 scrollbar-none text-xs font-bold">
+                    <button id="tabBtn-privacy" onclick="switchPolicyTab('privacy')" class="policy-tab-btn active px-3.5 py-2 rounded-lg bg-[#232f3e] text-white shrink-0">
+                        <i class="fas fa-user-shield ml-1"></i> سياسة الخصوصية
+                    </button>
+                    <button id="tabBtn-returns" onclick="switchPolicyTab('returns')" class="policy-tab-btn px-3.5 py-2 rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200 shrink-0">
+                        <i class="fas fa-box-open ml-1"></i> المعاينة والاسترجاع
+                    </button>
+                    <button id="tabBtn-shipping" onclick="switchPolicyTab('shipping')" class="policy-tab-btn px-3.5 py-2 rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200 shrink-0">
+                        <i class="fas fa-truck-fast ml-1"></i> الشحن والتوصيل
+                    </button>
+                    <button id="tabBtn-terms" onclick="switchPolicyTab('terms')" class="policy-tab-btn px-3.5 py-2 rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200 shrink-0">
+                        <i class="fas fa-file-contract ml-1"></i> الشروط والأحكام
+                    </button>
+                    <button id="tabBtn-guarantee" onclick="switchPolicyTab('guarantee')" class="policy-tab-btn px-3.5 py-2 rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200 shrink-0">
+                        <i class="fas fa-certificate ml-1"></i> ضمان الجودة 100%
                     </button>
                 </div>
 
-                <!-- Cart Summary & Checkout Footer -->
-                <div id="cartFooter" class="p-5 border-t border-gray-100 bg-gray-50 space-y-3">
+                <!-- Tab 1: Privacy Policy Content -->
+                <div id="policyTab-privacy" class="policy-tab-content space-y-3 text-xs text-gray-700 leading-relaxed max-h-[60vh] overflow-y-auto pr-1">
+                    <div class="bg-emerald-50 border border-emerald-200 p-3 rounded-xl flex items-center gap-3">
+                        <i class="fas fa-lock text-emerald-700 text-xl shrink-0"></i>
+                        <p class="font-bold text-emerald-900">خصوصيتك وأمان بياناتك هي أولويتنا القصوى في متجر كنوز مكة. نحن لا نبيع ولا نشارك بياناتك مع أي طرف ثالث على الإطلاق.</p>
+                    </div>
+
+                    <h4 class="font-bold text-sm text-gray-900 pt-2">1. ما هي البيانات التي نجمعها؟</h4>
+                    <p>نجمع فقط البيانات الضرورية واللازمة لمعالجة طلبك وإيصاله إليك بشكل آمن، وهي: الاسم، رقم الهاتف (للتواصل عبر الواتساب لتأكيد الشحن)، والمحافظة والعنوان بالتفصيل.</p>
+
+                    <h4 class="font-bold text-sm text-gray-900 pt-2">2. كيف نستخدم معلوماتك؟</h4>
+                    <ul class="list-disc list-inside space-y-1 pr-2">
+                        <li>تأكيد الطلب وشحنه إلى عنوانك عبر مندوبي الشحن المعتمدين.</li>
+                        <li>إرسال جدول وكيفية الاستخدام المخصصة لحالة شعرك عبر الواتساب.</li>
+                        <li>المتابعة معك للاطمئنان على استلام الشحنة وتجربتك للمنتج.</li>
+                    </ul>
+
+                    <h4 class="font-bold text-sm text-gray-900 pt-2">3. حماية وتشفير البيانات</h4>
+                    <p>تتم معالجة كافة البيانات عبر بروتوكولات اتصال مشفرة وآمنة (SSL/TLS)، مع حفظها في خوادم سحابية محمية بأنظمة التحقق وقواعد بيانات Firebase المحصنة ضد الاختراق.</p>
+                </div>
+
+                <!-- Tab 2: Returns & Inspection Policy -->
+                <div id="policyTab-returns" class="policy-tab-content hidden space-y-3 text-xs text-gray-700 leading-relaxed max-h-[60vh] overflow-y-auto pr-1">
+                    <div class="bg-amber-50 border border-amber-200 p-3 rounded-xl flex items-center gap-3">
+                        <i class="fas fa-hand-holding-heart text-amber-700 text-xl shrink-0"></i>
+                        <p class="font-bold text-amber-900">حق المعاينة الكامل قبل الدفع: من حقك فحص الطرد أمام مندوب الشحن قبل دفع أي جنيه، وإذا لم يعجبك المنتج يمكنك رفض الاستلام فوراً بدون أي تكلفة!</p>
+                    </div>
+
+                    <h4 class="font-bold text-sm text-gray-900 pt-2">1. المعاينة عند الاستلام</h4>
+                    <p>عند وصول مندوب التوصيل، يحق لك فتح الشحنة والتأكد من سلامة الزيوت ومطابقتها لمواصفات طلبك قبل سداد المبلغ نقداً.</p>
+
+                    <h4 class="font-bold text-sm text-gray-900 pt-2">2. فترة الاسترجاع والاستبدال (14 يوماً)</h4>
+                    <p>وفقاً لقانون حماية المستهلك المصري، يحق لك طلب استبدال أو استرجاع المنتج خلال 14 يوماً من تاريخ الاستلام في حالة وجود أي عيب مصنعي أو تلف أثناء الشحن.</p>
+
+                    <h4 class="font-bold text-sm text-gray-900 pt-2">3. كيفية طلب الاسترجاع</h4>
+                    <p>تواصل مع فريق خدمة العملاء مباشرة عبر الواتساب على الرقم <strong>01080369841</strong> مع توضيح رقم الطلب وسيتم الترتيب معك فوراً.</p>
+                </div>
+
+                <!-- Tab 3: Shipping & Delivery Policy -->
+                <div id="policyTab-shipping" class="policy-tab-content hidden space-y-3 text-xs text-gray-700 leading-relaxed max-h-[60vh] overflow-y-auto pr-1">
+                    <h4 class="font-bold text-sm text-gray-900">التغطية الجغرافية ومواعيد الشحن</h4>
+                    <p>نوفر التوصيل السريع لكافة محافظات ومدن وقرى جمهورية مصر العربية.</p>
                     
-                    <!-- Cost Breakdown -->
-                    <div class="space-y-1.5 text-xs text-gray-600">
-                        <div class="flex justify-between">
-                            <span>المجموع الفرعي</span>
-                            <span id="cartSubtotal" class="font-semibold text-gray-900">0 ج.م</span>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                        <div class="border border-gray-200 rounded-lg p-3 bg-gray-50">
+                            <span class="font-bold text-gray-900 block mb-1">القاهرة، الجيزة، الإسكندرية</span>
+                            <span class="text-emerald-700 font-bold block">التوصيل خلال 24 إلى 48 ساعة</span>
                         </div>
-                        <div class="flex justify-between">
-                            <span>تكلفة الشحن</span>
-                            <span id="cartShipping" class="font-semibold text-gray-900">مجاني</span>
-                        </div>
-                        <div class="flex justify-between text-base font-black text-gray-900 pt-2 border-t border-gray-200">
-                            <span>المجموع الإجمالي</span>
-                            <span id="cartTotal" class="text-emerald-700">0 ج.م</span>
+                        <div class="border border-gray-200 rounded-lg p-3 bg-gray-50">
+                            <span class="font-bold text-gray-900 block mb-1">باقي محافظات الوجه البحري والقبلي</span>
+                            <span class="text-emerald-700 font-bold block">التوصيل خلال 2 إلى 4 أيام عمل</span>
                         </div>
                     </div>
 
-                    <!-- Checkout Button -->
-                    <button onclick="openCheckoutModal()" class="w-full py-3.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-black rounded-xl shadow-lg shadow-emerald-600/25 active:scale-[0.99] transition-all flex items-center justify-center gap-2">
-                        <span>متابعة الشراء وتأكيد الطلب</span>
-                        <i class="fas fa-arrow-left text-sm"></i>
+                    <h4 class="font-bold text-sm text-gray-900 pt-2">الشحن المجاني</h4>
+                    <p>نقدم شحناً مجانياً بالكامل على الكورسات وعروض التوفير الترويجية، أو عند تجاوز إجمالي الطلب الحد المحدد في عروض المتجر.</p>
+                </div>
+
+                <!-- Tab 4: Terms of Service -->
+                <div id="policyTab-terms" class="policy-tab-content hidden space-y-3 text-xs text-gray-700 leading-relaxed max-h-[60vh] overflow-y-auto pr-1">
+                    <h4 class="font-bold text-sm text-gray-900">شروط الشراء والاستخدام</h4>
+                    <p>باستخدامك لمتجر كنوز مكة أو تقديم طلب شراء، فإنك توافق على الالتزام بالشروط والأحكام التالية:</p>
+                    <ul class="list-disc list-inside space-y-1 pr-2">
+                        <li>جميع المنتجات المعروضة هي زيوت طبيعية معصورة على البارد ومخصصة للاستخدام الخارجي على الشعر والفروة.</li>
+                        <li>الأسعار المعروضة بالجنيه المصري (ج.م) وشاملة للمواصفات الموضحة في تفاصيل المنتج.</li>
+                        <li>يتم تأكيد الطلب إلكترونياً ويصلك إشعار فوري عبر الواتساب برقم الطلب وتفاصيل الشحنة.</li>
+                        <li>يلتزم المتجر بتقديم الدعم والاستشارة المجانية للعميل طوال فترة استخدام الكورس.</li>
+                    </ul>
+                </div>
+
+                <!-- Tab 5: 100% Quality Guarantee -->
+                <div id="policyTab-guarantee" class="policy-tab-content hidden space-y-3 text-xs text-gray-700 leading-relaxed max-h-[60vh] overflow-y-auto pr-1">
+                    <div class="text-center py-4 bg-emerald-50 rounded-xl border border-emerald-200 space-y-2">
+                        <div class="w-12 h-12 rounded-full bg-emerald-600 text-white flex items-center justify-center mx-auto text-xl shadow-md">
+                            <i class="fas fa-certificate"></i>
+                        </div>
+                        <h4 class="font-black text-emerald-950 text-base">ضمان النقاء والجودة الملكية 100%</h4>
+                        <p class="text-xs text-emerald-800 max-w-md mx-auto">
+                            نضمن أن جميع زيوتنا خام نقية، معصورة على البارد وفق أعلى معايير الجودة، خالية تماماً من الكيماويات والبارابين والسيليكون والزيوت المعدنية.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Modal Footer -->
+                <div class="pt-3 border-t border-gray-200 flex items-center justify-between">
+                    <span class="text-[11px] text-gray-500">© 2026 كنوز مكة | Kunooz Makkah</span>
+                    <button onclick="closePolicyModal()" class="px-5 py-2 bg-[#232f3e] hover:bg-[#37475a] text-white rounded-lg text-xs font-bold transition-colors">
+                        إغلاق
                     </button>
                 </div>
 
@@ -347,103 +883,190 @@
         </div>
     </div>
 
-    <!-- Quick View Product Modal -->
+    <!-- ============================================== -->
+    <!-- SLIDE-OVER SHOPPING CART DRAWER (Amazon Style) -->
+    <!-- ============================================== -->
+    <div id="cartDrawer" class="fixed inset-0 z-50 overflow-hidden hidden">
+        <div id="cartBackdrop" onclick="toggleCartDrawer()" class="absolute inset-0 bg-black/60 backdrop-blur-xs transition-opacity opacity-0"></div>
+
+        <div class="absolute inset-y-0 left-0 max-w-full flex pl-0 sm:pl-10">
+            <div id="cartPanel" class="w-screen max-w-md bg-white shadow-2xl flex flex-col transform -translate-x-full transition-transform duration-300 ease-in-out">
+                
+                <!-- Drawer Header -->
+                <div class="p-4 border-b border-gray-200 flex items-center justify-between bg-[#131921] text-white">
+                    <div class="flex items-center gap-2">
+                        <i class="fas fa-cart-shopping text-amber-400 text-lg"></i>
+                        <h3 class="font-black text-white text-base">عربة التسوق في كنوز مكة</h3>
+                        <span id="drawerCartCount" class="bg-[#f08804] text-white text-[11px] px-2 py-0.5 rounded-full font-bold">0 عناصر</span>
+                    </div>
+                    <button onclick="toggleCartDrawer()" class="w-8 h-8 rounded-full hover:bg-white/20 flex items-center justify-center text-gray-300" aria-label="إغلاق">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+
+                <!-- Free Shipping Progress Indicator -->
+                <div class="bg-amber-50 border-b border-amber-200 p-2.5 text-xs text-amber-900 flex items-center gap-2">
+                    <i class="fas fa-circle-check text-emerald-600 text-sm"></i>
+                    <span>طلبك مؤهل للـ <strong>معاينة المجانية قبل الدفع</strong> عند الاستلام!</span>
+                </div>
+
+                <!-- Drawer Cart Items Body -->
+                <div id="cartItemsList" class="flex-1 overflow-y-auto p-4 space-y-3 divide-y divide-gray-100">
+                    <!-- Dynamic cart items rendered here -->
+                </div>
+
+                <!-- Empty Cart View -->
+                <div id="emptyCartView" class="hidden flex-1 flex flex-col items-center justify-center p-6 text-center space-y-3">
+                    <div class="w-20 h-20 bg-amber-50 text-amber-500 rounded-full flex items-center justify-center text-3xl">
+                        <i class="fas fa-cart-arrow-down"></i>
+                    </div>
+                    <h4 class="font-black text-gray-900 text-base">عربة التسوق فارغة حالياً</h4>
+                    <p class="text-xs text-gray-500 max-w-xs">تصفح صفقات وكورسات الزيوت الطبيعية وأضف ما يعجبك للعربة!</p>
+                    <button onclick="toggleCartDrawer(); scrollToProducts();" class="btn-amazon-yellow px-6 py-2.5 rounded-lg text-xs font-bold">
+                        ابدأ التسوق الآن
+                    </button>
+                </div>
+
+                <!-- Cart Summary & Checkout Footer -->
+                <div id="cartFooter" class="p-4 border-t border-gray-200 bg-gray-50 space-y-3">
+                    <div class="space-y-1.5 text-xs text-gray-600">
+                        <div class="flex justify-between">
+                            <span>المجموع الفرعي:</span>
+                            <span id="cartSubtotal" class="font-bold text-gray-900">0 ج.م</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>خدمة المعاينة والشحن:</span>
+                            <span id="cartShipping" class="font-bold text-emerald-700">مجاني بالكامل</span>
+                        </div>
+                        <div class="flex justify-between text-base font-black text-gray-900 pt-2 border-t border-gray-200">
+                            <span>الإجمالي الكلي المطلوب:</span>
+                            <span id="cartTotal" class="text-emerald-800">0 ج.م</span>
+                        </div>
+                    </div>
+
+                    <!-- Amazon Style Big Yellow Checkout Button -->
+                    <button onclick="openCheckoutModal()" class="w-full py-3.5 btn-amazon-yellow rounded-lg text-sm font-black shadow-md flex items-center justify-center gap-2">
+                        <span>متابعة إتمام الطلب (الدفع عند الاستلام)</span>
+                        <i class="fas fa-arrow-left text-xs"></i>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- AMAZON QUICK VIEW / BUY BOX MODAL              -->
+    <!-- ============================================== -->
     <div id="quickViewModal" class="fixed inset-0 z-50 overflow-y-auto hidden">
-        <div class="min-h-screen px-4 flex items-center justify-center">
-            <div class="fixed inset-0 bg-black/60 backdrop-blur-sm" onclick="closeQuickView()"></div>
+        <div class="min-h-screen px-4 flex items-center justify-center py-6">
+            <div class="fixed inset-0 bg-black/60 backdrop-blur-xs" onclick="closeQuickView()"></div>
             
-            <div class="relative bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl z-10 overflow-hidden">
-                <button onclick="closeQuickView()" class="absolute top-4 left-4 w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-500 z-10">
+            <div class="relative bg-white rounded-2xl max-w-3xl w-full p-6 sm:p-8 shadow-2xl z-10 overflow-hidden">
+                <button onclick="closeQuickView()" class="absolute top-4 left-4 w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-500 z-10" aria-label="إغلاق">
                     <i class="fas fa-times"></i>
                 </button>
 
-                <div id="quickViewContent" class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                <div id="quickViewContent" class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
                     <!-- Dynamic details injected here -->
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Checkout Modal -->
+    <!-- ============================================== -->
+    <!-- AMAZON FAST CHECKOUT MODAL (COD + Guarantee)   -->
+    <!-- ============================================== -->
     <div id="checkoutModal" class="fixed inset-0 z-50 overflow-y-auto hidden">
         <div class="min-h-screen px-4 flex items-center justify-center py-6">
-            <div class="fixed inset-0 bg-black/60 backdrop-blur-sm" onclick="closeCheckoutModal()"></div>
+            <div class="fixed inset-0 bg-black/60 backdrop-blur-xs" onclick="closeCheckoutModal()"></div>
             
-            <div class="relative bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl z-10">
-                <div class="flex items-center justify-between pb-4 border-b border-gray-100">
+            <div class="relative bg-white rounded-2xl max-w-lg w-full p-6 sm:p-7 shadow-2xl z-10">
+                <div class="flex items-center justify-between pb-3 border-b border-gray-200">
                     <div class="flex items-center gap-2">
-                        <div class="w-8 h-8 rounded-lg bg-green-100 text-green-600 flex items-center justify-center">
-                            <i class="fas fa-shield-alt"></i>
+                        <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center">
+                            <i class="fas fa-shield-alt text-base"></i>
                         </div>
-                        <h3 class="font-bold text-gray-900 text-lg">إتمام الطلب بأمان</h3>
+                        <h3 class="font-black text-gray-900 text-base">إتمام الطلب السريع (كنوز مكة)</h3>
                     </div>
                     <button onclick="closeCheckoutModal()" class="w-8 h-8 rounded-full hover:bg-gray-100 flex items-center justify-center text-gray-400">
                         <i class="fas fa-times"></i>
                     </button>
                 </div>
 
-                <form id="checkoutForm" onsubmit="handleCheckoutSubmit(event)" class="space-y-4 mt-4">
-                    <!-- Honeypot Anti-Bot Field (Hidden from humans, traps spam bots) -->
+                <div class="mt-3 bg-amber-50 border border-amber-200 p-2.5 rounded-lg text-xs text-amber-900 flex items-center gap-2">
+                    <i class="fas fa-box-open text-amber-600 text-sm"></i>
+                    <span><strong>معاينة مجانية أولاً:</strong> لا تدفع أي جنيه إلا بعد فحص الطرد والتأكد منه مع المندوب.</span>
+                </div>
+
+                <form id="checkoutForm" onsubmit="handleCheckoutSubmit(event)" class="space-y-3.5 mt-3">
+                    <!-- Honeypot Anti-Bot Field -->
                     <div style="display:none !important;" aria-hidden="true">
                         <input type="text" id="custHoneypot" name="customer_website_check" tabindex="-1" autocomplete="off">
                     </div>
 
                     <div>
                         <label class="block text-xs font-bold text-gray-700 mb-1">الاسم بالكامل *</label>
-                        <input type="text" id="custName" required placeholder="أحمد محمد" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-amber-500">
+                        <input type="text" id="custName" required placeholder="مثال: أحمد محمد" class="w-full bg-gray-50 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-amber-500">
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <div>
                             <label class="block text-xs font-bold text-gray-700 mb-1">رقم الهاتف (واتساب) *</label>
-                            <input type="tel" id="custPhone" required placeholder="010XXXXXXXX" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-amber-500">
+                            <input type="tel" id="custPhone" required placeholder="010XXXXXXXX" class="w-full bg-gray-50 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-amber-500">
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-gray-700 mb-1">المحافظة / المدينة *</label>
-                            <input type="text" id="custCity" required placeholder="القاهرة، المعادي" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-amber-500">
+                            <input type="text" id="custCity" required placeholder="القاهرة، المعادي" class="w-full bg-gray-50 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-amber-500">
                         </div>
                     </div>
 
                     <div>
                         <label class="block text-xs font-bold text-gray-700 mb-1">العنوان بالتفصيل *</label>
-                        <textarea id="custAddress" required rows="2" placeholder="اسم الشارع، رقم العمارة، رقم الشقة أو علامة مميزة" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-amber-500"></textarea>
+                        <textarea id="custAddress" required rows="2" placeholder="الشارع، رقم العمارة، رقم الشقة، أو أقرب علامة مميزة" class="w-full bg-gray-50 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-amber-500"></textarea>
                     </div>
 
                     <div>
                         <label class="block text-xs font-bold text-gray-700 mb-1">طريقة الدفع</label>
-                        <div class="grid grid-cols-2 gap-3">
-                            <label class="flex items-center gap-2 border border-amber-500 bg-amber-50/50 p-2.5 rounded-xl cursor-pointer">
+                        <div class="grid grid-cols-2 gap-2">
+                            <label class="flex items-center gap-2 border-2 border-amber-500 bg-amber-50/60 p-2.5 rounded-lg cursor-pointer">
                                 <input type="radio" name="paymentMethod" value="cod" checked class="text-amber-600 focus:ring-0">
-                                <span class="text-xs font-bold text-gray-800">الدفع عند الاستلام (معاينة أولاً)</span>
+                                <span class="text-xs font-bold text-gray-900">الدفع عند الاستلام (معاينة)</span>
                             </label>
-                            <label class="flex items-center gap-2 border border-gray-200 p-2.5 rounded-xl cursor-pointer opacity-70">
-                                <input type="radio" name="paymentMethod" value="card" disabled class="text-amber-600 focus:ring-0">
-                                <span class="text-xs font-medium text-gray-500">تحويل بنكي / فودافون كاش</span>
+                            <label class="flex items-center gap-2 border border-gray-200 p-2.5 rounded-lg opacity-60 cursor-not-allowed">
+                                <input type="radio" name="paymentMethod" value="card" disabled class="text-gray-400">
+                                <span class="text-xs font-medium text-gray-500">فودافون كاش / بطاقة</span>
                             </label>
                         </div>
                     </div>
 
-                    <div class="bg-gray-50 p-3 rounded-xl border border-gray-100 flex justify-between items-center text-sm">
-                        <span class="text-gray-600 font-medium">المبلغ المطلوب سداده عند الاستلام:</span>
-                        <span id="checkoutTotalVal" class="font-black text-emerald-700 text-lg">0 ج.م</span>
+                    <div class="bg-gray-100 p-3 rounded-lg flex justify-between items-center text-sm">
+                        <span class="text-gray-700 font-bold">المبلغ المطلوب عند الاستلام:</span>
+                        <span id="checkoutTotalVal" class="font-black text-emerald-800 text-lg">0 ج.م</span>
                     </div>
 
-                    <button type="submit" class="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-lg shadow-emerald-600/25 active:scale-[0.99] transition-all flex items-center justify-center gap-2">
+                    <p class="text-[10px] text-gray-500 text-center">
+                        بالضغط على تأكيد، أنت توافق على <a href="javascript:void(0)" onclick="openPolicyModal('privacy')" class="text-amber-700 underline">سياسة الخصوصية</a> و <a href="javascript:void(0)" onclick="openPolicyModal('terms')" class="text-amber-700 underline">شروط الشراء</a>.
+                    </p>
+
+                    <button type="submit" class="w-full py-3.5 btn-amazon-orange rounded-lg text-sm font-black shadow-md flex items-center justify-center gap-2">
                         <i class="fab fa-whatsapp text-lg"></i>
-                        <span>تأكيد الطلب وإرساله عبر الواتساب</span>
+                        <span>تأكيد الطلب وشحنه فوراً</span>
                     </button>
                 </form>
             </div>
         </div>
     </div>
 
-    <!-- Order Success Modal -->
+    <!-- ============================================== -->
+    <!-- ORDER SUCCESS MODAL                            -->
+    <!-- ============================================== -->
     <div id="orderSuccessModal" class="fixed inset-0 z-50 overflow-y-auto hidden">
         <div class="min-h-screen px-4 flex items-center justify-center">
-            <div class="fixed inset-0 bg-black/60 backdrop-blur-sm"></div>
+            <div class="fixed inset-0 bg-black/60 backdrop-blur-xs"></div>
             
-            <div class="relative bg-white rounded-3xl max-w-md w-full p-8 text-center shadow-2xl z-10 space-y-4">
-                <div class="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-4xl mx-auto animate-bounce">
+            <div class="relative bg-white rounded-2xl max-w-md w-full p-6 sm:p-8 text-center shadow-2xl z-10 space-y-4">
+                <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-3xl mx-auto animate-bounce">
                     <i class="fas fa-check"></i>
                 </div>
                 <h3 class="text-2xl font-black text-gray-900">تم تسجيل طلبك بنجاح!</h3>
@@ -451,14 +1074,14 @@
                     رقم الطلب: <span id="orderNumber" class="font-bold text-emerald-700 font-mono">#94821</span>
                 </p>
                 <p class="text-xs text-gray-500 leading-relaxed">
-                    شكراً لثقتكم بكنوز مكة! يمكنك إرسال تفاصيل طلبك إلى الواتساب الآن لتأكيد الشحن فوراً واستلام جدول الاستخدام المخصص لحالة شعرك.
+                    شكراً لثقتك بمتجر كنوز مكة! يمكنك إرسال بيانات طلبك إلى الواتساب الآن للحصول على الشحن السريع واستلام جدول الاستخدام المجاني.
                 </p>
                 <div class="pt-2 space-y-2">
-                    <a id="whatsappOrderBtn" href="#" target="_blank" class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-md transition-all flex items-center justify-center gap-2 text-sm">
+                    <a id="whatsappOrderBtn" href="#" target="_blank" class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg shadow-md transition-all flex items-center justify-center gap-2 text-xs">
                         <i class="fab fa-whatsapp text-lg"></i>
-                        <span>فتح المحادثة عبر الواتساب الآن</span>
+                        <span>فتح المحادثة عبر الواتساب لتأكيد الشحن</span>
                     </a>
-                    <button onclick="closeOrderSuccessModal()" class="w-full py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-xl text-xs transition-all">
+                    <button onclick="closeOrderSuccessModal()" class="w-full py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold rounded-lg text-xs transition-all">
                         متابعة التسوق في المتجر
                     </button>
                 </div>
@@ -466,120 +1089,46 @@
         </div>
     </div>
 
-    <!-- Wishlist Modal -->
+    <!-- ============================================== -->
+    <!-- WISHLIST MODAL                                 -->
+    <!-- ============================================== -->
     <div id="wishlistModal" class="fixed inset-0 z-50 overflow-y-auto hidden">
         <div class="min-h-screen px-4 flex items-center justify-center">
-            <div class="fixed inset-0 bg-black/60 backdrop-blur-sm" onclick="toggleWishlistModal()"></div>
-            <div class="relative bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl z-10">
-                <div class="flex items-center justify-between pb-3 border-b border-gray-100">
-                    <h3 class="font-black text-gray-900 flex items-center gap-2">
-                        <i class="fas fa-heart text-red-500"></i> قائمة المفضلة
+            <div class="fixed inset-0 bg-black/60 backdrop-blur-xs" onclick="toggleWishlistModal()"></div>
+            <div class="relative bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl z-10">
+                <div class="flex items-center justify-between pb-3 border-b border-gray-200">
+                    <h3 class="font-black text-gray-900 text-base flex items-center gap-2">
+                        <i class="fas fa-heart text-red-500"></i> قائمة الرغبات والمفضلة
                     </h3>
                     <button onclick="toggleWishlistModal()" class="w-8 h-8 rounded-full hover:bg-gray-100 flex items-center justify-center text-gray-400">
                         <i class="fas fa-times"></i>
                     </button>
                 </div>
                 <div id="wishlistItems" class="py-4 space-y-3 max-h-96 overflow-y-auto">
-                    <!-- Wishlist items dynamically populated -->
+                    <!-- Populated dynamically -->
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Toast Notification -->
-    <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none bg-gray-900 text-white px-5 py-3 rounded-2xl shadow-xl flex items-center gap-3 text-sm">
-        <div id="toastIcon" class="text-green-400 text-base">
-            <i class="fas fa-check-circle"></i>
-        </div>
-        <span id="toastMsg" class="font-medium">تمت الإضافة بنجاح</span>
-    </div>
-
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-gray-300 border-t border-gray-800 mt-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-                <div class="space-y-4">
-                    <div class="flex items-center gap-2">
-                        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-amber-600 to-yellow-500 flex items-center justify-center text-white shadow-md shadow-amber-600/30">
-                            <i class="fas fa-kaaba"></i>
-                        </div>
-                        <div>
-                            <span class="text-xl font-black text-white">كنوز <span class="text-amber-500">مكة</span></span>
-                            <p class="text-[10px] text-amber-400 font-bold uppercase tracking-wider -mt-1">Kunooz Makkah</p>
-                        </div>
-                    </div>
-                    <p class="text-xs text-gray-400 leading-relaxed">
-                        وجهتكم الأولى لأقوى الزيوت والتركيبات الطبيعية المعصورة على البارد لعلاج جميع مشاكل الشعر، التساقط، والفراغات بنتائج مجربة وضمان المعاينة.
-                    </p>
-                    <div class="flex items-center gap-3 text-gray-400 text-sm">
-                        <a href="#" class="w-8 h-8 rounded-lg bg-gray-800 flex items-center justify-center hover:bg-emerald-600 hover:text-white transition-colors"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="w-8 h-8 rounded-lg bg-gray-800 flex items-center justify-center hover:bg-emerald-500 hover:text-white transition-colors"><i class="fab fa-tiktok"></i></a>
-                        <a href="#" class="w-8 h-8 rounded-lg bg-gray-800 flex items-center justify-center hover:bg-pink-600 hover:text-white transition-colors"><i class="fab fa-instagram"></i></a>
-                        <a href="https://wa.me/201080369841" target="_blank" class="w-8 h-8 rounded-lg bg-gray-800 flex items-center justify-center hover:bg-green-600 hover:text-white transition-colors" title="واتساب كنوز مكة"><i class="fab fa-whatsapp"></i></a>
-                    </div>
-                </div>
-
-                <div>
-                    <h4 class="text-white font-bold text-sm mb-4">روابط سريعة</h4>
-                    <ul class="space-y-2 text-xs text-gray-400">
-                        <li><a href="#" class="hover:text-emerald-400 transition-colors">عن كنوز مكة للزيوت</a></li>
-                        <li><a href="#productsSection" class="hover:text-emerald-400 transition-colors">جميع زيوت وكورسات الشعر</a></li>
-                        <li><a href="#" class="hover:text-emerald-400 transition-colors">سياسة المعاينة والاستبدال</a></li>
-                        <li><a href="#" class="hover:text-emerald-400 transition-colors">الشحن لكافة محافظات مصر</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h4 class="text-white font-bold text-sm mb-4">علاج مشاكل الشعر</h4>
-                    <ul class="space-y-2 text-xs text-gray-400">
-                        <li><a href="javascript:void(0)" onclick="filterByCategory('hair-loss')" class="hover:text-emerald-400 transition-colors">علاج التساقط وإنبات الفراغات</a></li>
-                        <li><a href="javascript:void(0)" onclick="filterByCategory('frizz-repair')" class="hover:text-emerald-400 transition-colors">علاج الهيشان والتقصف</a></li>
-                        <li><a href="javascript:void(0)" onclick="filterByCategory('growth-length')" class="hover:text-emerald-400 transition-colors">تطويل وتكثيف الشعر</a></li>
-                        <li><a href="javascript:void(0)" onclick="filterByCategory('dandruff-scalp')" class="hover:text-emerald-400 transition-colors">علاج القشرة وحكة الفروة</a></li>
-                        <li><a href="javascript:void(0)" onclick="filterByCategory('bundles')" class="hover:text-emerald-400 transition-colors">الكورسات وعروض التوفير</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h4 class="text-white font-bold text-sm mb-4">النشرة البريدية والعروض</h4>
-                    <p class="text-xs text-gray-400 mb-3">اشترك لتصلك عروض ونفحات مواسم الحج والعمرة والخصومات أولاً بأول.</p>
-                    <div class="flex gap-2">
-                        <input type="email" placeholder="بريدك الإلكتروني" class="bg-gray-800 text-xs px-3 py-2 rounded-xl border border-gray-700 text-white w-full focus:outline-none focus:border-amber-500">
-                        <button class="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-xl text-xs font-bold shrink-0 transition-colors">
-                            اشتراك
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="pt-8 border-t border-gray-800 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-500 gap-4">
-                <p>© 2026 كنوز مكة (Kunooz Makkah). جميع الحقوق محفوظة.</p>
-                <div class="flex items-center gap-3">
-                    <button onclick="openAdminLoginModal()" class="text-gray-400 hover:text-emerald-400 transition-all flex items-center gap-1.5 cursor-pointer focus:outline-none group select-none" title="تسجيل الدخول للوحة الإدارة">
-                        <i class="fas fa-lock text-emerald-500 group-hover:scale-125 transition-transform"></i>
-                        <span>تسوق آمن 100%</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Secret Admin Login Modal -->
+    <!-- ============================================== -->
+    <!-- SECRET ADMIN LOGIN MODAL                       -->
+    <!-- ============================================== -->
     <div id="adminLoginModal" class="fixed inset-0 z-50 overflow-y-auto hidden">
         <div class="min-h-screen px-4 flex items-center justify-center">
-            <div class="fixed inset-0 bg-black/60 backdrop-blur-sm" onclick="closeAdminLoginModal()"></div>
+            <div class="fixed inset-0 bg-black/60 backdrop-blur-xs" onclick="closeAdminLoginModal()"></div>
             
-            <div class="relative bg-white rounded-3xl max-w-sm w-full p-6 sm:p-7 shadow-2xl z-10 text-center space-y-4">
+            <div class="relative bg-white rounded-2xl max-w-sm w-full p-6 text-center shadow-2xl z-10 space-y-4">
                 <button onclick="closeAdminLoginModal()" class="absolute top-4 left-4 w-8 h-8 rounded-full hover:bg-gray-100 flex items-center justify-center text-gray-400">
                     <i class="fas fa-times"></i>
                 </button>
 
-                <div class="w-16 h-16 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center text-2xl mx-auto shadow-sm">
+                <div class="w-14 h-14 bg-amber-50 text-amber-700 rounded-2xl flex items-center justify-center text-2xl mx-auto shadow-sm">
                     <i class="fas fa-shield-halved"></i>
                 </div>
                 <div>
                     <h3 class="font-black text-gray-900 text-lg">لوحة الإدارة والتحكم</h3>
-                    <p class="text-xs text-gray-500 mt-1">أدخل كلمة المرور للمتابعة</p>
+                    <p class="text-xs text-gray-500 mt-0.5">أدخل كلمة المرور للمتابعة</p>
                 </div>
 
                 <form onsubmit="handleAdminLogin(event)" class="space-y-3">
@@ -591,15 +1140,15 @@
                             maxlength="64"
                             autocomplete="current-password"
                             placeholder="كلمة المرور..." 
-                            class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-emerald-500 text-center font-mono tracking-widest"
+                            class="w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-amber-500 text-center font-mono tracking-widest"
                         >
-                        <button type="button" onclick="togglePasswordVisibility()" class="absolute left-3.5 top-3.5 text-gray-400 hover:text-gray-600 text-sm">
+                        <button type="button" onclick="togglePasswordVisibility()" class="absolute left-3.5 top-3 text-gray-400 hover:text-gray-600 text-sm">
                             <i id="passVisibilityIcon" class="fas fa-eye"></i>
                         </button>
                     </div>
                     <p id="adminLoginError" class="text-xs text-red-500 font-bold hidden">كلمة المرور غير صحيحة، حاول مجدداً</p>
 
-                    <button type="submit" class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-lg shadow-emerald-600/20 active:scale-95 transition-all text-sm flex items-center justify-center gap-2">
+                    <button type="submit" class="w-full py-2.5 btn-amazon-yellow rounded-lg text-xs font-black shadow-md flex items-center justify-center gap-2">
                         <i class="fas fa-unlock"></i>
                         <span>دخول للوحة التحكم</span>
                     </button>
@@ -608,19 +1157,125 @@
         </div>
     </div>
 
-    <!-- Floating WhatsApp Quick Button -->
-    <a id="floatingWhatsappBtn" href="https://wa.me/201080369841?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%D8%8C%20%D8%A3%D8%B1%D9%8A%D8%AF%20%D8%A7%D8%B3%D8%AA%D8%B4%D8%A7%D8%B1%D8%A9%20%D9%84%D8%B9%D9%84%D8%A7%D8%AC%20%D9%85%D8%B4%D8%A7%D9%83%D9%84%20%D8%B4%D8%B9%D8%B1%D9%8A%20%D9%85%D9%86%20%D9%83%D9%86%D9%88%D8%B2%20%D9%85%D9%83%D8%A9" target="_blank" class="fixed bottom-6 left-6 z-40 bg-emerald-500 hover:bg-emerald-600 text-white w-14 h-14 rounded-full shadow-2xl flex items-center justify-center text-2xl active:scale-95 transition-all group hover:w-auto hover:px-5 hover:rounded-2xl" title="استشارة واتساب مجانية">
+    <!-- ============================================== -->
+    <!-- FLOATING WHATSAPP & TOAST                      -->
+    <!-- ============================================== -->
+    <a id="floatingWhatsappBtn" href="https://wa.me/201080369841?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%D8%8C%20%D8%A3%D8%B1%D9%8A%D8%AF%20%D8%A7%D8%B3%D8%AA%D8%B4%D8%A7%D8%B1%D8%A9%20%D9%84%D8%B9%D9%84%D8%A7%D8%AC%20%D9%85%D8%B4%D8%A7%D9%83%D9%84%20%D8%B4%D8%B9%D8%B1%D9%8A%20%D9%85%D9%86%20%D9%83%D9%86%D9%88%D8%B2%20%D9%85%D9%83%D8%A9" target="_blank" class="fixed bottom-6 left-6 z-40 bg-emerald-500 hover:bg-emerald-600 text-white w-14 h-14 rounded-full shadow-2xl flex items-center justify-center text-2xl active:scale-95 transition-all group hover:w-auto hover:px-4 hover:rounded-2xl" title="استشارة واتساب مجانية">
         <i class="fab fa-whatsapp"></i>
         <span class="max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-xs transition-all duration-300 ease-in-out text-xs font-bold mr-0 group-hover:mr-2">استشارة واتساب مجانية</span>
     </a>
 
-    <!-- Firebase SDK (App, Auth, Realtime Database) -->
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none bg-gray-900 text-white px-4 py-2.5 rounded-xl shadow-2xl flex items-center gap-3 text-xs">
+        <div id="toastIcon" class="text-amber-400 text-base">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        <span id="toastMsg" class="font-bold">تمت الإضافة إلى العربة بنجاح</span>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- AMAZON 4-TIER FOOTER                           -->
+    <!-- ============================================== -->
+    <footer class="mt-auto select-none">
+        
+        <!-- Tier 1: Back to top bar -->
+        <div onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" class="bg-[#37475a] hover:bg-[#485769] text-white text-xs font-bold py-3.5 text-center cursor-pointer transition-colors">
+            العودة إلى الأعلى
+        </div>
+
+        <!-- Tier 2: 4-Column Directory Links -->
+        <div class="bg-[#232f3e] text-gray-300 py-10 px-4">
+            <div class="max-w-[1500px] mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-xs">
+                
+                <!-- Col 1: About Kunooz Makkah -->
+                <div class="space-y-3">
+                    <h4 class="text-white font-bold text-sm">تعرف على كنوز مكة</h4>
+                    <p class="text-gray-400 leading-relaxed text-[11px]">
+                        متجر كنوز مكة المتخصص في تقديم أنقى تركيبات الزيوت الطبيعية المعصورة على البارد لعلاج مشاكل الشعر والتساقط وفق أعلى معايير الجودة مع حق المعاينة عند الاستلام.
+                    </p>
+                    <div class="flex items-center gap-2 pt-1 text-gray-400">
+                        <a href="https://wa.me/201080369841" target="_blank" class="w-7 h-7 rounded bg-gray-700 hover:bg-green-600 hover:text-white flex items-center justify-center transition-colors"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#" class="w-7 h-7 rounded bg-gray-700 hover:bg-blue-600 hover:text-white flex items-center justify-center transition-colors"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="w-7 h-7 rounded bg-gray-700 hover:bg-pink-600 hover:text-white flex items-center justify-center transition-colors"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+
+                <!-- Col 2: Legal & Policies (Request A) -->
+                <div class="space-y-2">
+                    <h4 class="text-white font-bold text-sm">السياسات والضمانات</h4>
+                    <ul class="space-y-1.5 text-gray-400 text-[11px]">
+                        <li><a href="javascript:void(0)" onclick="openPolicyModal('privacy')" class="hover:text-amber-400 transition-colors">سياسة الخصوصية وسرية البيانات</a></li>
+                        <li><a href="javascript:void(0)" onclick="openPolicyModal('returns')" class="hover:text-amber-400 transition-colors">سياسة المعاينة والاسترجاع (14 يوماً)</a></li>
+                        <li><a href="javascript:void(0)" onclick="openPolicyModal('shipping')" class="hover:text-amber-400 transition-colors">سياسة الشحن والتوصيل للمحافظات</a></li>
+                        <li><a href="javascript:void(0)" onclick="openPolicyModal('terms')" class="hover:text-amber-400 transition-colors">الشروط والأحكام وسياسة الشراء</a></li>
+                        <li><a href="javascript:void(0)" onclick="openPolicyModal('guarantee')" class="hover:text-amber-400 transition-colors">ضمان الجودة الطبيعية 100%</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 3: Categories & Solutions -->
+                <div class="space-y-2">
+                    <h4 class="text-white font-bold text-sm">علاج مشاكل الشعر</h4>
+                    <ul class="space-y-1.5 text-gray-400 text-[11px]">
+                        <li><a href="javascript:void(0)" onclick="filterByCategory('hair-loss'); scrollToProducts();" class="hover:text-amber-400 transition-colors">علاج التساقط وإنبات الفراغات</a></li>
+                        <li><a href="javascript:void(0)" onclick="filterByCategory('frizz-repair'); scrollToProducts();" class="hover:text-amber-400 transition-colors">علاج الهيشان والتقصف</a></li>
+                        <li><a href="javascript:void(0)" onclick="filterByCategory('growth-length'); scrollToProducts();" class="hover:text-amber-400 transition-colors">التطويل والتكثيف السريع</a></li>
+                        <li><a href="javascript:void(0)" onclick="filterByCategory('dandruff-scalp'); scrollToProducts();" class="hover:text-amber-400 transition-colors">علاج القشرة وحكة الفروة</a></li>
+                        <li><a href="javascript:void(0)" onclick="filterByCategory('bundles'); scrollToProducts();" class="hover:text-amber-400 transition-colors">الكورسات وعروض التوفير</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 4: Customer Care & Payment -->
+                <div class="space-y-3">
+                    <h4 class="text-white font-bold text-sm">طرق الدفع والتسليم</h4>
+                    <p class="text-gray-400 text-[11px] leading-relaxed">
+                        دفع آمن 100% نقداً عند الاستلام بعد فحص ومعاينة الشحنة والتأكد من مطابقتها.
+                    </p>
+                    <div class="flex flex-wrap gap-2 text-xs">
+                        <span class="bg-gray-700 text-gray-200 px-2.5 py-1 rounded">💵 الدفع عند الاستلام (COD)</span>
+                        <span class="bg-gray-700 text-gray-200 px-2.5 py-1 rounded">📱 فودافون كاش</span>
+                        <span class="bg-gray-700 text-gray-200 px-2.5 py-1 rounded">🛡️ فحص قبل الدفع</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Tier 3: Logo, Country & Currency -->
+        <div class="bg-[#131921] border-t border-gray-800 py-6 text-center text-xs text-gray-400 space-y-3">
+            <div class="flex items-center justify-center gap-4">
+                <a href="javascript:void(0)" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" class="flex items-center gap-2">
+                    <img src="logo.svg" alt="كنوز مكة" class="w-8 h-8 rounded-lg object-cover">
+                    <span class="text-base font-black text-white">كنوز<span class="text-amber-400">مكة</span></span>
+                </a>
+                <span class="border-r border-gray-700 h-5"></span>
+                <span class="flex items-center gap-1.5 text-gray-300">
+                    <span>🇪🇬 مصر</span>
+                    <span class="text-gray-500 font-mono">(EGP - ج.م)</span>
+                </span>
+            </div>
+
+            <!-- Tier 4: Legal Copyright & Admin Link -->
+            <div class="max-w-4xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between text-[11px] text-gray-500 gap-2 pt-2 border-t border-gray-800/80">
+                <p>© 2026 كنوز مكة (Kunooz Makkah). جميع الحقوق محفوظة.</p>
+                <div class="flex items-center gap-4">
+                    <a href="javascript:void(0)" onclick="openPolicyModal('privacy')" class="hover:text-amber-400">شروط الاستخدام والخصوصية</a>
+                    <button onclick="openAdminLoginModal()" class="hover:text-amber-400 flex items-center gap-1">
+                        <i class="fas fa-lock text-[10px]"></i>
+                        <span>لوحة الإدارة</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </footer>
+
+    <!-- Firebase SDK (Compat Version) -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
     <script src="firebase-config.js"></script>
 
-    <!-- JavaScript logic -->
+    <!-- Main Store JavaScript -->
     <script src="app.js"></script>
 </body>
 </html>
